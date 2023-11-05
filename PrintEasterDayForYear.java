@@ -44,7 +44,7 @@ public class PrintEasterDayForYear
         // se il programma ha un errore
         catch(Exception e)
         {
-            System.out.println(e); // stampa errore
+            System.out.println("An error occurred: " + e.getMessage()); // stampa errore
         }
 
         // una volta finito il programma
@@ -70,10 +70,10 @@ public class PrintEasterDayForYear
         int n = (h - m + r + 90) / 25;
         int p = (h - m + r + n + 19) % 32;
 
-        System.out.println("Pasqua nel " + iAnnoY + " cade il " + p + " di " + vNomeMese(n));
+        System.out.println("Pasqua nel " + iAnnoY + " cade il " + p + " di " + sNomeMese(n));
     }
 
-    public static String vNomeMese(int iMese)
+    public static String sNomeMese(int iMese)
     {
         String sMese;
         switch (iMese)

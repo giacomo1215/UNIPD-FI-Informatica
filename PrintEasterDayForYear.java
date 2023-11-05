@@ -70,6 +70,54 @@ public class PrintEasterDayForYear
         int n = (h - m + r + 90) / 25;
         int p = (h - m + r + n + 19) % 32;
 
-        System.out.println("Pasqua nel " + iAnnoY + " cade il " + p + " del mese " + n);
+        System.out.println("Pasqua nel " + iAnnoY + " cade il " + p + " di " + vNomeMese(n));
+    }
+
+    public static String vNomeMese(int iMese)
+    {
+        String sMese;
+        switch (iMese)
+        {
+            case 1:
+                sMese = "Gennaio";
+                break;
+            case 2:
+                sMese = "Febbraio";
+                break;
+            case 3:
+                sMese = "Marzo";
+                break;
+            case 4:
+                sMese = "Aprile";
+                break;
+            case 5:
+                sMese = "Maggio";
+                break;
+            case 6:
+                sMese = "Giugno";
+                break;
+            case 7:
+                sMese = "Luglio";
+                break;
+            case 8:
+                sMese = "Agosto";
+                break;
+            case 9:
+                sMese = "Settembre";
+                break;
+            case 10:
+                sMese = "Ottobre";
+                break;
+            case 11:
+                sMese = "Novembre";
+                break;
+            case 12:
+                sMese = "Dicembre";
+                break;
+            default:
+                sMese = "input invalido";
+        }
+
+        return sMese;
     }
 }

@@ -1,0 +1,1111 @@
+[2023-10-11]
+== Intro Java ==
+
+-= Compilare un file Java =-
+    javac è il comando per compilare un file con estensione .java
+
+-= JVM =-
+    - è un programma che ha lo scopo di eseguire altri programmi
+    - permette di eseguire programmi java 
+    - Prende il bytecode e traduce in codice macchina da poi mandare nella cpu reale
+    - codice sorgente => compilatore => file di bytecode => linterprete => programma in esecuzione
+
+-= Compilatore e o interprete =-
+    - Il fdatto che un linguaggio sia compilato o interpretato influisce fortemente su
+        + quanto è facile eseguire lo stesso programma su computer aventi diverse cpu (portabilità)
+        + velocità in esecuzione di un programma (efficienza)
+    - Il linguaggio Java, da questo punto di vista, è un linguaggio misto, essendo sia compilato sia interpretato, in fasi diverse
+
+-= Portatbilità =-
+    - i programmi scritti in un linguaggio interpretato sono portabilità
+    - i programmi scritti in un linguaggio compilato
+        + sono portabili a livello di file sorgente, ma necessario compilare il programma su ogni cpu diversa
+
+-= Take Home Message =-
+    - I linguaggi di programmazione sono un compromesso tra linguaggio naturale e linguaggio macchina
+    - Diversi tipi di programmazione
+    - Java: molto utilizzato, buon compromesso
+
+-= codice terminal per compilare ed eseguire =-
+    - javac nomefile.java
+    - java nome public class
+
+-= Appunti =-
+    - Occorre fare molta attenzione
+        - Il testo va inserito esattamente come è presentato
+        - Maiuscole e minuscole sono distinte
+        - nome file deve avere il stesso nome della public class
+
+[java]
+    
+    public class Hello // 1.) nome del programma
+    {
+        public static void main(String[] args) // 2.) metodo
+        {
+            System.out.println("Hello, world!"); // 3.) istruzioni, enunciati
+        }
+    }
+
+[end]
+
+-= Analisi codice =-
+    1.  Prima riga "public class Hello" definisce una nuova classe
+        - Le classi sono contenitori o fabbriche di oggetti e rappresentano un concetto fondamentale in java, che è un linguattio ad oggetti
+            + Per il momento consideriamo gli oggetti come elementi da manipolare in un programma Java
+            + Classi correlate possono essere raggruppate per formare un Package
+        a. "Public" è una parola chiave che indica che la classe Hello può essere utilizzata da tutte le altre classi
+            + le parole chiavi sono parole "riservate" del linguaggio che vanno scritte esattamente così come sono e non possono essere usate per altri scopi.
+                - IMPORTANTE: Ciascun file sorgente può contenere una sola classe pubblica, il cui nome deve coincidere con il nome del file
+    2.  per ora non usiamo le classi come fabbriche di oggetti, ma come contenitori di metodi
+        - un "Metodo" serve a definire una sequenza di istruzioni o enunciati che descrive come svolgere un determinato compito.
+            + in pratica definisce un algoritmo o una sua parte
+        -   la costruzione 
+                [java]
+                    public static void main(String[] args)
+                    {
+                        ...
+                    }
+                [end]
+            definisce il metodo main
+        - un programma java deve avere un metodo "main"
+        - public significa utilizzabile da tutti
+        - invece, static significa che il metodo non esamina e non modifica gli oggetti della classe Hello a cui appartiene.
+    
+    **ENUNCIATI**
+        ha lo scopo di eseguire un programma semplice, descritto da enunciati e contenuto nel file NomeClasse.java
+        - gli enunciati che costituiscono un metodo vengono eseguiti nell'ordine in cui sono scritti
+    
+    3. Il "corpo" di un metodo è racchiuso tra parentesi graffe
+        - Gli enunciati del corpo di un metodo vengono eseguiti uno alla volta nella sequenza in cui sono scritti
+        - Ogni enunciato deve terminare con ";"
+        - Il metodo main del nostro esempio ha un solo enunciato, che visualizza una riga di testo
+            + Dove la visualizza? Un programma può inserire testo in una finsestra, scriverlo in un file o anche inviarlo ad un altro computer attraverso internet.
+        [java]
+            System.out.println("...");
+        [end]
+            - Nel nostro aso la destrinazione è l'output_standard
+                - è una proprietà di ciascun programma che dipende dal sistema operativo del computer
+            - all'interno di un programma java, l'output_standard è rappresentato da un oggetto di nome out
+                - come ogni metodo, anche gli oggetti devono essere inseriti in classi: out è inserito nella classe System della lbireria standard, che contiene oggetti e metodi da utilizzare per accedere alla risorse di sistema
+                - per usare l'oggetto out della classe System si scrive
+                    [java]
+                        System.out
+                    [end]
+            - quando si usa un oggetto, bisogna specificare cosa si vuol fare con l'oggetto stesso
+                - in questo caso vogliamo usare un metodo dell'oggetto out, il metodo println, che stampa una riga di testo
+                - per usare il metodo println dell'oggetto System.out si scrive 
+                    [java]
+                        System.out.println(parametri);
+                    [end]
+                - la coppia di parentesi tonde racchiude le informazioni necessarie per l'esecuzione del metodo (parametri)
+                - A volte il carattere "." significa "usa un oggetto di una classe", altre volte "usa un metodo di un oggetto": dipende dal contesto...
+                    - molte grammatiche (formali o naturali) hanno una sintassi dipendente dal contesto
+            
+
+
+
+[2023-10-12]
+*------------------------------------------------------------*
+| *** Rappresenzaione delle informazioni nei calcolatori *** |
+*------------------------------------------------------------*
+
+*** Obiettivi ***
+- Bisogna imparare come vari tipi di dato vengono rappresentati all'interno del computer
+    - Numeri naturali (interi senza segno)
+        - Rappresentazione posizionale
+    - Numeri interi
+        - Rappresentazione modulo/segno
+        - Rappresentazione in complemento a 2
+    - Numeri reali
+        - Rappresentazione a virgola fissa e mobile
+    - Caratteri
+        - ASCII e Unicode
+
+*** Perche' e' importante studaire la rappresentazione dei dati ***
+- Noi usiamo la notazione decimale per i numeri e dei simboli per le lettere
+    - Il computer capisce 0-1
+- I valori numerici sono infiniti
+    - I Bit che il computer dedica alla rappresentazione dei numeri NON sono infiniti
+        - Ci sono dei limiti alla rappresentazione dei valori numerici 
+            - max/min valore rappresentazione
+            - Precisione della rappresentazione
+- I caratteri sono dei simboli, necessaria tabella di conversione
+
+*-------------------------------*
+| *** Notazione Posizionale *** |
+*-------------------------------*
+
+- I numeri che siamo abituati a utilizzare sono espressi
+    - in base decimale perché usiamo dieci cifre diverse (da 0 a 9)
+    - Con notazione posizionale perché cifre uguali in posizioni diverse hanno valore diverso
+        - Il peso di una cifra è uguale alla base (10 in questo caso) elevata alla potenza della posizione della cifra 
+            - La posizione si incrementa da destra a sinistra a partire da 0
+- L'eventuale parte frazionaria, a destra del simbolo separatore, si valuta con potenze negative
+
+*---------------------------*
+| *** Notazione Binaria *** |
+*---------------------------*
+
+- I computer usano invece i numeri binari, cioè numeri rappresentati con notazione posizionale in base Binaria
+    - la base binaria usa solo due cifre diverse, 0 e 1
+        - in base X si usano le cifre da 0 a X-1
+    - la conversione da base binaria a decimale è semplice
+    
+        (1101)sub2 = (1*1^3 + 1*1^2 + 0*2^1 + 1*2^0)sub10 = (13)sub10
+        (1.01)sub2 = (1*1^0 + 1*1^-1 + 0*2^-2 + 1*2^-3)sub10 = (1.625)sub10
+
+    - La rappresentazione binaria è più facile da manipolare per i computer per motivi tecnologici
+        - perché è meno complicato costruire circuiti logici (digitali) che distinguono tra "acceso" e "spento".
+- La conversione di un numero da base decimale a base binaria è, invece, un po' più complessa
+- La parte intera del numero va elaborata indipendentemente dalla eventuale parte frazionaria.
+
+*** Convertire la parte intera ***
+- Per convertire la sola parte intera:
+    - si divide il numero per 2
+    - si elimina l'eventuale resto
+    - si continua a dividere per 2 il quozioente ottenuto fino a quando non si ottiene quozioente uguale a 0
+    - Il numero binario si ottiene scrivendo la sequenza dei resti delle divisioni, iniziando dall'ultimo resto ottenuto
+    - ATTENZIONE: non fermarsi quando si ottiene quoziente 1, ma proseguire fino a 0.
+
+        #CONVERTIRE LA PARTE INTERA ES. 100base10
+        100    /    2    =    50 resto 0
+        50     /    2    =    25 resto 0
+        25     /    2    =    12 resto 1
+        12     /    2    =    6  resto 0
+        3      /    2    =    1  resto 1
+        1      /    2    =    0  resto 1
+
+        (100)base10      =    (110100)base2
+
+*** Convertire la parte frazionaria ***
+
+- Per convertire la sola parte frazionaria:
+    - si moltiplica il numero per 2
+    - si sottrae 1 dal prodotto se questo e' maggiore di 1
+    - continuo fino a che il risultato e' uguale a 0 oppure e' un risultato gia' ottenuto
+        - se si ottiene un risultato gia' ottenuto in precedenza, il numero sara' periodico, anche se non lo era in base decimale.
+    - il numero binario si ottiene scrivendo la sequenza delle parti intere dei prodotti ottenuti, iniziando dal primo.
+
+        #CONVERTIRE 0.35d
+        0.35    *   2   =   0.7
+        0.7     *   2   =   1.4
+        0.4     *   2   =   0.8
+        0.8     *   2   =   1.6
+        0.6     *   2   =   1.2
+        0.2     *   2   =   0.4
+        (0.35)base10    =   (0.010110)base2
+
+*** Rappresentazione in virgola fissa ***
+
+- La rappresentazione completa si ottiene componendo la parte intera e quella frazionaria
+- Rappresentazione in virgola fissa: il separatore si trova sempre nello stesso punto rispetto alla sequenza di bit.
+
+    (100.35)base10  =  (110100.010110)base2
+
+
+Abbiamo visto che per i numeri interi non negativi si usa la rappresentazione binaria posizionale.
+    (101100)base2 = (44)base10
+Se si usa una rappresentazione a n bit, si possono rappresentare i 2^n numeri naturali che sono compresi nell'intervallo [0, (2^n)-1] ∩ Z
+
+- Con 8 cifre binarie (cioè 8 bit) si possono rappresentare 2^8 configurazioni, pari a 256 numeri diversi.
+
+*** NUMERI INTERI RELATIVI ***
+- Come possiamo rappresentare i numeri negativi?
+    - la rappresentazione più "naturale" o intuitiva è quella con modulo e segno
+        - si rappresenta il segno positivo o negativo del numero con il primo bit della sequenza (quello più a sinistra, ovvero il più significativo)
+            - 0 rappresenta +
+            - 1 rappresenta -
+        - si rappresenta il modulo o valore assoluto del numero (che ovviamente è un numero non negativo)
+            - utilizzando i restanti bit a disposizione
+            - con la notazione binaria posizionale vista per i numeri non negativi
+        - Esempio: rappresentazione usando 6 bit
+            - 1 bit di segno
+            - 5 bit destinati al valore assoluto del numero
+                - il loro spazio viene riempito di zeri a sinistra, dopo il bit del segno, se serve
+            
+            (101100)2ms = (-12)base10
+            (001100)2ms = (12)base10
+        - se si usa una rappresentazione a n bit modulo/segno
+            - si possono rappresentare (2^n)-1 numeri interi nell'intervallo
+                [ -(2^(n-1) - 1) , 2^(n-1) - 1] ∩ Z 
+        -  in pratica non si usa
+            - problema: c'è una doppia rappresentazione per lo zero, per cui si "spreca" una configurazione
+            - problema (più grave): l'algoritmo per l'addizione di numeri così rappresentati è complesso
+    - Complemento a due
+        - una rappresentazione più efficiente è quella denominata "complemento a 2", così definita
+            - dato un numero intero relativo
+                 a ∈ [-2^(n-1) , 2^(n-1)-1] ∩ Z
+              la sua rappresentazione in complemento a due con n bit è
+
+            C2(base n) (a) = - rappresentazione binaria di a con n bit se a ≥ 0
+                             - rappresentazione binaria di (a+2^n) con n bit se a < 0
+            
+
+
+[2023-10-13]
+Notes:
+
+*** PER CASA ***
+- Esercizio: Scrivere un programma java che chieda all'utente le lunghezze A B e C dei tre lati di un triangolo e stabilisca se esso è rettangolo oppure no.
+- Suggerimento:
++ Algoritmo verificaSeRettangolo
++ var A, B, C double
++ Inserisci A
++ Inserisci B
++ Inserisci C
++ Se (a*a==b*b+c*c || ...) = condizione vera
++ se condizione vera = "il triangolo è rettangolo"
++ altrimenti = "Il triangolo non è rettangolo"
+
+
+
+[2023-10-19]
+
+*** TIPI DI DATO IN JAVA ***
+- Java è un linguaggio fortemente tipizzato e quindi ogni dato è di un ben preciso tipo noto al momento della compilazione del programma
+- i tipi di dati in java possono essere:
+    - tipi primitivi
+        - tipologie semplici di dati
+    - riferimenti ad un oggetto
+
+# Dati primitivi
+- Boolean
+    - vero o falso
+- Number
+    - integer
+        - byte
+            - 1 byte
+            - -128 a 127
+            - variabile con segno che rappresenta valori in un range [-128 e 127] (estremi inclusi)
+        - short
+            - 2 byte
+            - -32768 a 32767
+            - numeri interi (con segno) in un range [-32768 a 32767]
+        - int
+            - 4 byte
+            - -2*10^9 a 2*10^9 circa
+            - numeri intero (per default con segno, signed) in un range[-2^31 a 2^31-1]
+        - long
+            - 8 byte
+            - -10^20 a 10^20 circa
+        - char
+            - 2 byte
+            - 0 a 65535 unicode
+    - floating-point
+        - float
+            - precisione singola
+            - +- 10^38 cifre significative
+            - numeri in virgola mobile in singola precisione secondo la specifica IEEE754
+        - double
+            - precisione doppia
+            - +- 10^308, 15 cifre significative
+
+Una variabile "int" è rappresentata con 32 bit in complemento a 2. Quindi il massimo numero esprimibile è 2^31 - 1 = 2147483647.
+
+# Valori Massimi e Minimi
+- Se servono i valori massimi/minimi dei numeri rappresentati con i vari tipi di dati non occorre ricordarli
+- il pacchetto java.lang della libreria standard contiene una classe per ciascun tipo di dati fondamentali, in cui sono definiti questi valori come costanti.
+
+* ! OCIO ! *
+!! In java tutti i tipi di dati fondamentali per numeri interi usano internamente la rappresentazione in complemento a due 
+!! La JVM non segnala le condizioni di overflow nelle operazioni aritmetiche
+!! L'unica operazione aritmetica tra numeri interi che genera una eccezione è la divisione con divisiore zero: "ArithmeticException"
+!! Invece la divisione per zero un numero float/double si ottiene -/+ infinity
+!! Quando l'intervallo di variabilità del tipo "int" non soddisfa le esigenze numeriche del problema, si usa il tipo long  
+    - max valore assoluto con una variabile long: circa 9 miliardi di miliardi
+    - per assegnare un valore a una variabile long bisogna aggiungere un carattere L alla fine (Java assume che le costanti numeriche siano interi)
+        - long l = 123456789023424; ERRORE
+        - long l = 123456789023424L; OK
+
+# Variabili
+- In Java ogni variabile ha
+    - nome: identificativo che viene utilizzato per "usare" la variabile
+    - tipo:
+        - determina l'insieme dei valori amissibili (assegnabili)
+        - determina l'occupazione in memoria
+    - contenuto: valore associato
+    - alcuni attributi: determinano la visibilità (public, protected, private) o specificano tipi particolari di variabili (static, final)
+- sintassi: 
+    nomeTipo nomeVariabile;
+    nomeTipo nomeVariabile = espressione;
+    - scopo: definire la nuova variabile "nomeVariabile", di tipo "nomeTipo", ed eventualmente assegnarle il valore iniziale "espressione".
+    
+    nomeVariabile = espressione;
+    - scopo: assegnare il nuovo valore "espressione" alla variabile "nomeVariabile".
+
+# Costante
+- sintassi:
+    final nomeTipo NOME_COSTANTE = espressione;
+    - scopo: definire la costante "NOME_COSTANTE" di tipo "nomeTipo", assegnandole il valore espressione, che non potrà più essere modificato. 
+        !!nota: il compilatore segnala come errore semantico il tentativo di assegnare un nuovo valore ad una costante, dopo la sua inizializzazione.
+
+
+Di solito in Java si usa la seguente convenzione
+    - i nomi di costanti sono formati da lettere maiuscole
+    - i nomi composti si ottengono attaccando le parole successive alla prima con un carattere di sottolineatura
+
+# Literals /1
+I valori costanti (=literals) per i numeri sono interpretate da java come tipi int e double, a seconda che abbiamo o meno la parte frazionaria
+
+- interi
+    - se il valore ricade nell'intervallo di un tipo di dato meno capace (byte o short) all'ra l'assegnamento avviene senza problemi, altrimenti errore in compilazione
+        
+        [java]
+        byte value1 = 10;       // OK
+        byte value2 = 128;      // errore in compilazione
+                                // max consentito 127
+
+        short value3 = 200;     // OK
+        short value4 = 33000;   // errore in compilazione
+                                // max consentito 32767
+        [/java]
+
+    - se il valore è più grande del range del tipo "int", ma rientra nel range del tipo "long", devo esplicitare che si tratta di un valore long, aggiungendo "L" alla fine del numero
+
+        [java]
+        long l = 1345845486748064820L;       // OK
+        long l = 1345845486748064820;        // errore in compilazione
+        [/java]
+
+- numeri in virgola mobile
+    - anche se il valore ricade nell'intervallo del tipo float ho errore in compilazione
+    - devo esplicitamente dire che il valore va interpretato come float per poterlo assegnare.. aggiungo f alla fine del numero
+    - posso anche inizializzare un numero in virgola mobile con un valore intero.. in questo caso semplicemente la parte frazionaria corrisponderà a 0.
+        
+        [java]
+        float f1 = 2.35;   // ERRORE
+        float f2 = 2.35f;  // OK
+        float f3 = 2;      // OK
+        System.out.println(f3);  // stampa: 2.0
+        [/java]
+    
+    !!nota: non ci sono solo valori costanti numerici. Anche le stringhe o i caratteri hanno "literals".
+
+        [java]
+        char c = 'A';
+        String name = "Giacomo";
+        [/java]
+
+# Promozioni e casting
+Può capitare di dover spostare dei valori numerici fra variabili di tipo diverso
+    - se un valore contenuto in una variabile di un certo tipo deve essere assegnato ad una variabile di un tipo "più capace", ad esempio: 
+        
+        [java]
+        byte b = 100;
+        int i = b;
+        // OK!!
+        [/java]
+
+    il compilatore esegue una conversione automatica (promozione).
+    - se un valore contenuto in una variabile di un certo tipo deve essere assegnato ad una variabile di un tipo "meno capace", il cimpilatore non esegue una conversione perché potrebbe portare alla perdita di cifre significative. 
+        - provoca un errore in compilazione
+    
+# Operatori Aritmetici
+- L'operatore che indica la divisione è "/", quello che indica la moltiplicazione è "*"
+- il punto è il separatore deciale
+- non bisogna indicare il punto separatore delle migliaia
+- Numeri in virgola mobile si possono indicare anche in notazione esponenziale
+    [java]
+    1.93E3 // vale 1.93x10^3
+    [java]
+- L'operatore di moltiplicazione va indicato esplicitamente, non può essere sottointeso
+- Le operazioni di moltiplicazione e divisione hanno la precedenza
+- è possibile usare coppie di parentesi TONDE per indicare in quale ordine valutare le sotto-espressioni
+        a + b / 2 != (a + b) / 2
+- In Java non esiste il simbolo di frazione, le frazioni vanno espresse inline
+- le operazioni di moltiplicazione e divisione hanno la precedenza
+- è possibile usare coppie di parentesi tonde per indicare l'ordine
+- quando entrambi gli operandi sono interi, la divisione calcola il quoziente intero scartando il resto
+        7 / 4 = 1 
+        7.0/4 && 7.0/4.0 && 7/4.0 = 1.75
+- il resto della divisione può essere calcolato usando "%"
+        7 % 4 = 3
+
+
+La classe math della libreria standard mette a disposizione metodi statii per il calcolo di tutte le funzioni algebriche e trigonometriche.
+- Math.pow(x,y) restituisce x^y
+- Math.sqrt(x) restituisce radice quadrata di x
+- Math.log(x) restituisce logaritmo naturale di x
+- Math.sin(x) restituisce il seno di x espresso in radicanti
+
+Methodi di Math vs println:
+- println agisce su un oggetto (ad esempio System.out)
+    - ricordiamo che per il momento, consideriamo gli oggetti come elementi da manipolare in un programma Java
+- pow non agisce su un oggetto (Math è una classe)
+    - il metodo Math.pow è un metodo statico
+- La sintassi è identica, ma tutte le classi, gli oggetti e i metodi della libreria standard seguono una rigida convenzione:
+    - i nomi delle classi (Math, System) iniziano con una lettera maiuscola
+    - i nomi di oggetti (out) e metodi (println, pow) iniziano con una lettera minuscola
+        - oggetti e metodi si distinguono perché solo i metodi sono sempre seguiti dalle parentesi tonde
+
+- public: il metodo può essere invocato in qualsiasi classe
+- static: il metodo è statico
+- double: tipo di dato restituito
+- pow:    nome o identificatore del metodo
+- double a, double b: parametri "espliciti" del ...
+
+// -----------------------------------
+[java]
+    NomeClasse.nomeMetodo(parametri);
+[/java]
+    Scopo: invocare il metodo statico "nomeMetodo" definito nella classe "NomeClasse", fornendo gli eventuali "parametri" richiesti.
+    Nota: un metodo statico non viene invocato con un oggetto, ma con un nome di classe
+        - un metodo statico elabora o modifica solo i propri parametri espliciti
+- Nella classe Math sono definite alcune costanti
+    [java]
+        public final class Math
+        {
+            public static final double PI = 3.141592658979323846;
+            public static final double E = 2.7182818284590452354;
+        }
+    [/java]
+- Sono costanti statiche, ovvero appartengono alla classe
+- tali costanti sono di norma public e per ottenere il loro valore si usa il nome della classe seguito dal punto e dal nome della costante, Math.E, oppure Math.PI
+
+# Combinare assegnazioni e aritmetica
+- Per combinare in un singolo enunciato un'assegnazione ed un'espressione aritmetica che coinvolge la variabile a cui si assegna il risultato
+    [java]
+        totalEuro = totalEuro + dollars * 1.41;
+    [/java]
+- la via più veloce è 
+    [java]
+        totalEuro += dollars * 1.41;
+    [/java]
+- questo esiste per tutti gli operatori aritmetici
+    [java]
+        x = x * 2;
+        x*=2;
+    [/java]
+# Incremento di una variabile
+- L'incremento di una variabile che consiste nell'aumentarne il valore di uno
+    [java]
+        int counter = 0;
+        counter = counter + 1;
+
+        counter++;
+    [/java]
+- Funziona anche per il decremento
+    [java]
+        int counter = x;
+        counter = counter - 1;
+
+        counter--;
+    [/java]
+
+# Documentazione della libreria standard
+- Le classi della libreria Java sono migliaia, esistono documentazioni
+- L'ambiente JDK fornisce la documentazione API (Application Programming Interface) per l'utilizzo delle classi della libreria standard
+- JDK inoltre fornisce:
+    - tutta la documentazione per l'utilizzo delle classi della libreria standard
+    - alcuni documenti in formato "tutorial" per la descrizione delle funzionalità di interi pacchetti
+    - esempi di programmi ("demo")
+
+
+# I pacchetti di classi (package)
+- Tutte le classi della libreria standard sono raccolte in package e sono organizzate per argomento e/o finalità
+- Per usare una classe di una libreria, bisogna importarla nel programma usando l'enunciato
+    [java]
+        import.nomePacchetto.nomeClasse;
+    [/java]
+- le classi System, Math e String appartengono al pacchetto java.lang
+- il pacchetto java.lang viene importato automaticamente
+
+        [java]
+            import.nomePacchetto.nomeClasse;
+        [/java]
+        - Scopo: importare una classe da una pacchetto, per poterla utilizzare in un programma. 
+        [java]
+            import.nomePacchetto.*;
+        [/java]
+        - Scopo: importare tutte le classi di un pacchetto, per poterle utilizzare in un programma.
+
+    ## Stili per l'importazione delle classi
+    - usare un enunciato import per ogni classe importata
+        [java]
+            import.math.BigInteger;
+            import.math.BigDecimal;
+        [/java]
+    - usare un enunciato import che importa tutte le classi di un pacchetto
+        [java]
+            import java.math.*;
+        [/java]
+        - non è un errore importare classi che non si usano 
+        - se si usano più enunciati di questo tipo, non è più chiaro il pacchetto di appartenenza di una classe
+    - non usare per nulla gli enunciati import, ma indicare sempre il nome completo delle classi utilizzate nel codice
+        [java]
+            java.math.BigInteger a = new java.math.BigInteger("123456789");
+        [/java]
+        - questo stile è poco usato
+            - più errori di battitura
+            - più lungo il codice
+            - più noioso
+            - meno leggibile
+
+# stringhe
+    - I tipi di dati più importanti nella maggior parte dei programmi sono i numeri e le stringhe
+    - Una stringa è una sequenza di caratteri, che in Java (come in molti altri linguaggi) vanno racchiusi tra virgolette
+    - Possiamo dichiarare e inizializzare variabili di tipo stringa
+        [java]
+            String name = "Giacomo";
+        [/java]
+    - Possiamo assegnare un valore ad una variabile di tipo stringa
+        [java]
+            name = "Jack";
+        [/java]
+    - Diversamente dai numeri, le stringhe sono oggetti
+    - Una variabile di tipo stringa può quindi essere utilizzata per invocare metodi (non statici) della classe String 
+        - ad esempio, il metodo length restituisce la lunghezza di uan stringa, cioè il numero di caratteri presenti in essa (senza contare le virgolette)
+        [java]
+            String name = "Giacomo";
+            int n = name.length();
+        [/java]
+        - il metodo "length" della classe String !! non è un metodo statico !!
+            - infatti per invocarlo usiamo un oggetto della classe String e questo significa che il metodo funziona agendo su un oggetto
+            [java]
+                String s = "Giacomo";
+                int n = s.length(); // FUNZIONA
+                
+                // ----------------------
+                
+                String s = "Giacomo";
+                int n = String.length(); // NON FUNZIONA
+            [/java]
+        - una stringa di lunghezza zero, che non contiene caratteri, si chiama stringa vuota e si indica con due caratteri virgolette consecutivi, senza spazi interposti.
+            [java]
+                String empty = "";
+                System.out.println(empty.length()); // 0
+            [/java]
+
+# Estrazioni di sottostringhe
+    - per estrarre una sottostringa da una stringa si usa il metodo substring
+        [java]
+            String greeting = "Hello, World!";
+            String sub = greeting.substring(0, 4); // contiene "Hell"
+        [/java]
+        - il primo parametro di substring è la posizione del primo carattere che si vuole usare
+        - il secondo parametro è la posizione successiva all'ultimo carattero che si vuole usare
+
+            H E L L O ,   W O R L D !
+            0 1 2 3 4 5 6 7 8 9 10 11 12
+
+        - la posizione dei caratteri nelle stringhe viene numerata a partire da 0 anziché da 1
+            - uniformità con altri linguaggi
+        !NOTE: 
+            - la posizione dell'ultimo carattere corrisponde alla lunghezza della stringa meno 1
+            - la differenza tra due parametri di substring corrisponde alla lunghezza della sottostringa estratta
+    - Il metodo substring può essere invocato anche con un solo parametro
+        [java]
+            String greeting = "Hello, World!";
+            String sub = greeting.substring(7); // contiene "World!"
+        [/java]
+
+# Concatenazione di stringhe 
+    - Per concatenare due stringhe si usa l'operatore +
+        [java]
+            String s1 = "li";
+            String s2 = "re";
+            String s3 = s1 + s2; // s3 contiene "lire"
+            int lit = 15000;
+            String s = lit + s3; // s contiene "15000lire"
+        [/java]
+    - l'operatore + non aggiunge spazi
+    - per avere lo spazio bisogna aggiungerlo
+        [java]
+            String s1 = "li";
+            String s2 = "re";
+            String s3 = s1 + s2; // s3 contiene "lire"
+            int lit = 15000;
+            String s = lit + ' ' + s3; // s contiene "15000 lire"
+        [/java]
+
+# Metodi utili di String
+    - Un problema che capita spesso di affrontare è quello della conversione di una stringa per ottenerne un'altra tutta in maiuscolo o tutto in minuscolo
+    - la classe String mette a disposizione due metodi
+        - toUpperCase converte tutto in maiuscolo
+        - toLowerCase converte tutto in minuscolo
+    
+        [java]
+            Strong s = "Hello";
+            String ss = s.toUpperCase() + s.toLowerCase(); // vs vale "HELLOhellO"
+        [/java]
+    - si noti che l'applicazione di uno di questi metodi alla stirnga s non altera il contenuto della stringa s, ma restituisce una nuova stringa
+    - in particolare nessun metodo della classe String modifica l'oggetto con cui viene invocato
+        - si dice perciò che gli oggetti della classe String sono oggetti immutabili
+
+# Conversione di numeri in stringhe
+    - per convertire un numero in stringa si può concatenare il numero con la stringa vuota
+    [java]
+        int ageNumber = 10;
+        String ageString = "" + ageNumber; // ageString contiene "10"
+    [/java]
+    - è però più elegante e comprensibile utilizzare il metodo toString delle classi Integer e Double
+    [java]
+        int ageNumber = 10;
+        String ageString = Integer.toString(ageNumber);
+    [/java]
+
+
+
+[2023-10-20]
+
+# La classe scanner
+- prima di tutto bisogna creare un oggetto della classe Scanner usando l'istruzione
+    [java]
+    Scanner console = new Scanner(System.in);
+    [/java]
+
+# I metodi nextInt() e nextDouble()
+- il metodo nextInt restituisce un valore numerico di int
+- è consigliabile inserire un emssaggio di richiesta prima di invocare un metodo di scanner
+- il metodo nextDouble restituisce un valore numerico di double
+- è consigliabile inserire un emssaggio di richiesta prima di invocare un metodo di scanner
+
+!! Attenzione per nextDouble()
+    - i progettisti di classe Scanner hanno usato la localizzazione
+        - significa che il comportamento del programma è legato alla configurazione del sistema su cui viene fatto eseguire
+    - a seconda della configurazione (anglosassone o italiana) un valore di tipo double dovrà essere inserito nella forma
+        - parteIntera.parteDecimale ad esempio 4.35
+        - parteIntera,parteDecimale ad esempio 4,35
+- il metodo nextLine restituisce un oggetto di tipo String che contiene l'intera riga introdotta dall'utente (fino alla pressione del carattere Invio)
+
+
+
+[2023-10-24]
+
+# Sequenze di escape
+- Se noi cerchiamo di stampare una string che contenga delle virgolette, semplicemente inserire le virgolette non funziona
+- Il compilatore identifica le seconde virgolette come la fine della prima stringa
+- Basta inserire un backslash prima delle virgolette all'interno della stringa.
+    [java]
+        System.out.println("Hello, "World"!");   // non funziona
+        System.out.println("Hello, \"World\"!"); // funziona
+    [/java]
+- Il carattere backslash all'interno di una stringa non rappresenta se stesso, ma si usa per codificare altri caratteri che non si riesce ad includere facilmente in una stringa, a causa delle sequenze di escape. 
+- Se devo inserire un backslash dentro la stringa, devo usare la sequenza di escape "\\". 
+    [java]
+        System.out.printlm("File C:\\test.exe"); // Il path vien fuori corretto "C:\test.exe
+    [/java]
+- Altra sequenza di escape comune è \n, per rappresentare il carattere di "new line"
+- Le sequenze di escape si usano anche per inserire caratteri di lingue straniere o simboli che non si trovano sulla tastiera.
+
+# Utilizzo di Classi e Oggetti
+- Elaborando numeri e caratteri si possono scrivere programmi interessanti, ma programmi più utili hanno bisogno di manipolare dati più complessi
+    - numeri complessi, conti bancari, dati anagrafici, forme grafiche, file audio, ecc
+- Il linguaggio Java gestisce questi dati complessi sotto forma di Oggetti
+- Gli oggetti e il loro comportamento vengono descritti mediante le Classi e i loro Metodi
+
+    ## Programmazione ad oggetti
+    - Paradigma di programmazione
+        - Insieme di strumenti concettuali che cartterizzano un linguaggio di programmazione
+    - Nella programmazione ad oggetti si utilizzano le classi come "fabbriche di oggetti"
+    - Una classe: 
+        a. Contiene dati e emtodi la cui realizzazione non è necessariamente nota
+        b. Permette acecsso e/o modifica di dati tramite la sua interfaccia pubblica
+            i. Incapsulamento: diversi livelli di astrazione
+
+        ### Oggetti
+        - Un oggetto è un'entità che può essere manipolata in un programma mediante l'invocazione di metodi 
+        - Metodi: sequenze di istruzioni che possono accedere ai dati interni dell'oggetto
+        - Immaginiamo un oggetto come una "scatola nera" dotata di: 
+            a. un'interfaccia pubblica (insieme dei metodi che si possono utilizzare), che definisce il comportamento dell'oggetto
+            b. una realizzazione (o implementazione) nascosta (dentro la "scatola": il codice dei metodi e i loro dati)
+
+        ### Classi
+        - Una classe è una fabbrica di oggetti o, meglio, uno schema di progetto per la costruzione di oggetti.
+            - gli oggetti che si creano sono esemplari (o "istanze", instance) di una classe
+        - specifica i metodi che si possono invocare con gli oggetti che sono esemplari di tale classe (l'interfaccia pubblica)
+        - definisce i dettagli della realizzazione dei metodi (codice e dati)
+        - è anche un contenitore di
+            a. metodi statici (Hello contiene main)
+            b. variabili statiche (System contiene out)
+
+- Usare oggetti che siano istanze di una classe e realizzare una classe sono due attività ben distinte!
+
+# Interfaccia pubblica
+- L'interfaccia pubblica di una classe descrive i metodi che possono essere invocati da oggetti "fabbricati da quella classe (anche detti istanze o esemplari della classe)
+- Per esempio, alcuni metodi della classe String sono: 
+    a. length() che restituisce la lunghezza della stringa
+    b. toUpperCase() che restituisce la stringa con tutte le lettere minuscole trasformate in maiuscolo
+
+# definizione / inizializzazione di una variabile oggetto di tipo string
+- per invocare un metodo di una classe che fabbrica oggetti (come String) devo prima creare un oggetto di quella classe e inizializzarlo
+- per le stringhe posso dichiarare una variabile e usare l'assegnazione come si fa per i tipi primitivi 
+    [java]
+        String saluto = "Ciao, Mondo!"
+    [/java]
+
+# invocazione di metodi
+- Per invocare un metodo della classe String, ad esempio length(), devo utilizzare una variabile di oggetto di tipo String che dica su che dati il metodo devo lavorare
+    [java]
+        nomeOggetto.nomeMetodo(parametri);
+        
+        String saluto = "Ciao, Mondo!"
+        saluto.length();
+    [/java]
+
+# Metodi
+- Se il metodo restituisce un valore di un certo tipo, posso assegnare questo valore ad una variabile di quello stesso tipo
+    - ad esempio, length() restituisce un interno
+    [java]
+        String greeting = "Hello, World";
+        int n = greeting.length();
+    [/java]
+    - ad esempio, toUpperCase() restituisce una stringa
+    [java]
+        String river = "Mississippi";
+        String bigRiver = river.toUpperCase();
+        System.out.println(bigRiver); // stampa MISSISSIPPI
+    [/java]
+- se il metodo restituisce un valore di un certo tipo, posso utilizzare questo valore come parametro esplicito di un altro metodo
+- Istruzioni NON valide:
+    !- con un oggetto che è un'istanza di una data classe posso invocare solo metodi messi a disposizione da quella classe
+    !- out è un oggetto di tipo PrintStream. Questa classe non ha tra i suoi metodi il metodo length()
+
+# Metodi: parametri espliciti/impliciti
+- Alcuni metodi necessitano di valori di ingresso, o parametri espliciti, che specifichino i dati da elaborare
+    [java]
+        System.out.println(greeting);
+    [/java]
+    - greeting è un parametro esplicito: è la stringa che voglio stampare
+    - i parametri espliciti sono quelli tra le parentesi
+- Altri metodi no: tutte le info necessarie sono memorizzate nell'oggetto corrispondente, il parametro implicito
+    [java]
+        int n = greeting.length();
+    [/java]
+    - qui greeting è il parametro implicito: length viene calcolata sui dati contenuti nella variabile oggetto che invoca il metodo e perciò restituirà la lunghezza di "Hello, World!"
+
+# Un metodo con parametri espliciti e parametro implicito
+[java]
+    public String replace(String oldStr, String newStr);
+[/java]
+- Il metodo replace della classe String riceve due parametri espliciti, entrambi stringhe, e cerca nella stringa descritta dal parametro implicito le occorrenze del primo parametro per sostituirle con il secondo. Restituisce la stringa ottenuta in un altro oggetto, senza modificare la stringa associata al parametro implicito.
+    - questa è una caratteristica di tutti i metodi di String, ma non è vera per tutte le classi. Esistono metodi, detti modificatori, che modificano i dati interni alla classe.
+[java]
+    river.replace("issipp", "our");
+[/java]
+    - due parametri espliciti: le stringhe "issipp" e "our"
+    - un parametro implicito: l'oggetto river (la stringa "Mississippi")
+    - un valore restituito: la stringa "Missouri"
+[java]
+    System.out.println(river.replace("issipp", "our")); // Stampa Missouri
+    System.out.println(river); // Stampa Mississippi
+[/java]
+
+# Definizioni di metodi: firma
+?- come faccio a sapere se il metodo che voglio utilizzare ha dei parametri espliciti, di che tipo sono, e in che ordine li devo specificare?
+?- come faccio a sapere che tipo di dato restituisce un metodo?
+
+Queste informazioni sono contenute nella documentazione della classe, in quella che si chiama firma del metodo
+
+[java]
+    public String replace(String target, String replace); // String = tipo restituito | replace = nome metodo | (...,  ...) = Parametri espliciti
+    public void println(String output);
+    public String replace(String target, String replace);
+[/java]
+
+- La definizione di un metodo inizia con la sua intestazione (firma, signature):
+    - uno specificatore di acecsso
+        - indica quli altri metodi possono invocare il metodo 
+            - un metodo "public" può essere invocato da qualsiasi altro metodo di qualsiasi altra classe
+            - un metodo può essere anche private
+    - il tipo di dati restituito dal metodo (String, void, int, ...)
+    - il nome (identificatore) del metodo (println, replace, ...)
+    - un elencto di parametri espliciti, eventualmente vuoto, tra parentesi tonde
+        - di ogni parametro si indica il tipo ed il nome
+        - più parametri sono separati da una virgola
+- La dichiarazione di un metodo specifrica il tipo di dati restituito al termine della sua invocazione 
+- Se un metodo non restituisce nessun valore si dichiara il tipo speciale void
+    - il valore restituito, se assegnato, deve essere assegnato ad un tipo di dati corrispondente
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Variabili oggetto
+Una "variabile oggetto" conserva non l'oggetto stesso, ma informazioni sulla sua posizione nella memoria del computer. 
+    * è detta anche "riferimento" o "puntatore"
+Come già visto per oggetti della classe String, per definire una variabile oggetto si indica il nome della classe ai cui oggetti farà riferimento la variabile, seguito dal nome della variabile stessa
+[java]
+    NomeClasse nomeOggetto;
+[/java]
+
+    ## Costruire oggetti: l'operatore NEW
+    - A differenza di quanto visto per gli oggetti della classe String, in generale per creare un nuovo oggetto di una classe si usa l'operatore "new" seguito dal nome della classe e da una coppia di parentesi tonde.
+    [java]
+        new NomeClasse(parametri);
+
+        // Questa inizializzazione è valida anche per String, ma meno usata.
+        String river = "Mississippi";
+        String river = new String("Mississippi");
+    [/java]
+    - L'operatore "new" crea un nuovo oggetto e ne restituisce un riferimento, che può essere assegnato a una variabile oggetto del tipo appropriato.
+    [java]
+        NomeClasse nomeVar = new NomeClasse(parametri);
+    [/java]
+
+    ## Esempio: la classe Rectangle
+    - Un rettangolo è descritto dalle coordinate (x,y) del suo vertice in alto a sinistra, e da larghezza e altezza
+        - per creare un rettangolo bisogna
+            - specificare x, y, width, height
+            - invocare l'operatore New e il costruttore con i parametri richiesti
+            - assegnare il rettangolo appena creato ad una variabile oggetto
+            [java]
+                Rectangle box = new Rectangle(5,10,20,30);
+            [/java]
+
+    ## Costruttori vs Metodi
+    - Il processo di creazione di un nuovo oggetto è detto costruzione e ciò che segue l'operatore new è detto "costruttore"
+    -! Un costruttore NON è un metodo
+        - Ci assomiglia perché il nome è seguito dalle parentesi e pu avere dei parametri espliciti
+        - il suo nome è uguale a quello della classe
+            - però inizia con la maiuscola
+        - non viene invocato da un parametro implicito
+            - utilizzabile solo con "new"
+        [java]
+            Rectangle box = new Rectangle(5,10,20,30); // Corretto
+            box.Rectangle(20,35,20,30)                 // ERRORE
+        [/java]
+            - ora box contiene un riferimento ad un oggetto che si trova in posizione x=20, y=35 e ha dimensioni di 20x20
+    - Per vedere che metodi ha a disposizione un oggetto istanza della classe Rectangle basta cercare la classe nella documentazione java
+
+
+
+[2023-11-07]
+# Alternative multiple
+
+    ## Sequenze di confronti
+        - se si hanno più di due alternative, si usa una sequenza di confronti
+        [java]
+            if (richter >= 8)
+                System.out.println("Terremoto molto forte");
+            else if (richter >= 6)
+                System.out.println("Terremoto forte");
+            else if (richter >= 4)
+                System.out.println("Terremoto medio");
+            else if (richter >= 2)
+                System.out.println("Terremoto debole");
+            else if (richter >= 0)
+                System.out.println("Terremoto molto debole");
+            else
+                System.out.println("Numeri negativi non validi");
+        [/java]
+        - l'ordine e la sequenza sono importanti
+        - se si fanno confronti di tipo "maggiore di" si devono prima scrivere i valori più alti, e viceversa.
+        - se non si rendono mutuamente esclusive le alternative, usando le clasuole "else", non funziona
+
+    ## Diramazioni annidate
+        - Caso di studio:
+            Calcoliamo le tasse secondo le aliquote del sistema federale americano nel 2008
+            [java]
+                public class TaxReturn
+                {
+                    // variabili d'istanza
+                    private int status;
+                    private double income;
+
+                    // costanti
+                    public static final int SINGLE = 1;
+                    public static final int MARRIED = 2;
+
+                    public static final double RATE1 = 0.10;
+                    public static final double RATE2 = 0.25;
+
+                    public static final double SINGLE_LIMIT = 32000;
+                    public static final double MARRIED_LIMIT = 64000;
+
+
+                    public TaxReturn(int aStatus, double anIncome)
+                    {
+                        status = aStatus; income = anIncome;
+                    }
+                }
+            [/java]
+            (piccola prova fatta in TaxCalculator.java)
+    ## il problema dell'else sospeso
+        - nell'esempio seguente i livelli di rientro suggeriscono che la clausola else si riferisca al primo enunciato if
+        [java]
+            if (richter >=0)
+                if (richter <= 4)
+                    ...
+            else                     // non funziona!!
+                ...
+        [/java]
+        - compilatore ignora i rientri
+            - risultati ottenuti errari
+            - regola sintattica è che ! una clausola else appartiene sempre all'eunciato if più vicino!
+        - per ottenere il risultato voluto, bisogna "nascondere" il secondo enunciato if all'interno di un blocco di enunciati, inserendo una coppia di parentesi graffe.
+        [java]
+            if (richter >=0)
+            {
+
+                if (richter <= 4)
+                {
+                    ...
+                }
+            }
+            else
+            {
+                ...
+            }
+        [/java]
+    
+    ## Visibilità delle variabili
+        - se il valore finale di una variabile usata nel corpo di un enunciato if/else deve essere visibile al di fuori del corpo, bisogna definirlo PRIMA dell'enunciato if/else
+        - poiché una variabile definita nel corpo di un enunciato if/else non è più definita dopo di esso, è possibile usare di nuovo lo stesso nome successivamente nel codice (ma fare molta attenzione
+        
+        [java]
+            double b = ...;
+            if (b < 10)
+            {
+                double c = ...;
+                // modifica b e c ...
+            }
+            // qui b è visibile, ma c no
+        [/java]
+
+    (esercizio in classe, PunteggioGiocatori.java)
+
+# Conversione di stringhe in Numeri
+- A volte si ha una stringa che continene un valore numerico e si vuole assegnare tale valore a una variabile di tipo numerico, per poi elaborarlo
+[java]
+    String password = "md50";
+    String ageString = password.substring(2);
+    // ageString contiene "50"
+    // NON FUNZIONA
+    int age = ageString;
+[/java]
+- il compilatore segnala l'errore semantico perché non si può convertire automaticamente una stringa in un numero, dato che non vi è certezza che il suo contenuto rappresenti un valore numerico.
+- la conversione corretta si ottiene invocando il metodo statico "parseInt" della classe "Integer"
+[java]
+    int age = Integer.parseInt(ageString);
+    // age contiene il numero 50
+[/java]
+- la conevrsione di un numero in viggola mobile si otteiene, analogamente, invocando il metodo statico "parseDouble" della classe "Double".
+[java]
+    String numberString = "34.3";
+    double number = Double.parseDouble(numberString);
+    // number contiene il numero 34.3
+[/java]
+- NON viene usata la localizzazione, quindi la stringa deve contenere sempre il punto come separatore decimale.
+- oppure usare notazione scientifica.
+- Cosa succede se la stringa passata come argomento non contiene un numero? 
+- i metodi Integer.parseInt e Double.parseDouble lanciano un'eccezione di tipo "NumberFormatException" e il programma termina segnalando l'errore
+- Il meccaniscmo generale di segnalazione di errori in Java consiste nel fare un throw di un'eccezione
+
+# Espressioni booleane
+- Ogni espressione ha un valore
+    - x + 10 espressione aritmetica, valore numerico
+    - x < 10 espressione relazionale, valore booleano
+- un'espressione relazionale ha un valore vero o falso (true or false)
+- i valore true e false non sono numeri, ne oggetti, ne classi: appartengono ad un tipo di dati diverso, detto booleano.
+- è un tipo fondamentale in java, come quelli numerici
+- i tipi di dati boolean, come tutti gli altri tipi di dati, consente la definizione di variabili e l'assegnazione di valori
+    boolean a = true;
+- a volte è comodo utilizzare variabili booleane per memorizzare valori di passaggi intermedi in cui è opportuno scomporre verifiche troppo complesse.
+- altre volte l'uso di una variabile booleana rende più leggibile il codice
+- spesso le variabili booleane vengono chiamate flags, perché possono assumere soltanto due valori, cioè trovarsi in due soli stati possibili
+
+    ## Operatori booleani
+    - Gli operatori booleani o logici servono a svolgere operazioni su valori booleani
+    [java]
+        if (x > 10 && x < 20) // esegue se x è maggiore di 10 e minore di 20
+    [/java]
+    - l'operatore "&&" (and) combina due o più combinazioni in una sola, che risulta vera se e solo se tutte sono vere
+    - l'operatore "||" (or) combina due o più condizioni in una sola, che risulta vera se e solo se almeno una è vera
+    - l'operatore "!" (not) inverte il valore di un'espressione booleana
+    - più operatori booleani possono essere usati in un'unica espressione
+        [java]
+        if ((x > 10 && x < 20) || x > 30) {...}
+        [/java]
+    - la valutazione di un'espressione con operatori booleani viene effettuata con uan strategia detta "cortocircuito"
+        - la valutazione dell'espressione termina appena è possibile decidere il risultato
+    - in un'espressione booleana con più operatori, la valutazione viene fatta da sinistra a destra, dando la precedenza all'operatore not, poi all'operatore and, infine all'operatore or
+    - l'ordine di valutazione può comunque essere alterato dalle parentesi tonde
+    [java]
+        if (!(x<0 || x>10)){...}
+        // esegue se x è compreso tra 0 e 10, estremi inclusi
+        if (!x<0 || x>10){...}
+        // esegue se x è maggiore o uguale a 0
+    [/java]
+
+
+
+[2023-11-08]
+# Leggi di De Morgan
+    - Due leggi per semplificare espressioni logiche
+        - criterio per convertire un'espressione "negata" in un'espressione "affermata"
+        1. Legge "!(A && B) è uguale a !A || !B"
+        2. Legge "!(A !! B) è uguale a !A && !B"
+        - gli operatori not vengono spostati sulle singole variabili
+        - gli operatori AND e OR vengono scambiati
+        [java]
+            if (!(x < 0 || x > 10)) {}
+            if ( x>=0 && x<=10) {}
+        [/java]
+
+# Iterazioni (while loops)
+    - L'enunciato "while" consente la realizzazione di programmi che devono "eseguire ripetutamente" una serie di azioni "finché" è verificata una condizione 
+    - Sintassi:
+        [java]
+            while (condizione)
+            {
+                enunciato
+            }
+        [/java]
+    - Scopo: eseguire un enunciato finché la condizione è verificata
+    - Nota: il corpo del ciclo while può essere un enunciato qualsiasi, quindi anche un blocco di enunciati
+    - Esistono errori logici che impediscono la terminazione di un ciclo, generando un ciclo infinito
+    - l'esecuzione del seguente programma continua ininterrottamente
+    [java]
+        int year = 0;
+        while (year < 20)
+        {
+            double interest 0 balance * rate / 100;
+            balance = balance + interest;
+
+            // qui manca year++, quindi il ciclo continua infinitamente
+        }
+    [/java]
+    - in questo caso bisogna arrestare il programma con un comando del sistema operativo o addirittura riavviare il computer
+
+# Cicli for
+    - generalmente, molti cicli hanno la seguente forma
+        [java]
+
+            i = inizio;
+            while (i < fine)
+            {
+                enunciati();
+                i++;
+            }
+
+        [/java]
+    - per comodità esiste il ciclo "for" equivalente
+        [java]
+
+            for (i = inizio; i < fine; i++)
+            {
+                enunciati();
+            }
+
+        [/java]
+    - non è necessario che l'incremento sia di una sola unità, ne che sia positivo, ne che sia intero.
+    - Sintassi:
+        [java]
+
+            for (inizializzazione; condizione; aggiornamento)
+            {
+                enunciati
+            }
+
+        [/java]
+    - Scopo: eseguire un'inizializzazione, poi ripetere l'esecuzione di un enunciato ed effettuare un aggiornamento finché la condizione è vera. 
+    - Nota: l'inizializzazione può contenere la definizione di una variabile, che sarà visibile soltanto all'interno del corpo del ciclo
+        [java]
+
+            for (int y = 1; y <= 10; y++)
+            {
+                ...
+            }
+            // qui y non è più definita
+
+        [/java]
+        

@@ -1109,3 +1109,16 @@ Come già visto per oggetti della classe String, per definire una variabile ogge
 
         [/java]
         
+
+
+[2023-11-10]
+# Ciclo e mezzo
+- un ciclo del tipo
+    - fai qualcosa, verifica una condizione, fai qualcos'altro e ripeti il ciclo se la condizione era vera
+- non ha una struttura di controllo predenfinita in Java e dev'essere realizzata con un "trucco", come quello di usare una variabile booleana
+- una struttura di questo tipo si chiama anche "ciclo e mezzo" o ciclo ridondante
+- una situazione tipica è quella in cui l'utente deve inserire un insieme di valori, la cui dimensione non è predenfinita
+    - si realizza un ciclo while, dal quale si esce soltanto quando si verifica la condizione all'interno del ciclo
+
+# Ciclo "do"
+- capita spesso di dover eseguire il corpo di un ciclo almeno una volta, per poi ripeterne l'esecuzione se è verificata una particolare condizione

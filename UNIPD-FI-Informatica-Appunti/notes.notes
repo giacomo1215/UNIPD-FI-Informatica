@@ -1122,3 +1122,205 @@ Come già visto per oggetti della classe String, per definire una variabile ogge
 
 # Ciclo "do"
 - capita spesso di dover eseguire il corpo di un ciclo almeno una volta, per poi ripeterne l'esecuzione se è verificata una particolare condizione
+- per esempio, si vuole leggere un valore in ingresso, ed eventualmente rileggerlo finché non viene introdotto un valore valido
+    [java]
+        // si può usare un ciclo while "innaturale"
+        // si usa un'inizializzazione "ingiustificata"
+        double rate = 0;
+        while (rate <= 0)
+        {
+            System.out.println("Inserire il tasso: ");
+            rate = console.nextDouble();
+        }
+
+        // oppure si può ricopiare il corpo del ciclo (o una sua parte) prina del ciclo stesso
+        System.out.println("Inserire il tasso: ");
+        double rate = console.nextDouble();
+        while (rate <= 0)
+        {
+            System.out.println("Inserire il tasso: ");
+            rate = console.nextDouble();
+        }
+
+        // ma per comodità e chiarezza esiste il ciclo do
+        do
+        {
+            System.out.println("Inserire il tasso: ");
+            rate = console.nextDouble();
+        } while (rate <= 0); // qui certamente a rate è stato assegnato un valore
+    [/java]
+
+# variabile non inizializzata
+[java]
+    // ecco un caso in cui è ammessa la dichiarazione di variabile senza inizializzazione
+    // meglio fare così piuttosto di inizializarla ad una valore immediato
+
+    double rate;
+    do
+    {
+        System.out.println("Inserire il tasso: ");
+        rate = console.nextDouble();
+    } while (rate <= 0);
+[/java]
+- inizializzando ad un valore immediato da due problemi
+    1) al termine dell'esecuzione del ciclo do, la variabile rate non è più visibile perché è definita all'interno del suo corpo
+        - quindi il valore letto da tastiera non è utilizzabile
+    2) in realtà, rate non è visible nemmeno nel punto in cui si valuta la condizione di uscita dal ciclo (rate <= 0), sempre perché è definita all'interno del corpo, quindi si ha errore di sintassi
+
+# l'enunciato BREAK
+- L'enunciato break si può usare per terminare un ciclo
+    - l'itereazione in corso NON viene completat, il ciclo termina "bruscamente"
+    - se la condizione di uscita dal ciclo può essere erificata in un punto INTERNO al ciclo, si realizza un ciclo infinito while(true), dal quale si esce soltanto quando si verifica la condizione all'interno del ciclo. 
+    [java]
+    while (true)
+        {
+            ...
+            if (...)
+            {
+                break;
+            }
+            ...
+        }
+    [/java]
+- nel caso di cicli annidati, l'enunciato break provoca la terminazione del ciclo più interno tra quelli in cui si trova l'enunciato stesso
+    [java]
+        int i=0, j=0;
+        while (true)
+        {
+            System.out.println("i= " + i);
+            while (true)
+            {
+                if (j==5) 
+                {
+                    break;
+                    System.out.println("j= " + j);
+                    j++;
+                    ...
+                }
+                i++;
+                if (i==3)
+                {
+                    break;
+                }
+            }
+        }
+    [/java]
+- l'esecuzione dell'enunciato break deve essere condizionata
+    - in caso contrario, la porzione di corpo del ciclo che si trova dopo l'enunciato break non viene MAI eseguita
+    - è certamente un errore logico, segnalato dal compilatore come "unreachable statement" dal flusso d'esecuzione
+- l'enunciato break NON è necessario, si può sempre scrivere codice equivalente
+
+# enunciato Cotinue
+- esiste anche l'enunciato "continue" e può essere usato all'interno dei cicli
+    - provoca la terminazione dell'iterazione corrente e il passaggio all'iterazione successiva
+
+# l'utilizzo di break e continue
+- l'uso di break e continue è non necessario e sconsigliabile perché contribuisce a creare "spaghetti code", ovvero rappresentato da diagrammi di flusso pieni di linee, difficili da leggere e comprendere.
+
+# Enunciato switch
+- una sequenza che confronti un'unica variabile intera con diverse alternative costanti può essere realizzata con un enunciato switch
+- vantaggio: non bisogna ripetere il nome della variabile da confrontare
+- svantaggio: si può usare solo se la variabile da confrontare è intera (byte, short, char, int) oppure una string (da java 7)
+- svantaggio: non si può usare se uno dei valori da confrontare non è costante
+- svantaggio: ogni case deve terminare on un enunciato break, altrimenti viene eseguito anche il corpo del case succcessivo
+
+
+[2023-11-15]
+# ARRAY
+Lo strumento messo a disposizione dal linguaggio Java (e in molti altri linguaggi di programmazione) per memorizzare una sequenza di dati si chiama "array"
+In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati omogenei, che vengono detti elementi o componenti dell'array
+
+- Costruire un array:
+    - un array in java è un oggetto
+        - come ogni oggetto, deve essere costruito con l'operatore new, dichiarando il tipo di dati che potrà contenere
+        [java]
+        new double[10];
+        [/java]
+    - nella costruzione il tipo di dati è seguito da una coppia di parentesi quadre che contiene la dimensione dell'array, cioè il numero di elementi che potrà contenere
+    - in Java, le parentesi quadre si usano SOLO per gli array
+    - il tipo di dati di un array può essere qualsiasi tipo di dati valido in java
+        - uno dei tipi di dati fondamentali o una classe
+        - potremo avere quindi array di numeri interi, di numeri in virgola mobile, di stringhe, di conti bancari..
+    - si dice anche che l'array è costituito da celle o posizioni, nelle quali sono memorizzati i suoi elementi
+        - le posizioni sono identificate da numeri interi non negativi
+        - esiste il dato in prima posizione (posizione 0), quello in seconda posizione (posizione 1), ecc...
+        - quindi l'array NON rappresenta un insieme matematico, anhe perché i dati presenti nell'array possono essere replicati in diverse posizioni
+
+- riferimento a un array:
+    - come avviene dopo la costruzione di qualunque oggetto, l'operatore new restituisce un riferimento all'array appena creato, che può essere memorizzato in una variabile oggetto dello stesso tipo
+    [java]
+    double[] values = new double[10];
+
+    // si può fare anche in due passi
+    double[] values;
+    ... 
+    values  = new double[10];
+    [/java]
+    - ATTENZIONE: nella definizione della variabile oggetto devono essere presenti le parentesi quadre, ma NON dev'essere indicata la dimesione dell'array; la variabile potrà riferirsi solo ad array di quel tipo, ma di qualunque dimensione
+        - non esiste, quindi, il tipo di dato "array di dieci double", bensì il tipo di dato "array di double"
+    [java]
+    double[] x = new double[6];
+    [/java]
+        - una variabile x che si riferisce a un array è una variabile oggetto che contiene un riferimento all'oggetto array
+
+- utilizzare un array:
+    - al momento della costruzione, tutti gli elementi dell'array vengono inizializzati a una valore, seguendo le stesse regole viste per le variabili di esemplare prive di inizializzazione esplicita.
+    [java]
+    double[] values = new double[10];
+    // tutti gli elementi sono inizializzati a 0 in questo caso
+    [/java]
+    - si accede al contenuto di una cella dell'array indicando tra parentesi la posizione voluta
+        - accesso al contenuto della posizione i dell'array values:
+            [java]
+            values[i];
+            [/java]
+    - si può leggere il contenuto di una cella dell'array, per usarlo in un'espressione
+    [java]
+    double doubleVar = 5 + values[3];
+    [/java]
+    - la stessa sintassi si usa per scrivere un valore in una cella dell'array, ponendola nella parte sinistra di un enunciato di assegnazione
+        [java]
+        values[9] = 3.4 + Math.sqrt(2);
+        [/java]
+        [java]
+        double[] values = new double[10];
+        double oneValue = values[3]; // vale 0
+        values[9] = 3.4;
+        [/java]
+    - il numero utilizzato per accedere a un particolare elemento dell'array si chiama indicare
+    - l'indice può assumere un valore compreso tra 0 (incluso) e la dimensione dell'array (esclusa), cioè segue le stess convenzioni viste per le posizioni dei caratteri in una stringa
+        - il primo elemento ha indice 0
+        - l'ultimo elemento ha indice (dimensione - 1)
+    - a tutti gli effetti sintattici e semantici, un elemento di un array equivale a una singola variabile dello stesso tipo
+        - values[3] è, quindi, una variabile di tipo double
+    - l'indice di un elemento di un array può, più in generale, essere un'espressione di tipo int
+        [java]
+        double[] values = new double[10];
+        int a = 4;
+        values[a + 2] = 3.2 // modifica il settimo elemento (parto da indice 0)
+        [/java]
+    - se si accede a un elemento dell'array usando un indice sbagliato, l'ambiente di esecuzione lancia un'ecceszione di tipo "ArrayIndexOutOfBoundsException"
+
+- struttura di dati ad accesso casuale: il tempo di accesso (in lettura o scrittura) a uno dei suoi elementi non deve dipendere dal valore dell'indice associato a tale elemento.
+
+- la dimensione di un array: 
+    - un array non ha metodi pubblici, ne statici, ne di esemplare
+    - l'unico elemento pubblico di un oggetto di tipo array è la sua dimensione, a cui si accede attraverso la sua variabile pubblica di esemplare length (attenzione, non è un metodo)
+    - una variabile pubblica di esemplare sembrerebbe una violazione delle regole
+    - in realtà, length è una variabile pubblica ma è final, quindi non può essere modificat, può soltanto essere ispezionata.
+        - questo paradigma è, in generale, considerato accettabile nell'OPP
+            [java]
+            double[] values = new double[10];
+            values.length = 15; // errore in compilazione 
+
+            // in alternativa si sarebbe potuto fornire un metodo pubblico per accedere alla variabile privata
+            double[] values = new double[10];
+            int a = values.getLength(); // non è così!
+            // la soluzione progettuale scelta è meno elegante ma fornisce lo stesso livello di protezione dell'informazione ed è più veloce in esecuzione
+            [/java]
+
+# argomenti sulla riga di comando 
+[java]
+    public static void main(String[] args)
+[/java]
+Quando si esegue un programma Java, è possibile fornire dei parametri dopo il nome della classe che contiene il metodo main 

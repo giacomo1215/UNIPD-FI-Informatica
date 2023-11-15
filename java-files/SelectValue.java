@@ -14,7 +14,7 @@ public class SelectValue
             values[i] = input.nextDouble();
         }
         
-        System.out.println("Inserisci un numreo:");
+        System.out.println("Inserisci un numero:");
         int index = input.nextInt();
 
         if (index < 0 || index >= values.length)

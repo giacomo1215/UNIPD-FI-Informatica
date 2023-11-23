@@ -1323,4 +1323,44 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
 [java]
     public static void main(String[] args)
 [/java]
-Quando si esegue un programma Java, è possibile fornire dei parametri dopo il nome della classe che contiene il metodo main 
+- Quando si esegue un programma Java, è possibile fornire dei parametri dopo il nome della classe che contiene il metodo main 
+- Tali parametri vengono letti dall'interprete Java e trasformati in un array di stringhe che costituisce il parametro del metodo main
+
+[java]
+    public class Program
+    {
+        public static void main(String[] args)
+        {
+            System.out.println(args.length);
+            System.out.println(args[1]);
+        }   // qui sotto l'output del programma, se viene eseguito con la riga di comando vista sopra
+    }
+[/java]
+
+# Copiare o clonare un array
+- una variabile che si riferisce a un array è una variabile oggetto che contiene un riferimento all'oggetto array. Copiando il contenuto della variabile in un'altra non si copia l'array, ma si ottiene un altro riferimento allo stesso oggetto array.
+- se si vuole clonare un array, bisogna:
+    1) creare un nuovo array dello stesso tipo e con la stessa dimensione
+    2) copiare ogni elemento del primo array nel corrispondente elemento del secondo array
+    [java]
+        double[] values = new double[10];
+        // inseriamo i dati nell'array
+        ...
+        double[] otherValues = new double[values.length];
+        for (int i = 0; i < values.length; i++)
+        {
+            otherValues[i] = values[i];
+        }
+    [/java]
+- invece di usare un ciclo, è possibile invocare il metodo statico "arraycopy" della classe System.
+- il metodo "System.arraycopy" consente, più in generale, di copiare una porzione di un array in un altro array
+    - anche l'array di destinazione (quello in cui si copiano i dati) deve già esistere e deve essere grande a sufficienza
+
+# Array riempiti solo in parte
+PROBLEMA: Scrivere un programma che 
+        1) legge dallo standard input una sequenza di numeri in virgola mobile, uno per riga, finché i dati non sono finiti
+        2) chieda all'utente un numero intero index e visualizzi il numero che nella sequenza occupava la posiizone indicata da index
+        Per costruire un array è necessasrio indicarne la sua dimensione, che è una sua proprietà final
+        Al termine dei dati da parte dell'utente, non tutto l'array conterrà dati validi
+
+

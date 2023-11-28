@@ -36,7 +36,6 @@ public class copyArray
                 default:
                     System.out.println("Errore.");
             }
-
         }
         catch(Exception e)
         {

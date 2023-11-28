@@ -1319,48 +1319,194 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
             // la soluzione progettuale scelta è meno elegante ma fornisce lo stesso livello di protezione dell'informazione ed è più veloce in esecuzione
             [/java]
 
-# argomenti sulla riga di comando 
-[java]
-    public static void main(String[] args)
-[/java]
-- Quando si esegue un programma Java, è possibile fornire dei parametri dopo il nome della classe che contiene il metodo main 
-- Tali parametri vengono letti dall'interprete Java e trasformati in un array di stringhe che costituisce il parametro del metodo main
-
-[java]
-    public class Program
-    {
-        public static void main(String[] args)
-        {
-            System.out.println(args.length);
-            System.out.println(args[1]);
-        }   // qui sotto l'output del programma, se viene eseguito con la riga di comando vista sopra
-    }
-[/java]
-
-# Copiare o clonare un array
-- una variabile che si riferisce a un array è una variabile oggetto che contiene un riferimento all'oggetto array. Copiando il contenuto della variabile in un'altra non si copia l'array, ma si ottiene un altro riferimento allo stesso oggetto array.
-- se si vuole clonare un array, bisogna:
-    1) creare un nuovo array dello stesso tipo e con la stessa dimensione
-    2) copiare ogni elemento del primo array nel corrispondente elemento del secondo array
+    ## argomenti sulla riga di comando 
     [java]
-        double[] values = new double[10];
-        // inseriamo i dati nell'array
-        ...
-        double[] otherValues = new double[values.length];
-        for (int i = 0; i < values.length; i++)
+        public static void main(String[] args)
+    [/java]
+    - Quando si esegue un programma Java, è possibile fornire dei parametri dopo il nome della classe che contiene il metodo main 
+    - Tali parametri vengono letti dall'interprete Java e trasformati in un array di stringhe che costituisce il parametro del metodo main
+
+    [java]
+        public class Program
         {
-            otherValues[i] = values[i];
+            public static void main(String[] args)
+            {
+                System.out.println(args.length);
+                System.out.println(args[1]);
+            }   // qui sotto l'output del programma, se viene eseguito con la riga di comando vista sopra
         }
     [/java]
-- invece di usare un ciclo, è possibile invocare il metodo statico "arraycopy" della classe System.
-- il metodo "System.arraycopy" consente, più in generale, di copiare una porzione di un array in un altro array
-    - anche l'array di destinazione (quello in cui si copiano i dati) deve già esistere e deve essere grande a sufficienza
 
-# Array riempiti solo in parte
-PROBLEMA: Scrivere un programma che 
-        1) legge dallo standard input una sequenza di numeri in virgola mobile, uno per riga, finché i dati non sono finiti
-        2) chieda all'utente un numero intero index e visualizzi il numero che nella sequenza occupava la posiizone indicata da index
-        Per costruire un array è necessasrio indicarne la sua dimensione, che è una sua proprietà final
-        Al termine dei dati da parte dell'utente, non tutto l'array conterrà dati validi
+    ## Copiare o clonare un array
+    - una variabile che si riferisce a un array è una variabile oggetto che contiene un riferimento all'oggetto array. Copiando il contenuto della variabile in un'altra non si copia l'array, ma si ottiene un altro riferimento allo stesso oggetto array.
+    - se si vuole clonare un array, bisogna:
+        1) creare un nuovo array dello stesso tipo e con la stessa dimensione
+        2) copiare ogni elemento del primo array nel corrispondente elemento del secondo array
+        [java]
+            double[] values = new double[10];
+            // inseriamo i dati nell'array
+            ...
+            double[] otherValues = new double[values.length];
+            for (int i = 0; i < values.length; i++)
+            {
+                otherValues[i] = values[i];
+            }
+        [/java]
+    - invece di usare un ciclo, è possibile invocare il metodo statico "arraycopy" della classe System.
+    - il metodo "System.arraycopy" consente, più in generale, di copiare una porzione di un array in un altro array
+        - anche l'array di destinazione (quello in cui si copiano i dati) deve già esistere e deve essere grande a sufficienza
 
+    ## Dimemsione fisica vs dimensione logica
+    - Dimensione fisica:
+        - values.length è il numero di valori memorizzabili ed è la dimensione fisica dell'array
+    - Dimensione logica:
+        - valuesSize è il numero di valori memorizzati ed è la dimensione logica dell'array
 
+    ## Array riempiti solo in parte
+    - Si dice che un array utilizzato in questo modo è "riempito solo in parte", anche se sarebbe meglio dire "riempito in una sua porzione iniziale" (eventualmente vuota o eventualmente coincidente con l'intero array).
+    - valuesSize è una variabile esterna all'array, non esistono oggetti primitivi di tipo "array riempito solo in parte".
+    - L'array riempito solo in parte è, quindi, semplicemente una modalità di utilizzo di un normale array, a cui viene associata, dal punto di vista logico (ma non strutturale), una variabile di tipo int. 
+
+    ## Cambiare dimensione a un array
+    - Non si può aumentare o diminuire la dimensione di un array.
+    - Si può creare un nuovo array più grande di quello "pieno"
+        - ad esempio: il doppio, ma potrebbe bastare un elemento in più
+        - copiarne il contenuto
+        - "abbandonare il vecchio array, usando poi quello nuovo
+    - si parla di array dinamico, sottointendendo che in realtà si tratta di una gestione dinamica dell'array:
+        - non può esserci ambiguità perché in Java non esistono array dinamici, cioè di dimensione modificabile
+    - si dice anche che si ridimensione l'array, di nuovo senza ambiguità
+
+        [java]
+            if (valuesSize == values.length) // è pieno
+            {
+                double[] newValues = new double[values.length * 2];
+                for (int i = 0; i < values.length; i++)
+                {
+                    newValues[i] = values[i];
+                }
+                values = newValues;
+                // valuesSize ovviamente non cambia
+                // values non punta più al vecchio
+                // array che viene abbandonato.
+            }
+        [/java]
+
+    - possiamo progettare un metodo di utilità che restituisca un array "ingrandito" a partire da quello che viene fornito
+
+        [java]
+            public class ArrayUtil
+            {
+                public static double[] resize(double[] oldArray, int newLength)
+                {
+                    if (newLength < oldArray.length)
+                    {
+                        // gestire la situazione come più opportuno
+                    }
+                    
+                    double[] newArray = new double[newLength];
+                    for (int i = 0; i < oldArray.length; i++)
+                    {
+                        newArray[i] = oldArray[i];
+                    }
+
+                    return newArray;
+                } 
+                // la "coda" del nuovo array rimane riempita con i valori predenfiniti
+
+                public static void main(String[] args)
+                {
+                    double[] values = {1, 2.3, 4.5};
+                    values = ArrayUtil.resize(values, 5);
+                    values[4] = 5.2;
+                    
+                    
+                    // lo stesso metodo può essere usato per CLONARE un intero array; in seguito, è consentito utilizzare sia iul nuovo sia il vecchio
+
+                    double[] values = {1, 2.3, 4.5};
+                    double[] newV = ArrayUtil.resize(values, values.length);
+                    values[2] = 5.2;
+
+                }
+            }
+        [/java]
+
+    ## Garbage Collector
+    - la JVM provvede a effettuare automaticamente la gestione della memoria (garbage collection) durante l'esecuzione di un programma
+    - gli oggetti che non hanno più un riferimento nel programma vengono considerati memoria libera. 
+
+        ### Allocazione della memoria in Java
+        - Durante l'esecuzione dei metodi di un programma vengono creati dinamicamente oggetti (allocazione dinamica) usando lo speciale operatore new:
+            - BankAccount acct = new BankAccount();
+            - crea dinamicamente un oggetto di classe BankAccount
+        - Per l'allocazione dinamica di oggetti Java usa un'area di memoria denominata Java Heap.
+
+    ## Array riempito in parte come parametro
+    - un metodo che voglia elaborare un array riempito solo in parte deve dichairare due parametri..
+        - 1. l'Array
+        - 2. la sua dimensione logica, perché quest'ultima non può essere dedotta ispezionando l'array, come invece avviene per la dimensione fisica
+        - NB: se passo come parametro v.length elaboro array pieni
+
+# ARRAY BIDIMENSIONALI E MULTIDIMENSIONALI
+- problema:
+    - stampare una tabella con i valor idelle potenze x^y, tra 1 e 4 per ogni valore di y tra 1 e 5
+
+        1       1      1       1       1
+        2       4      8      16      32
+        3       9     27      81     243
+        4      16     64     256    1024
+
+    - una struttura di questo tipo, con dati organizzati in righe e colonne, si dice "MATRICE" o array bidimensionale
+    - un elemento all'interno di una matrice p identificato da una coppia (ordinanta) di indici
+        - un indice di riga
+        - un indice di colonna
+    - in Java esistono gli array bidimensionali e, in generale, multidimensionali
+        ! sempre di dati omogenei
+    - dichiarazione di un array bidimensionale con elementi di tipo int
+        [java]
+            int[][] powers;
+        [/java]
+
+    - costruzione di array bidimensionale di tipo int con 4 righe e 5 colonne
+        [java]
+            new int[4][5];
+        [/java]
+
+    - Assegnazione di un riferimento ad array bidimensionale
+        [java]
+            powers = new int[4][5];
+        [/java]
+
+    - Accesso a un elemento di un array bidimensionale
+        [java]
+            powers[2][3] = 2;
+            int x = powers[0][1] + 5;
+        [/java]
+        
+    - Ciascun indice deve essere:
+        - di tipo int
+        - non negativo
+        - minore della dimensione corrispondente
+    - per conoscere il valore delle due dimensioni
+        - la prima dimensione è "powers.length;"
+        - la seconda dimensione è "powers[0].length;" // perché in realtà un array bidimensionale è un array di array
+    - in un array tridimensionale (double[][][] powers), la terza dimensione è, analogamente "powers[0][0].length;"
+
+    - ESEMPIO: TableOfPowers.java
+
+# SEMPLICI ALGORITMI SU ARRAY
+! GENERO FILE CHIAMATO: ArrayUtil.java
+
+    ## Numeri Casuali
+    - La classe Math mette a disposizione il metodo statico random() per generare sequenze di numeri pseudo-casuali
+    - Ogni invocazione del metodo restituisce un numero reale pseudo-casuale nell'intervalloa [0, 1[
+        [java]
+            double x = Math.random();
+        [/java]
+    - per ottenere, ad esempio, numeri interi casuali compresi nell'intervallo [a, b], basta fare un po' di calcoli...
+        [java]
+            int n = (int)(a + (1+b-a)*Math.random());
+        [/java]
+    - ESEMPIO: AverageDice.java
+
+    - usando random scriviamo nella classe ArrayUtil un metodo che genera array di numeri interi casuali, ciascuno dei quali ha un valore compreso tra 0 e n.

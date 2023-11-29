@@ -1510,3 +1510,16 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
     - ESEMPIO: AverageDice.java
 
     - usando random scriviamo nella classe ArrayUtil un metodo che genera array di numeri interi casuali, ciascuno dei quali ha un valore compreso tra 0 e n.
+
+# ELIMINARE UN ELEMENTO
+- L'eliminazione di un elemento da un array richiede due algoritmi diversi
+    - se l'ordine degli elementi non è importante, è sufficiente spostare l'ultimo elemento nell'indice da eliminare e
+        - ridimensionare l'array se uso array riempiti completamente
+        - decrementare la dimensione logica se uso array riempiti parzialmente
+    - se l'ordine degli elementi è importante, è necessario spostare tutti gli elementi successivi di un indice verso sinistra
+
+# INSERIRE UN ELEMENTO
+- Per inserire un elemento in un array nella posizione voluta, se questa non è la prima posizione libera, bisogna "fargli spazio"
+    - tutti gli elementi il cui indice è maggiore dell'indice della posizione voluta devono essere spostati nella posizioen con indice immediatamente superiore, a partire dall'ultimo elemento dell'array
+    
+

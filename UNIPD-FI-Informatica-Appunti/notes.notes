@@ -1732,3 +1732,32 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
     - Stabilire quali sono le caratteristiche essenziali degli oggetti della classe, e fare un elenco delle operazioni che sarà possibile compiere su di essi: "processo di astrazione"
     - "Definire e scrivere l'interfaccia pubblica": Ovvero scrivere l'intestazione della classe, definire i costruttori ed i metodi pubblici da realizzare, e scrivere la "firma" (specificatore di accesso, tipo di valore restituito, nome del metodo, eventuali parametri espliciti) di ciascuno di essi.
     - "Definire le variabili di esemplare ed eventuali variabili statiche": è necessario individuare tutte le variabili necessarie. Per ciascuna di esse si deve, poi, definire tipo e nome
+    - Se un metodo non restituisce valori (ovvero il tipo del valore restituito è void), scrivere inizialmente un corpo vuoto, ovvero {}.
+    - Se un metodo restituisce valori non void, scrivere inizalmente un corpo fittizzio contenente solo un enunciato di return
+
+# GESTIONE DELLE ECCEZIONI
+- Un'eccezione è un evento anomalo che si verifica durante l'esecuzione di un programma e che interrompe il normale flusso di esecuzione.
+- Un'eccezione può essere generata da un'istruzione che non può essere eseguita correttamente, ad esempio perché i dati su cui deve operare non sono validi.
+- Un'eccezione può essere generata anche da un'istruzione che non può essere eseguita correttamente, ad esempio perché i dati su cui deve operare non sono validi.
+
+    ## Record di attivazione
+    - Quando un metodo entra in esecuzione viene creata nella memoria Stack una zona riservata, detta record di attivazione, che contiene tutte le informazioni necessarie per l'esecuzione del metodo, quali:
+        - Parametri formali
+        - Variabili locali 
+        - Valore di ritorno
+    
+    ## Pila di attivazione
+    - La zona di memoria che contiene i record di attivazione dei metodi invocati si chiama Stack perché si comporta come una pila di piatti o di libri.
+        - Quando un metodo in esecuzione invoca un altro metodo viene aggiunto in cima alla pila il record di attivazione del metodo invocato
+        - Quando un metodo termina la sua esecuzione viene tolto dalla pila e si torna ad eseguire il metodo che l'aveva invocato (quindi quello immediatamente "sotto") dal punto in cui eravamo rimasti.
+    
+    ## Lancio delle eccezioni
+    - Il meccanismo generali di segnalazione di errori (o di condizioni di funzionamento anomale) in Java è basato sul lancio di eccezioni.
+    - si dice anche che il metodo solleva o genera un'eccezione
+
+    # Le eccezioni in Java
+    - Quando un metodo lancia un'eccezione..
+        - il metodo termina immediatamente la sua esecuzione
+        - il controllo passa al metodo che l'ha invocato
+        - se anche questo metodo non gestisce l'eccezione, il controllo passa al metodo che l'ha invocato, e così via
+        - se nessuno dei metodi che hanno invocato il metodo che ha lanciato l'eccezione gestisce l'eccezione, il programma termina con un messaggio di errore

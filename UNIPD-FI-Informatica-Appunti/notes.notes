@@ -1517,9 +1517,218 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
         - ridimensionare l'array se uso array riempiti completamente
         - decrementare la dimensione logica se uso array riempiti parzialmente
     - se l'ordine degli elementi è importante, è necessario spostare tutti gli elementi successivi di un indice verso sinistra
+    [java]
+        double[] values = {1, 2.3, 4.5, 5.6};
+        int vSize = 4; // array pieno, dim logica = dim fisica
+        int iIndexToRemove = 1;
+        for (int i = iIndexToRemove; i < values.length - 1; i++)
+        {
+            values[i] = values[i + 1];
+        }
+        vSize--;
+    [/java]
 
 # INSERIRE UN ELEMENTO
 - Per inserire un elemento in un array nella posizione voluta, se questa non è la prima posizione libera, bisogna "fargli spazio"
     - tutti gli elementi il cui indice è maggiore dell'indice della posizione voluta devono essere spostati nella posizioen con indice immediatamente superiore, a partire dall'ultimo elemento dell'array
-    
+    [java]
+        double[] values = {1, 2.3, 4.5, 5.6};
+        values = resize(values, values.length + 1);
 
+        int iIndex = 2;
+        for (int i = values.length - 1; i > iIndex; i--)
+        {
+            values[i] = values[i - 1];
+        }
+        values[iIndex] = 5.4;
+        vSize++;
+    [/java]
+# Ricerca di un valore in un array
+[java]
+    // Declare and initialize an array of doubles with a size of 100
+    double[] v = new double[100];
+
+    // Declare and initialize a variable to hold the number of elements in the array
+    int vSize = 0;
+
+    // Declare a variable to hold the target value to be searched for in the array
+    double target;
+
+    // Declare and initialize a boolean variable to indicate whether the target value is found in the array
+    boolean found = false;
+
+    // Read the data. At the end, vSize contains the number of elements and target contains the value to be searched for
+
+    // Iterate over the elements in the array
+    for (int i = 0; i < vSize; i++)
+    {
+        // Check if the current element is equal to the target value
+        if (v[i] == target)
+        {
+            // If it is, set found to true and exit the loop
+            found = true;
+            break;
+        }
+    }
+
+    // Check if the target value was found in the array
+    if(found)
+    {
+        // If it was, print a message indicating that it was found
+        System.out.println("Trovato");
+    }
+    else
+    {
+        // If it wasn't, print a message indicating that it was not found
+        System.out.println("Non trovato");
+    }
+
+[/java]
+
+# Varianti per verificare la presenza di uno specifico valore 
+- l'algoritmo può essere realizzato in diverse varianti e inserito in un metodo che riceve il valroe da cercare e l'array in cui cercare
+    - un valore boolean: successo/insuccesso della ricerca
+    - un valore int: posizione dell'elemento trovato, -1 se non trovato
+    - un array di int: posizioni di tutti gli elementi trovati, array vuoto se non trovato
+
+
+# GESTIONE DI CONTENUTI CONDIVISI IN UNA CLASSE
+    ## Metodi ausiliari
+    - I metodi ausiliari aiutano a strutturare meglio il codice svolgendo un sottoinsieme di istruzioni che possono venire invocate da altri metodi della classe, inclusi i metodi di esemplare.
+    
+    ## Metodi statici o di classe
+    - Sono metodi che non vengono invocati con un oggetto come parametro implicito
+    - Es: i metodi della classe Math
+        - I numeri non sono oggetti e non posso utilizzarli per invocare metodi
+        - Math.sqrt(2);
+            - Math non crea in oggetto ma dice solo dove si trova il metodo
+    
+    ## Invocazione di metodi ausiliari statici
+    - Per invocare un metodo statico presente nella stessa classe non è necessario specificare il nome della classe
+    - Se il metodo statico si trova in un'altra classe bisogna specificare il nome della classe
+    [java]
+        public class A
+        {
+            public static void main(String[] args)
+            {
+                B.faiQualcosa(); // fa parte della classe B
+                stampa();        // fa parte della classe A
+            }
+
+            public static void stampa()
+            {
+                System.out.println("Ciao");
+            }
+        }
+        public class B
+        {
+            public static void faiQualcosa()
+            {
+                ...
+            }
+        }
+    [/java]
+
+    ## Invocazione di metodi ausiliari non statici
+    - Anche un metodo di esemplare può invoareu n altro metodo di esemplare della stessa classe senza specificare una variabile oggetto.
+    - In questo caso, il metodo invocato viene eseguito sullo stesso oggetto su cui è stato invocato il metodo che lo invoca
+    - Esempio: associo ad ogni deposito una commissione (che di fatto è un prelievo)
+    [java]
+        public void deposit(double amount)
+        {
+            withdraw(2); // evito di duplicare il codice di withdraw
+            balance += amount;
+        }
+
+        // in questo caso, come per le variabili, viene usato implicitamente this, come se fosse
+        public void deposit(double amount)
+        {
+            this.withdraw(2);
+            this.balance += amount;
+        }
+    [/java]
+    - il parametro implicito con cui è stato invocato deposit diventa "automaticamente" il parametro implicito con cui viene invocato withdraw.
+
+    ## Metodi di esemplare ausiliari
+    - aggiungiamo un contatore di operazioni effettuate
+    [java]
+        public class BankAccount
+        {
+            private double dBalance;
+            private int iNumberOfOperations;
+
+            public void deposit(double amount)
+            {
+                balance += amount;
+                iNumberOfOperations++;
+            }
+
+            public void withdraw(double amount)
+            {
+                balance -= amount;
+                iNumberOfOperations++;
+            }
+
+            public double getBalance()
+            {
+                return balance;
+            }
+
+            public int getNumberOfOperations()
+            {
+                return numberOfOperations;
+            }
+        }
+    [/java]
+    - idealmente sarebbe meglio evitare codice duplicato e creare metodi ausiliari 
+    [java]
+        public class BankAccount
+        {
+            private double dBalance;
+            private int iNumberOfOperations;
+
+            private void recordOperation()
+            {
+                numberOfOperations++;
+                balance -= 2.5; // commissione
+            }
+
+            public void deposit(double amount)
+            {
+                balance += amount;
+                recordOperation();
+            }
+
+            public void withdraw(double amount)
+            {
+                balance -= amount;
+                recordOperation();
+            }
+
+            public double getBalance()
+            {
+                return balance;
+            }
+        }
+    [/java]
+
+# VARIABILI STATICHE
+- Una variabile static (detta variabile di classe) è condivisa da tutti gli oggetti della classe e ne esiste un'unica copia.
+    - non si trova all'interno degli esemplari della classe, ma in una zona di memoria riservata alla classe
+-! osserviamo che le variabili statiche non dovrebbero (da un punto di vista logico) essere inizializzate nei Costruttori
+    - il loro valore verrebbe inizializzato di nuovo ogni volta che si costruisce un oggetto, perdendo il vantaggio di avere una variabile condivisa!
+- Bisogna inizializzarle quando si dichiarono
+    [java] private static int iLastAssignedNumber = 0; [/java]
+    - sappiamo che questa sintassi si può usare anche per le variabili di esemplare, anziché usare un costruttore, ma non è una buona pratica di programmazione
+- Nella programmazione a oggetti, l'utilizzo di variabili statiche deve essere limitato, perché
+    - metodi che leggono variabili statiche e agiscono di conseguenza hanno un comportamento che non dipende soltanto dai loro parametri (implicito ed espliciti), quindi sono più esposti ai cosiddetti "effetti collaterali", cioè effetti più difficili da prevedere correttamente
+- in  ogni caso, le variabili statiche devono essere private come quelle di esemplare, per evitare accessi indesiderati
+    - se iLastAssignedNumber fosse public, vi si potrebbe accedere (in lettura o in scrittura) anche da un metodo esterno alla classe usando la sintassi BanckAccount.iLastAssignedNumber, cioè usando il nome della classe.
+- è invece pratica comune (senza controindicazioni) usare costanti statiche, come nella classe Math
+- Tali costanti sono di norma public e per accedere al loro valore si usa il nome della classe seguito dal punto e dal nome della costante, Math.PI
+
+# CONSNIGLI PER LA PROGETTAZIONE DI UNA CLASSE
+    ## Progettare la classe
+    - Stabilire quali sono le caratteristiche essenziali degli oggetti della classe, e fare un elenco delle operazioni che sarà possibile compiere su di essi: "processo di astrazione"
+    - "Definire e scrivere l'interfaccia pubblica": Ovvero scrivere l'intestazione della classe, definire i costruttori ed i metodi pubblici da realizzare, e scrivere la "firma" (specificatore di accesso, tipo di valore restituito, nome del metodo, eventuali parametri espliciti) di ciascuno di essi.
+    - "Definire le variabili di esemplare ed eventuali variabili statiche": è necessario individuare tutte le variabili necessarie. Per ciascuna di esse si deve, poi, definire tipo e nome

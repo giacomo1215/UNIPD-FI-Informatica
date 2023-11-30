@@ -1890,5 +1890,40 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
                         }
                     [/java]
     
-    ## Enunciato Throw
-    
+    ## Gestione dei casi degeneri
+    - spesso (ma non sempre) i casi degeneri di un algoritmo vanno gestiti separatamente
+        [java]
+            public static double sum(double[] values)
+            {
+                if (values.length == 0)
+                {
+                    return 0; // inutile
+                }
+                double sum = 0;
+                for (int i=0; i<values.length; i++)
+                {
+                    sum += values[i];
+                }
+                return sum;
+            }
+        [/java]
+        - qui è inutile gestire separatamente il caso in cui l'array ha lunghezza zero, 
+    - l'obiettivo del programmatore era quello di rendere più veloce l'elaborazione nel caso di array di lunghezza zero
+        - l'effetto ottenuto è quello di rendere più lenta l'elaborazione nel caso di array con lunghezza diversa da zero, perché la condizione va valutata sempre. 
+    - in un metodo che calcola, invece, il valore medio dei dati presenti in un array, il caso di array di lunghezza zero va gestito separatamente, per evitare divisioni per zero
+    [java]
+        public static double average(double[] values)
+        {
+            if (values.length == 0)
+            {
+                throw new IllegalArgumentException();
+            }
+            double sum = 0;
+            for (int i=0; i < values.length; i++)
+            {
+                sum = sum + values[i];
+            }
+            return sum / values.length;
+        }
+    [/java]
+    - ESERCIZIO: FactorGenerator.java

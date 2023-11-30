@@ -1755,9 +1755,140 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
     - Il meccanismo generali di segnalazione di errori (o di condizioni di funzionamento anomale) in Java è basato sul lancio di eccezioni.
     - si dice anche che il metodo solleva o genera un'eccezione
 
-    # Le eccezioni in Java
+    ## Le eccezioni in Java
     - Quando un metodo lancia un'eccezione..
         - il metodo termina immediatamente la sua esecuzione
         - il controllo passa al metodo che l'ha invocato
         - se anche questo metodo non gestisce l'eccezione, il controllo passa al metodo che l'ha invocato, e così via
         - se nessuno dei metodi che hanno invocato il metodo che ha lanciato l'eccezione gestisce l'eccezione, il programma termina con un messaggio di errore
+    
+    ## Gestire le eccezioni di input
+    [java]
+        String line = console.nextLine();
+        int n = Integer.parseInt(line);
+    [/java]
+    - se l'utente inserisce una stringa che non rappresenta un numero intero, il metodo parseInt lancia un'eccezione di tipo NumberFormatException
+    - si può gestire l'eccezione, segnalando l'errore all'utente e chiedendo di inserire nuovamente il dato numerico, anziché terminare il programma
+        - possiamo intercettare l'eccezione e gestirla mediante un blocco try-catch
+    [java]
+        int n = 0;
+        boolean valid = false;
+        do
+        {
+            try
+            {
+                String line = console.nextLine();
+                n = Integer.parseInt(line);
+                valid = true;
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println("Inserire un numero intero");
+            }
+        }
+    [/java]
+    - il blocco try-catch è un blocco di codice che contiene un blocco try e uno o più blocchi catch
+
+    ## Eccezioni numeriche e Scanner
+    [java]
+        int n = 0;
+        boolean done = false;
+        do
+        {
+            try
+            {
+                n = console.nextInt();
+                done = true;
+            }
+            catch(java.util.InputMismatchException e)
+            {
+                System.out.println("Riprova");
+                console.next();
+            }
+        } while (!done);
+    [/java]
+    - se invece di nextLine() uso nextInt(), le eccezioni ci sono lo stesso (le lancia nextInt invece di parseInt).
+    - usando nextLine() invece di next() si pone rimedio a errore più gravi da parte dell'utente (che magari ha scritto "pippo pluto", con uno spazio, invece di un numero)
+        - usando next() avrei eliminato pippo ma non pluto
+    - si può anche pensare di svuotare completamente il flusso, nell'ipotesi che l'errore dell'utente si possa estendere su più righe, in questo modo
+    [java]
+        catch(java.util.InputMismatchException e)
+        {
+            System.out.println("Riprova");
+            while(console.hasNextLine())
+            {
+                console.nextLine();
+            }
+        }
+    [/java]
+    - con questo codice, togliamo tutta la riga scritta per errore dall'utente, quando avrebbe dovuto scrivere un numero e premere Invio
+    [java]
+        catch(java.util.InputMismatchException e)
+        {
+            System.out.println("Riprova");
+            console.nextLine();
+        }
+    [/java]
+    - basta anche questo, infatti è veramente difficile che l'utente sia riuscito a scrivere qualcos'altro dopo aver premuto invio e prima che venga eseguito di nuovo il metodo nextLine() del blocco try ( dopo la pulizia nel catch), quindi è fortemente probabile che veda prima il "Riprova".
+
+    ## Scanner: comportamenti anomali
+    - a volte nextInt e nextDouble si comportano in modo "strano", in realtà sempre in modo ben documentato.
+        - leggono e "consumano" eventuali caratteri di spaziatura che possono precedere il numero che stanno cercando, ignorandoli
+            - anche in caso di lancio di eccezione, questi caratteri saranno definitivamente consumati
+        - leggono i caratteri provenienti dal flusso finché sono idonei a costruire un numero (intero o, rispettivamente, frazionario)
+        - appena "vedono" un carattere non idoneo, interrompono la propria azione, lasciando all'inizio del flusso, senza "consumarlo", il carattere appena visto.
+            - se hanno visto caratteri sufficienti a costruire un numero e SOLTANTO caratteri che costituiscono un numero, li "consumano" e restituiscono
+            - altrimenti si verifica l'eccezione InputMismatchException e i caratteri NON vengono consumati, rimangono nel flusso, così come se il flusso viene chiuso prima che si sia visto un carattere non idoneo.
+    - quando un'invocazione di next/nextInt/nextDouble è seguita da un'invocazione di nextLine
+    
+    ## Un altro uso di Scanner
+    - E' possibile creare un oggetto della classe Scanner fornendo una stringa come parametro al costruttore
+    - Scanner considera come delimitatori predefiniti gli spazi, i caratteri di tabulazione e i caratteri di "andata a capo". Questi e altri caratteri sono detti whitespaces, e sono risconosciuti dal metodo predicativo: Character.isWhitesplace(char c)
+    - se come parametro di costruzione viene fornita una stringa, lo scanner esaminerà i caratteri di quella stringa (invece di esaminare i caratteri di un flusso)
+        - può essere utile per scomporre una stringa in "parole"
+        - non ha niente a che vedere con la redirezione del flusso di input
+    - per accedere al token successivo si usa next() della classe Scanner
+    - se l'elemento successivo non c'è next() lancia l'eccezione java.util.NoSuchElementException
+    - poiché non è noto a priori il numero di "token" (parole ben delimitate da whitespaces) is utilizza "hasNext()"
+
+    ## Diversi tipi di eccezioni
+    - la gestione delle eccezioni di tipo Error e di tipo RuntimeException è facoltativa
+        - se non vengono gestite e vengono lanciate, provocano la terminazione del programma
+        - si dice che sono non controllate
+            - descrivono problemi dovuti a errori del programmatore e che quindi non dovrebbero verificarsi
+        - per questo motivo le eccezioni di tipo RuntimeException sono non controllate
+        - non è obbligatorio catturarle traminte try-catch
+    - la gestione delle altre eccezioni è obbligatoria (se non c'è, si ha un errore in compilazione)
+        - si dice che sono controllate
+            - descrivono problemi che possono verificarsi prima o poi, indipendentemente dalla bravura del programmatore
+        - se si invoca un metodo che può lanciare un'eccezione controllata, è obbligatorio gestirla con try-catch
+            - altrimenti viene segnalato un errore in compilazione
+    
+# REALIZZAZIONE DEI METODI: argomenti inattesi (pre-condizioni)
+- spesso un metodo richiede che i suoi argomenti
+    - siano di un tipo ben definito
+        - questo viene garantito dal compilatore
+    - abbiamo un valore che rispetti certi vincoli, ad esempio sia un numero positivo
+        - ci sono tre modi per reagire ad argomenti inattesi
+            -  non fare niente: il metodo semplicemente termina la sua esecuzione senza alcuna segnalazione d'errore
+                - si può fare solo epr metodi con valore di ritorno void, altrimenti che cosa restituisce il metodo?
+                - se restituisce un valore casuale senza segnalare un errore, chi ha invocato il metodo probabilmente andrà incontro ad un errore logico
+            - terminare il programma con System.exit(1);
+                - System.exit(0): è andato tutto bene
+            - lanciare un'eccezione
+                - lanciare un'eccezione in risposta ad un parametro che non rispetta una precondizione è la soluzione più corretta in ambito professionale
+                    - la libreria standard mette a disposizione tale eccezione
+                        - "IllegalArgumentException"
+                    [java]
+                        public void deposit(double amount)
+                        {
+                            if (amount < 0)
+                            {
+                                throw new IllegalArgumentException();
+                            }
+                            balance += amount;
+                        }
+                    [/java]
+    
+    ## Enunciato Throw
+    

@@ -1927,3 +1927,175 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
         }
     [/java]
     - ESERCIZIO: FactorGenerator.java
+
+
+[2023-12-06]
+# ORDINAMENTO DI DATI
+- Un problema molto frequente nell'elaborazione dei dati consiste nell'ordinamento dei dati stessi, secondo un criterio prestabilito
+    - numeri in ordine crescente (o decrescente)
+    - stringhe in ordine lessicografico (crescente o decrescente)
+    - conti bancari in ordine di saldo (crescente o decrescente)
+- Una sequenza di n "oggetti" confrontabili
+    - si dice che un oggetto è confrontabile se è possibile stabilire se è maggiore, minore o uguale ad un altro oggetto dello stesso tipo
+- Tra i piu studiati problemi in informatica
+    - fucina di idee algoritmiche
+    - moltissime soluzioni
+- analisi di complessità computazionale
+    - caso miglior/peggiore/medio
+- L'ordinamento è un passaggio chiave su cui molti altri algoritmi sono costruiti.
+- Studieremo tre algoritmi di ordinamento
+    - selection sort
+    - merge sort
+    - insertion sort
+- In generale ci occupiamo di ordinamento di dati presenti in un contenitore (array per ora)
+- nei problemi di ordinamento si parla di
+    - ordinamento "sul posto" quando il metodo di ordinamento riceve un contenitore e ne ordina il contenuto
+        - non restituisce nulla
+        - il metodo invocante si ritrova il contenitore ordinato
+    - ordinamento "fuori posto" quando il metodo di ordinamento riceve un contenitore e restituisce un nuovo contenitore con i dati ordinati
+- I metodi che ordinano gli array sono metodi statici
+    - devono ricevere un array come parametro, ma questo non può essere il parametro implicito del metodo, perché non esiste la classe array in cui definire il metodo di ordinamento
+- ordineremo array "pieni" 
+    - fornendo la dimensione logica come parametro aggiuntivo
+- con modifiche minime, gli stessi algoritmi possono ordinare
+    - array "riempiti solo in parte"
+    - porzioni di array, fornendo due parametri aggiuntivi:
+        - indice iniziale (incluso)
+        - indice finale (escluso)
+        (in analogia con il metodo substring della classe String)
+
+   ## Selection Sort
+    - L'algoritmo di ordinamento per selezione (selection sort) è un algoritmo di ordinamento "sul posto" che ordina un array di n elementi confrontando ripetutamente gli elementi dell'array e scambiandoli se necessario.
+    [java]
+        public static void selectionSort(double[] a)
+        {
+            if (a == null) 
+            {
+                return;
+            }
+
+            for (int i = 0; i < a.length - 1; i++)
+            {
+                int minIndex = findMinIndexFrom(a, i);
+                for (int j = i + 1; j < a.length; j++)
+                {
+                    if (minIndex != i)
+                    {
+                        swap(a, i, minIndex);
+                    }
+                }
+                double temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    [/java]
+    [java]
+        private static void swap(double[] a, int i, int j)
+        {
+            // non verifico precondizioni perché è un metodo privato
+            double temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+
+        private static int  findMinIndexFrom(double[] a, int from)
+        {   
+            int minIndex = from;
+            for (int i = from + 1; i < a.length; i++)
+            {
+                if (a[i] < a[minIndex])
+                {
+                    minIndex = i;
+                }
+            }
+            return minIndex;
+        }
+    [/java]
+    - Metodi ausiliari privati
+        - senza i metodi ausiliari il codice è meno immediato
+        - con i metodi ausiliari, se si usano nomi appropriati, il codice "si commenta da solo"
+    
+    - Ordinare array riempiti in parte:
+    [java]
+        public static void selectionSort(double[] a, int size)
+        {
+            if (a == null)
+            {
+                throw new IllegalArgumentException();
+            }
+
+            for (int i = 0; i < size - 1; i++)
+            {
+                int minPos = findMinPosFrom(a, i, size);
+                if (minPos != i)
+                {
+                    swap(a, i, minPos);
+                }
+            }
+        }
+
+        public static int findMinPosFrom(double[] a, int from, int size)
+        {
+            int pos = from;
+            for (int i = pos + 1; i < size; i++)
+            {
+                if (a[i] < a[pos])
+                {
+                    pos = i;
+                }
+            }
+            return pos;
+        }
+    [/java]
+
+    - Ordinare per selezione: 
+        - possiamo ora sostituire il metodo che ordina un array "pieno" con uno stub che invoca quello che ordina array riempiti nella parte inziale
+        [java]
+            public static void selectionSort(double[] a)        // stub
+            {
+                if (a == null)
+                {
+                    throw new IllegalArgumentException();
+                }
+                
+                selectionSort(a, a.length);
+            }
+        [/java]
+        - quindi, findMinPos con due soli parametri non serve più
+    - complessità di selection sort
+        - sia n la dimensione logica dell'array da ordinare
+        - ho un ciclo for su indice i che va da 0 a n-2
+        - per ogni i, ho un ciclo for su indice j che va da i+1 a n-1
+            - al suo interno ho un numer ocostatne di passi primitivi
+        [java]
+            public static void selectionSort(double[] a)
+            {
+                if (a == null)
+                {
+                    throw new IllegalArgumentException();
+                }
+
+                for (int i = 0; i < a.length - 1; i++)
+                {
+                    int minPos = i;
+                    for (int j = i + 1; j < a.length; j++)
+                    {
+                        if (a[j] < a[minPos])
+                        {
+                            minPos = j;
+                        }
+                    }
+                    if (minPos != i)
+                    {
+                        swap(a, i, minPos);
+                    }
+                }
+            }
+        [/java]
+        - cicli for esterno:
+            - i=0: n-1 cicli for interno + c istruzioni base
+            - i=1: n-2 cicli for interno + c istruzioni base
+            - i=2: n-3 cicli for interno + c istruzioni base
+            - ...
+            - i=n-2: 1 ciclo for interno + c istruzioni base

@@ -2099,3 +2099,78 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
             - i=2: n-3 cicli for interno + c istruzioni base
             - ...
             - i=n-2: 1 ciclo for interno + c istruzioni base
+
+
+[2023-12-07]
+    ## Merge Sort
+    - L'algoritmo di ordinamento per fusione (merge sort) è un algoritmo di ordinamento "fuori posto" che ordina un array di n elementi dividendo l'array in due sottosequenze, ordinando ciascuna di esse e quindi fondendo le due sottosequenze ordinate in un'unica sequenza ordinata.
+        - l'array da ordinare non viene modificato
+        - viene restituito un nuovo array ordinato
+    [java]
+        public static void mergeSort(double[] a)
+        {
+            if (a == null)
+            {
+                throw new IllegalArgumentException();
+            }
+            mergeSort(a, 0, a.length);
+        }
+
+        private static void mergeSort(double[] a, int from, int to)
+        {
+            if (to - from <= 1)
+            {
+                return;
+            }
+            int mid = (from + to) / 2;
+            mergeSort(a, from, mid);
+            mergeSort(a, mid, to);
+            merge(a, from, mid, to);
+        }
+
+        private static void merge(double[] a, int from, int mid, int to)
+        {
+            double[] temp = new double[to - from];
+            int i = from;
+            int j = mid;
+            int k = 0;
+            while (i < mid && j < to)
+            {
+                if (a[i] < a[j])
+                {
+                    temp[k] = a[i];
+                    i++;
+                }
+                else
+                {
+                    temp[k] = a[j];
+                    j++;
+                }
+                k++;
+            }
+            while (i < mid)
+            {
+                temp[k] = a[i];
+                i++;
+                k++;
+            }
+            while (j < to)
+            {
+                temp[k] = a[j];
+                j++;
+                k++;
+            }
+            for (k = 0; k < temp.length; k++)
+            {
+                a[from + k] = temp[k];
+            }
+        }
+    [/java]
+    - Prestazioni di Merge Sort
+        - Rilevazionie sperimentali delle prestazioni mostarano che l'ordinamento con MergeSort è molto più efficiente dell'ordinamento con selezione
+            - la curva del tempo, in funzione delle dimensione, cresce poco più rapidamente di una retta
+        - L'analisi teorica conferma che MergeSort è più efficiente di SelectionSort
+            - SelectionSort ha complessità O(n^2)
+            - MergeSort ha complessità O(n log n)
+        
+        

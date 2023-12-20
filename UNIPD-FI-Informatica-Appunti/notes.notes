@@ -775,57 +775,57 @@ Methodi di Math vs println:
     - qui greeting è il parametro implicito: length viene calcolata sui dati contenuti nella variabile oggetto che invoca il metodo e perciò restituirà la lunghezza di "Hello, World!"
 
 # Un metodo con parametri espliciti e parametro implicito
-[java]
-    public String replace(String oldStr, String newStr);
-[/java]
-- Il metodo replace della classe String riceve due parametri espliciti, entrambi stringhe, e cerca nella stringa descritta dal parametro implicito le occorrenze del primo parametro per sostituirle con il secondo. Restituisce la stringa ottenuta in un altro oggetto, senza modificare la stringa associata al parametro implicito.
-    - questa è una caratteristica di tutti i metodi di String, ma non è vera per tutte le classi. Esistono metodi, detti modificatori, che modificano i dati interni alla classe.
-[java]
-    river.replace("issipp", "our");
-[/java]
-    - due parametri espliciti: le stringhe "issipp" e "our"
-    - un parametro implicito: l'oggetto river (la stringa "Mississippi")
-    - un valore restituito: la stringa "Missouri"
-[java]
-    System.out.println(river.replace("issipp", "our")); // Stampa Missouri
-    System.out.println(river); // Stampa Mississippi
-[/java]
+    [java]
+        public String replace(String oldStr, String newStr);
+    [/java]
+    - Il metodo replace della classe String riceve due parametri espliciti, entrambi stringhe, e cerca nella stringa descritta dal parametro implicito le occorrenze del primo parametro per sostituirle con il secondo. Restituisce la stringa ottenuta in un altro oggetto, senza modificare la stringa associata al parametro implicito.
+        - questa è una caratteristica di tutti i metodi di String, ma non è vera per tutte le classi. Esistono metodi, detti modificatori, che modificano i dati interni alla classe.
+    [java]
+        river.replace("issipp", "our");
+    [/java]
+        - due parametri espliciti: le stringhe "issipp" e "our"
+        - un parametro implicito: l'oggetto river (la stringa "Mississippi")
+        - un valore restituito: la stringa "Missouri"
+    [java]
+        System.out.println(river.replace("issipp", "our")); // Stampa Missouri
+        System.out.println(river); // Stampa Mississippi
+    [/java]
 
 # Definizioni di metodi: firma
-?- come faccio a sapere se il metodo che voglio utilizzare ha dei parametri espliciti, di che tipo sono, e in che ordine li devo specificare?
-?- come faccio a sapere che tipo di dato restituisce un metodo?
+    ?- come faccio a sapere se il metodo che voglio utilizzare ha dei parametri espliciti, di che tipo sono, e in che ordine li devo specificare?
+    ?- come faccio a sapere che tipo di dato restituisce un metodo?
 
-Queste informazioni sono contenute nella documentazione della classe, in quella che si chiama firma del metodo
+    Queste informazioni sono contenute nella documentazione della classe, in quella che si chiama firma del metodo
 
-[java]
-    public String replace(String target, String replace); // String = tipo restituito | replace = nome metodo | (...,  ...) = Parametri espliciti
-    public void println(String output);
-    public String replace(String target, String replace);
-[/java]
+    [java]
+        public String replace(String target, String replace); // String = tipo restituito | replace = nome metodo | (...,  ...) = Parametri espliciti
+        public void println(String output);
+        public String replace(String target, String replace);
+    [/java]
 
-- La definizione di un metodo inizia con la sua intestazione (firma, signature):
-    - uno specificatore di acecsso
-        - indica quli altri metodi possono invocare il metodo 
-            - un metodo "public" può essere invocato da qualsiasi altro metodo di qualsiasi altra classe
-            - un metodo può essere anche private
-    - il tipo di dati restituito dal metodo (String, void, int, ...)
-    - il nome (identificatore) del metodo (println, replace, ...)
-    - un elencto di parametri espliciti, eventualmente vuoto, tra parentesi tonde
-        - di ogni parametro si indica il tipo ed il nome
-        - più parametri sono separati da una virgola
-- La dichiarazione di un metodo specifrica il tipo di dati restituito al termine della sua invocazione 
-- Se un metodo non restituisce nessun valore si dichiara il tipo speciale void
-    - il valore restituito, se assegnato, deve essere assegnato ad un tipo di dati corrispondente
+    - La definizione di un metodo inizia con la sua intestazione (firma, signature):
+        - uno specificatore di acecsso
+            - indica quli altri metodi possono invocare il metodo 
+                - un metodo "public" può essere invocato da qualsiasi altro metodo di qualsiasi altra classe
+                - un metodo può essere anche private
+        - il tipo di dati restituito dal metodo (String, void, int, ...)
+        - il nome (identificatore) del metodo (println, replace, ...)
+        - un elencto di parametri espliciti, eventualmente vuoto, tra parentesi tonde
+            - di ogni parametro si indica il tipo ed il nome
+            - più parametri sono separati da una virgola
+    - La dichiarazione di un metodo specifrica il tipo di dati restituito al termine della sua invocazione 
+    - Se un metodo non restituisce nessun valore si dichiara il tipo speciale void
+        - il valore restituito, se assegnato, deve essere assegnato ad un tipo di dati corrispondente
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Variabili oggetto
-Una "variabile oggetto" conserva non l'oggetto stesso, ma informazioni sulla sua posizione nella memoria del computer. 
-    * è detta anche "riferimento" o "puntatore"
-Come già visto per oggetti della classe String, per definire una variabile oggetto si indica il nome della classe ai cui oggetti farà riferimento la variabile, seguito dal nome della variabile stessa
-[java]
-    NomeClasse nomeOggetto;
-[/java]
+    Una "variabile oggetto" conserva non l'oggetto stesso, ma informazioni sulla sua posizione nella memoria del computer. 
+        * è detta anche "riferimento" o "puntatore"
+    Come già visto per oggetti della classe String, per definire una variabile oggetto si indica il nome della classe ai cui oggetti farà riferimento la variabile, seguito dal nome della variabile stessa
+    [java]
+        NomeClasse nomeOggetto;
+    [/java]
 
     ## Costruire oggetti: l'operatore NEW
     - A differenza di quanto visto per gli oggetti della classe String, in generale per creare un nuovo oggetto di una classe si usa l'operatore "new" seguito dal nome della classe e da una coppia di parentesi tonde.
@@ -964,538 +964,538 @@ Come già visto per oggetti della classe String, per definire una variabile ogge
     (esercizio in classe, PunteggioGiocatori.java)
 
 # Conversione di stringhe in Numeri
-- A volte si ha una stringa che continene un valore numerico e si vuole assegnare tale valore a una variabile di tipo numerico, per poi elaborarlo
-[java]
-    String password = "md50";
-    String ageString = password.substring(2);
-    // ageString contiene "50"
-    // NON FUNZIONA
-    int age = ageString;
-[/java]
-- il compilatore segnala l'errore semantico perché non si può convertire automaticamente una stringa in un numero, dato che non vi è certezza che il suo contenuto rappresenti un valore numerico.
-- la conversione corretta si ottiene invocando il metodo statico "parseInt" della classe "Integer"
-[java]
-    int age = Integer.parseInt(ageString);
-    // age contiene il numero 50
-[/java]
-- la conevrsione di un numero in viggola mobile si otteiene, analogamente, invocando il metodo statico "parseDouble" della classe "Double".
-[java]
-    String numberString = "34.3";
-    double number = Double.parseDouble(numberString);
-    // number contiene il numero 34.3
-[/java]
-- NON viene usata la localizzazione, quindi la stringa deve contenere sempre il punto come separatore decimale.
-- oppure usare notazione scientifica.
-- Cosa succede se la stringa passata come argomento non contiene un numero? 
-- i metodi Integer.parseInt e Double.parseDouble lanciano un'eccezione di tipo "NumberFormatException" e il programma termina segnalando l'errore
-- Il meccaniscmo generale di segnalazione di errori in Java consiste nel fare un throw di un'eccezione
+    - A volte si ha una stringa che continene un valore numerico e si vuole assegnare tale valore a una variabile di tipo numerico, per poi elaborarlo
+    [java]
+        String password = "md50";
+        String ageString = password.substring(2);
+        // ageString contiene "50"
+        // NON FUNZIONA
+        int age = ageString;
+    [/java]
+    - il compilatore segnala l'errore semantico perché non si può convertire automaticamente una stringa in un numero, dato che non vi è certezza che il suo contenuto rappresenti un valore numerico.
+    - la conversione corretta si ottiene invocando il metodo statico "parseInt" della classe "Integer"
+    [java]
+        int age = Integer.parseInt(ageString);
+        // age contiene il numero 50
+    [/java]
+    - la conevrsione di un numero in viggola mobile si otteiene, analogamente, invocando il metodo statico "parseDouble" della classe "Double".
+    [java]
+        String numberString = "34.3";
+        double number = Double.parseDouble(numberString);
+        // number contiene il numero 34.3
+    [/java]
+    - NON viene usata la localizzazione, quindi la stringa deve contenere sempre il punto come separatore decimale.
+    - oppure usare notazione scientifica.
+    - Cosa succede se la stringa passata come argomento non contiene un numero? 
+    - i metodi Integer.parseInt e Double.parseDouble lanciano un'eccezione di tipo "NumberFormatException" e il programma termina segnalando l'errore
+    - Il meccaniscmo generale di segnalazione di errori in Java consiste nel fare un throw di un'eccezione
 
 # Espressioni booleane
-- Ogni espressione ha un valore
-    - x + 10 espressione aritmetica, valore numerico
-    - x < 10 espressione relazionale, valore booleano
-- un'espressione relazionale ha un valore vero o falso (true or false)
-- i valore true e false non sono numeri, ne oggetti, ne classi: appartengono ad un tipo di dati diverso, detto booleano.
-- è un tipo fondamentale in java, come quelli numerici
-- i tipi di dati boolean, come tutti gli altri tipi di dati, consente la definizione di variabili e l'assegnazione di valori
-    boolean a = true;
-- a volte è comodo utilizzare variabili booleane per memorizzare valori di passaggi intermedi in cui è opportuno scomporre verifiche troppo complesse.
-- altre volte l'uso di una variabile booleana rende più leggibile il codice
-- spesso le variabili booleane vengono chiamate flags, perché possono assumere soltanto due valori, cioè trovarsi in due soli stati possibili
+    - Ogni espressione ha un valore
+        - x + 10 espressione aritmetica, valore numerico
+        - x < 10 espressione relazionale, valore booleano
+    - un'espressione relazionale ha un valore vero o falso (true or false)
+    - i valore true e false non sono numeri, ne oggetti, ne classi: appartengono ad un tipo di dati diverso, detto booleano.
+    - è un tipo fondamentale in java, come quelli numerici
+    - i tipi di dati boolean, come tutti gli altri tipi di dati, consente la definizione di variabili e l'assegnazione di valori
+        boolean a = true;
+    - a volte è comodo utilizzare variabili booleane per memorizzare valori di passaggi intermedi in cui è opportuno scomporre verifiche troppo complesse.
+    - altre volte l'uso di una variabile booleana rende più leggibile il codice
+    - spesso le variabili booleane vengono chiamate flags, perché possono assumere soltanto due valori, cioè trovarsi in due soli stati possibili
 
-    ## Operatori booleani
-    - Gli operatori booleani o logici servono a svolgere operazioni su valori booleani
-    [java]
-        if (x > 10 && x < 20) // esegue se x è maggiore di 10 e minore di 20
-    [/java]
-    - l'operatore "&&" (and) combina due o più combinazioni in una sola, che risulta vera se e solo se tutte sono vere
-    - l'operatore "||" (or) combina due o più condizioni in una sola, che risulta vera se e solo se almeno una è vera
-    - l'operatore "!" (not) inverte il valore di un'espressione booleana
-    - più operatori booleani possono essere usati in un'unica espressione
+        ## Operatori booleani
+        - Gli operatori booleani o logici servono a svolgere operazioni su valori booleani
         [java]
-        if ((x > 10 && x < 20) || x > 30) {...}
+            if (x > 10 && x < 20) // esegue se x è maggiore di 10 e minore di 20
         [/java]
-    - la valutazione di un'espressione con operatori booleani viene effettuata con uan strategia detta "cortocircuito"
-        - la valutazione dell'espressione termina appena è possibile decidere il risultato
-    - in un'espressione booleana con più operatori, la valutazione viene fatta da sinistra a destra, dando la precedenza all'operatore not, poi all'operatore and, infine all'operatore or
-    - l'ordine di valutazione può comunque essere alterato dalle parentesi tonde
-    [java]
-        if (!(x<0 || x>10)){...}
-        // esegue se x è compreso tra 0 e 10, estremi inclusi
-        if (!x<0 || x>10){...}
-        // esegue se x è maggiore o uguale a 0
-    [/java]
+        - l'operatore "&&" (and) combina due o più combinazioni in una sola, che risulta vera se e solo se tutte sono vere
+        - l'operatore "||" (or) combina due o più condizioni in una sola, che risulta vera se e solo se almeno una è vera
+        - l'operatore "!" (not) inverte il valore di un'espressione booleana
+        - più operatori booleani possono essere usati in un'unica espressione
+            [java]
+            if ((x > 10 && x < 20) || x > 30) {...}
+            [/java]
+        - la valutazione di un'espressione con operatori booleani viene effettuata con uan strategia detta "cortocircuito"
+            - la valutazione dell'espressione termina appena è possibile decidere il risultato
+        - in un'espressione booleana con più operatori, la valutazione viene fatta da sinistra a destra, dando la precedenza all'operatore not, poi all'operatore and, infine all'operatore or
+        - l'ordine di valutazione può comunque essere alterato dalle parentesi tonde
+        [java]
+            if (!(x<0 || x>10)){...}
+            // esegue se x è compreso tra 0 e 10, estremi inclusi
+            if (!x<0 || x>10){...}
+            // esegue se x è maggiore o uguale a 0
+        [/java]
 
 
 
 [2023-11-08]
-# Leggi di De Morgan
-    - Due leggi per semplificare espressioni logiche
-        - criterio per convertire un'espressione "negata" in un'espressione "affermata"
-        1. Legge "!(A && B) è uguale a !A || !B"
-        2. Legge "!(A !! B) è uguale a !A && !B"
-        - gli operatori not vengono spostati sulle singole variabili
-        - gli operatori AND e OR vengono scambiati
-        [java]
-            if (!(x < 0 || x > 10)) {}
-            if ( x>=0 && x<=10) {}
-        [/java]
+    ## Leggi di De Morgan
+        - Due leggi per semplificare espressioni logiche
+            - criterio per convertire un'espressione "negata" in un'espressione "affermata"
+            1. Legge "!(A && B) è uguale a !A || !B"
+            2. Legge "!(A !! B) è uguale a !A && !B"
+            - gli operatori not vengono spostati sulle singole variabili
+            - gli operatori AND e OR vengono scambiati
+            [java]
+                if (!(x < 0 || x > 10)) {}
+                if ( x>=0 && x<=10) {}
+            [/java]
 
-# Iterazioni (while loops)
-    - L'enunciato "while" consente la realizzazione di programmi che devono "eseguire ripetutamente" una serie di azioni "finché" è verificata una condizione 
-    - Sintassi:
+    ## Iterazioni (while loops)
+        - L'enunciato "while" consente la realizzazione di programmi che devono "eseguire ripetutamente" una serie di azioni "finché" è verificata una condizione 
+        - Sintassi:
+            [java]
+                while (condizione)
+                {
+                    enunciato
+                }
+            [/java]
+        - Scopo: eseguire un enunciato finché la condizione è verificata
+        - Nota: il corpo del ciclo while può essere un enunciato qualsiasi, quindi anche un blocco di enunciati
+        - Esistono errori logici che impediscono la terminazione di un ciclo, generando un ciclo infinito
+        - l'esecuzione del seguente programma continua ininterrottamente
         [java]
-            while (condizione)
+            int year = 0;
+            while (year < 20)
             {
-                enunciato
+                double interest 0 balance * rate / 100;
+                balance = balance + interest;
+
+                // qui manca year++, quindi il ciclo continua infinitamente
             }
         [/java]
-    - Scopo: eseguire un enunciato finché la condizione è verificata
-    - Nota: il corpo del ciclo while può essere un enunciato qualsiasi, quindi anche un blocco di enunciati
-    - Esistono errori logici che impediscono la terminazione di un ciclo, generando un ciclo infinito
-    - l'esecuzione del seguente programma continua ininterrottamente
-    [java]
-        int year = 0;
-        while (year < 20)
-        {
-            double interest 0 balance * rate / 100;
-            balance = balance + interest;
+        - in questo caso bisogna arrestare il programma con un comando del sistema operativo o addirittura riavviare il computer
 
-            // qui manca year++, quindi il ciclo continua infinitamente
-        }
-    [/java]
-    - in questo caso bisogna arrestare il programma con un comando del sistema operativo o addirittura riavviare il computer
+    ## Cicli for
+        - generalmente, molti cicli hanno la seguente forma
+            [java]
 
-# Cicli for
-    - generalmente, molti cicli hanno la seguente forma
-        [java]
+                i = inizio;
+                while (i < fine)
+                {
+                    enunciati();
+                    i++;
+                }
 
-            i = inizio;
-            while (i < fine)
-            {
-                enunciati();
-                i++;
-            }
+            [/java]
+        - per comodità esiste il ciclo "for" equivalente
+            [java]
 
-        [/java]
-    - per comodità esiste il ciclo "for" equivalente
-        [java]
+                for (i = inizio; i < fine; i++)
+                {
+                    enunciati();
+                }
 
-            for (i = inizio; i < fine; i++)
-            {
-                enunciati();
-            }
+            [/java]
+        - non è necessario che l'incremento sia di una sola unità, ne che sia positivo, ne che sia intero.
+        - Sintassi:
+            [java]
 
-        [/java]
-    - non è necessario che l'incremento sia di una sola unità, ne che sia positivo, ne che sia intero.
-    - Sintassi:
-        [java]
+                for (inizializzazione; condizione; aggiornamento)
+                {
+                    enunciati
+                }
 
-            for (inizializzazione; condizione; aggiornamento)
-            {
-                enunciati
-            }
+            [/java]
+        - Scopo: eseguire un'inizializzazione, poi ripetere l'esecuzione di un enunciato ed effettuare un aggiornamento finché la condizione è vera. 
+        - Nota: l'inizializzazione può contenere la definizione di una variabile, che sarà visibile soltanto all'interno del corpo del ciclo
+            [java]
 
-        [/java]
-    - Scopo: eseguire un'inizializzazione, poi ripetere l'esecuzione di un enunciato ed effettuare un aggiornamento finché la condizione è vera. 
-    - Nota: l'inizializzazione può contenere la definizione di una variabile, che sarà visibile soltanto all'interno del corpo del ciclo
-        [java]
+                for (int y = 1; y <= 10; y++)
+                {
+                    ...
+                }
+                // qui y non è più definita
 
-            for (int y = 1; y <= 10; y++)
-            {
-                ...
-            }
-            // qui y non è più definita
-
-        [/java]
+            [/java]
         
 
 
 [2023-11-10]
-# Ciclo e mezzo
-- un ciclo del tipo
-    - fai qualcosa, verifica una condizione, fai qualcos'altro e ripeti il ciclo se la condizione era vera
-- non ha una struttura di controllo predenfinita in Java e dev'essere realizzata con un "trucco", come quello di usare una variabile booleana
-- una struttura di questo tipo si chiama anche "ciclo e mezzo" o ciclo ridondante
-- una situazione tipica è quella in cui l'utente deve inserire un insieme di valori, la cui dimensione non è predenfinita
-    - si realizza un ciclo while, dal quale si esce soltanto quando si verifica la condizione all'interno del ciclo
+    ## Ciclo e mezzo
+    - un ciclo del tipo
+        - fai qualcosa, verifica una condizione, fai qualcos'altro e ripeti il ciclo se la condizione era vera
+    - non ha una struttura di controllo predenfinita in Java e dev'essere realizzata con un "trucco", come quello di usare una variabile booleana
+    - una struttura di questo tipo si chiama anche "ciclo e mezzo" o ciclo ridondante
+    - una situazione tipica è quella in cui l'utente deve inserire un insieme di valori, la cui dimensione non è predenfinita
+        - si realizza un ciclo while, dal quale si esce soltanto quando si verifica la condizione all'interno del ciclo
 
-# Ciclo "do"
-- capita spesso di dover eseguire il corpo di un ciclo almeno una volta, per poi ripeterne l'esecuzione se è verificata una particolare condizione
-- per esempio, si vuole leggere un valore in ingresso, ed eventualmente rileggerlo finché non viene introdotto un valore valido
+    ## Ciclo "do"
+    - capita spesso di dover eseguire il corpo di un ciclo almeno una volta, per poi ripeterne l'esecuzione se è verificata una particolare condizione
+    - per esempio, si vuole leggere un valore in ingresso, ed eventualmente rileggerlo finché non viene introdotto un valore valido
+        [java]
+            // si può usare un ciclo while "innaturale"
+            // si usa un'inizializzazione "ingiustificata"
+            double rate = 0;
+            while (rate <= 0)
+            {
+                System.out.println("Inserire il tasso: ");
+                rate = console.nextDouble();
+            }
+
+            // oppure si può ricopiare il corpo del ciclo (o una sua parte) prina del ciclo stesso
+            System.out.println("Inserire il tasso: ");
+            double rate = console.nextDouble();
+            while (rate <= 0)
+            {
+                System.out.println("Inserire il tasso: ");
+                rate = console.nextDouble();
+            }
+
+            // ma per comodità e chiarezza esiste il ciclo do
+            do
+            {
+                System.out.println("Inserire il tasso: ");
+                rate = console.nextDouble();
+            } while (rate <= 0); // qui certamente a rate è stato assegnato un valore
+        [/java]
+
+    ## variabile non inizializzata
     [java]
-        // si può usare un ciclo while "innaturale"
-        // si usa un'inizializzazione "ingiustificata"
-        double rate = 0;
-        while (rate <= 0)
-        {
-            System.out.println("Inserire il tasso: ");
-            rate = console.nextDouble();
-        }
+        // ecco un caso in cui è ammessa la dichiarazione di variabile senza inizializzazione
+        // meglio fare così piuttosto di inizializarla ad una valore immediato
 
-        // oppure si può ricopiare il corpo del ciclo (o una sua parte) prina del ciclo stesso
-        System.out.println("Inserire il tasso: ");
-        double rate = console.nextDouble();
-        while (rate <= 0)
-        {
-            System.out.println("Inserire il tasso: ");
-            rate = console.nextDouble();
-        }
-
-        // ma per comodità e chiarezza esiste il ciclo do
+        double rate;
         do
         {
             System.out.println("Inserire il tasso: ");
             rate = console.nextDouble();
-        } while (rate <= 0); // qui certamente a rate è stato assegnato un valore
+        } while (rate <= 0);
     [/java]
+    - inizializzando ad un valore immediato da due problemi
+        1) al termine dell'esecuzione del ciclo do, la variabile rate non è più visibile perché è definita all'interno del suo corpo
+            - quindi il valore letto da tastiera non è utilizzabile
+        2) in realtà, rate non è visible nemmeno nel punto in cui si valuta la condizione di uscita dal ciclo (rate <= 0), sempre perché è definita all'interno del corpo, quindi si ha errore di sintassi
 
-# variabile non inizializzata
-[java]
-    // ecco un caso in cui è ammessa la dichiarazione di variabile senza inizializzazione
-    // meglio fare così piuttosto di inizializarla ad una valore immediato
-
-    double rate;
-    do
-    {
-        System.out.println("Inserire il tasso: ");
-        rate = console.nextDouble();
-    } while (rate <= 0);
-[/java]
-- inizializzando ad un valore immediato da due problemi
-    1) al termine dell'esecuzione del ciclo do, la variabile rate non è più visibile perché è definita all'interno del suo corpo
-        - quindi il valore letto da tastiera non è utilizzabile
-    2) in realtà, rate non è visible nemmeno nel punto in cui si valuta la condizione di uscita dal ciclo (rate <= 0), sempre perché è definita all'interno del corpo, quindi si ha errore di sintassi
-
-# l'enunciato BREAK
-- L'enunciato break si può usare per terminare un ciclo
-    - l'itereazione in corso NON viene completat, il ciclo termina "bruscamente"
-    - se la condizione di uscita dal ciclo può essere erificata in un punto INTERNO al ciclo, si realizza un ciclo infinito while(true), dal quale si esce soltanto quando si verifica la condizione all'interno del ciclo. 
-    [java]
-    while (true)
-        {
-            ...
-            if (...)
-            {
-                break;
-            }
-            ...
-        }
-    [/java]
-- nel caso di cicli annidati, l'enunciato break provoca la terminazione del ciclo più interno tra quelli in cui si trova l'enunciato stesso
-    [java]
-        int i=0, j=0;
+    ## l'enunciato BREAK
+    - L'enunciato break si può usare per terminare un ciclo
+        - l'itereazione in corso NON viene completat, il ciclo termina "bruscamente"
+        - se la condizione di uscita dal ciclo può essere erificata in un punto INTERNO al ciclo, si realizza un ciclo infinito while(true), dal quale si esce soltanto quando si verifica la condizione all'interno del ciclo. 
+        [java]
         while (true)
-        {
-            System.out.println("i= " + i);
+            {
+                ...
+                if (...)
+                {
+                    break;
+                }
+                ...
+            }
+        [/java]
+    - nel caso di cicli annidati, l'enunciato break provoca la terminazione del ciclo più interno tra quelli in cui si trova l'enunciato stesso
+        [java]
+            int i=0, j=0;
             while (true)
             {
-                if (j==5) 
+                System.out.println("i= " + i);
+                while (true)
                 {
-                    break;
-                    System.out.println("j= " + j);
-                    j++;
-                    ...
-                }
-                i++;
-                if (i==3)
-                {
-                    break;
+                    if (j==5) 
+                    {
+                        break;
+                        System.out.println("j= " + j);
+                        j++;
+                        ...
+                    }
+                    i++;
+                    if (i==3)
+                    {
+                        break;
+                    }
                 }
             }
-        }
-    [/java]
-- l'esecuzione dell'enunciato break deve essere condizionata
-    - in caso contrario, la porzione di corpo del ciclo che si trova dopo l'enunciato break non viene MAI eseguita
-    - è certamente un errore logico, segnalato dal compilatore come "unreachable statement" dal flusso d'esecuzione
-- l'enunciato break NON è necessario, si può sempre scrivere codice equivalente
+        [/java]
+    - l'esecuzione dell'enunciato break deve essere condizionata
+        - in caso contrario, la porzione di corpo del ciclo che si trova dopo l'enunciato break non viene MAI eseguita
+        - è certamente un errore logico, segnalato dal compilatore come "unreachable statement" dal flusso d'esecuzione
+    - l'enunciato break NON è necessario, si può sempre scrivere codice equivalente
 
-# enunciato Cotinue
-- esiste anche l'enunciato "continue" e può essere usato all'interno dei cicli
-    - provoca la terminazione dell'iterazione corrente e il passaggio all'iterazione successiva
+    ## enunciato Cotinue
+    - esiste anche l'enunciato "continue" e può essere usato all'interno dei cicli
+        - provoca la terminazione dell'iterazione corrente e il passaggio all'iterazione successiva
 
-# l'utilizzo di break e continue
-- l'uso di break e continue è non necessario e sconsigliabile perché contribuisce a creare "spaghetti code", ovvero rappresentato da diagrammi di flusso pieni di linee, difficili da leggere e comprendere.
+    ## l'utilizzo di break e continue
+    - l'uso di break e continue è non necessario e sconsigliabile perché contribuisce a creare "spaghetti code", ovvero rappresentato da diagrammi di flusso pieni di linee, difficili da leggere e comprendere.
 
-# Enunciato switch
-- una sequenza che confronti un'unica variabile intera con diverse alternative costanti può essere realizzata con un enunciato switch
-- vantaggio: non bisogna ripetere il nome della variabile da confrontare
-- svantaggio: si può usare solo se la variabile da confrontare è intera (byte, short, char, int) oppure una string (da java 7)
-- svantaggio: non si può usare se uno dei valori da confrontare non è costante
-- svantaggio: ogni case deve terminare on un enunciato break, altrimenti viene eseguito anche il corpo del case succcessivo
+    ## Enunciato switch
+    - una sequenza che confronti un'unica variabile intera con diverse alternative costanti può essere realizzata con un enunciato switch
+    - vantaggio: non bisogna ripetere il nome della variabile da confrontare
+    - svantaggio: si può usare solo se la variabile da confrontare è intera (byte, short, char, int) oppure una string (da java 7)
+    - svantaggio: non si può usare se uno dei valori da confrontare non è costante
+    - svantaggio: ogni case deve terminare on un enunciato break, altrimenti viene eseguito anche il corpo del case succcessivo
 
 
 [2023-11-15]
 # ARRAY
-Lo strumento messo a disposizione dal linguaggio Java (e in molti altri linguaggi di programmazione) per memorizzare una sequenza di dati si chiama "array"
-In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati omogenei, che vengono detti elementi o componenti dell'array
+    Lo strumento messo a disposizione dal linguaggio Java (e in molti altri linguaggi di programmazione) per memorizzare una sequenza di dati si chiama "array"
+    In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati omogenei, che vengono detti elementi o componenti dell'array
 
-- Costruire un array:
-    - un array in java è un oggetto
-        - come ogni oggetto, deve essere costruito con l'operatore new, dichiarando il tipo di dati che potrà contenere
-        [java]
-        new double[10];
-        [/java]
-    - nella costruzione il tipo di dati è seguito da una coppia di parentesi quadre che contiene la dimensione dell'array, cioè il numero di elementi che potrà contenere
-    - in Java, le parentesi quadre si usano SOLO per gli array
-    - il tipo di dati di un array può essere qualsiasi tipo di dati valido in java
-        - uno dei tipi di dati fondamentali o una classe
-        - potremo avere quindi array di numeri interi, di numeri in virgola mobile, di stringhe, di conti bancari..
-    - si dice anche che l'array è costituito da celle o posizioni, nelle quali sono memorizzati i suoi elementi
-        - le posizioni sono identificate da numeri interi non negativi
-        - esiste il dato in prima posizione (posizione 0), quello in seconda posizione (posizione 1), ecc...
-        - quindi l'array NON rappresenta un insieme matematico, anhe perché i dati presenti nell'array possono essere replicati in diverse posizioni
-
-- riferimento a un array:
-    - come avviene dopo la costruzione di qualunque oggetto, l'operatore new restituisce un riferimento all'array appena creato, che può essere memorizzato in una variabile oggetto dello stesso tipo
-    [java]
-    double[] values = new double[10];
-
-    // si può fare anche in due passi
-    double[] values;
-    ... 
-    values  = new double[10];
-    [/java]
-    - ATTENZIONE: nella definizione della variabile oggetto devono essere presenti le parentesi quadre, ma NON dev'essere indicata la dimesione dell'array; la variabile potrà riferirsi solo ad array di quel tipo, ma di qualunque dimensione
-        - non esiste, quindi, il tipo di dato "array di dieci double", bensì il tipo di dato "array di double"
-    [java]
-    double[] x = new double[6];
-    [/java]
-        - una variabile x che si riferisce a un array è una variabile oggetto che contiene un riferimento all'oggetto array
-
-- utilizzare un array:
-    - al momento della costruzione, tutti gli elementi dell'array vengono inizializzati a una valore, seguendo le stesse regole viste per le variabili di esemplare prive di inizializzazione esplicita.
-    [java]
-    double[] values = new double[10];
-    // tutti gli elementi sono inizializzati a 0 in questo caso
-    [/java]
-    - si accede al contenuto di una cella dell'array indicando tra parentesi la posizione voluta
-        - accesso al contenuto della posizione i dell'array values:
+    - Costruire un array:
+        - un array in java è un oggetto
+            - come ogni oggetto, deve essere costruito con l'operatore new, dichiarando il tipo di dati che potrà contenere
             [java]
-            values[i];
+            new double[10];
             [/java]
-    - si può leggere il contenuto di una cella dell'array, per usarlo in un'espressione
-    [java]
-    double doubleVar = 5 + values[3];
-    [/java]
-    - la stessa sintassi si usa per scrivere un valore in una cella dell'array, ponendola nella parte sinistra di un enunciato di assegnazione
-        [java]
-        values[9] = 3.4 + Math.sqrt(2);
-        [/java]
+        - nella costruzione il tipo di dati è seguito da una coppia di parentesi quadre che contiene la dimensione dell'array, cioè il numero di elementi che potrà contenere
+        - in Java, le parentesi quadre si usano SOLO per gli array
+        - il tipo di dati di un array può essere qualsiasi tipo di dati valido in java
+            - uno dei tipi di dati fondamentali o una classe
+            - potremo avere quindi array di numeri interi, di numeri in virgola mobile, di stringhe, di conti bancari..
+        - si dice anche che l'array è costituito da celle o posizioni, nelle quali sono memorizzati i suoi elementi
+            - le posizioni sono identificate da numeri interi non negativi
+            - esiste il dato in prima posizione (posizione 0), quello in seconda posizione (posizione 1), ecc...
+            - quindi l'array NON rappresenta un insieme matematico, anhe perché i dati presenti nell'array possono essere replicati in diverse posizioni
+
+    - riferimento a un array:
+        - come avviene dopo la costruzione di qualunque oggetto, l'operatore new restituisce un riferimento all'array appena creato, che può essere memorizzato in una variabile oggetto dello stesso tipo
         [java]
         double[] values = new double[10];
-        double oneValue = values[3]; // vale 0
-        values[9] = 3.4;
+
+        // si può fare anche in due passi
+        double[] values;
+        ... 
+        values  = new double[10];
         [/java]
-    - il numero utilizzato per accedere a un particolare elemento dell'array si chiama indicare
-    - l'indice può assumere un valore compreso tra 0 (incluso) e la dimensione dell'array (esclusa), cioè segue le stess convenzioni viste per le posizioni dei caratteri in una stringa
-        - il primo elemento ha indice 0
-        - l'ultimo elemento ha indice (dimensione - 1)
-    - a tutti gli effetti sintattici e semantici, un elemento di un array equivale a una singola variabile dello stesso tipo
-        - values[3] è, quindi, una variabile di tipo double
-    - l'indice di un elemento di un array può, più in generale, essere un'espressione di tipo int
+        - ATTENZIONE: nella definizione della variabile oggetto devono essere presenti le parentesi quadre, ma NON dev'essere indicata la dimesione dell'array; la variabile potrà riferirsi solo ad array di quel tipo, ma di qualunque dimensione
+            - non esiste, quindi, il tipo di dato "array di dieci double", bensì il tipo di dato "array di double"
+        [java]
+        double[] x = new double[6];
+        [/java]
+            - una variabile x che si riferisce a un array è una variabile oggetto che contiene un riferimento all'oggetto array
+
+    - utilizzare un array:
+        - al momento della costruzione, tutti gli elementi dell'array vengono inizializzati a una valore, seguendo le stesse regole viste per le variabili di esemplare prive di inizializzazione esplicita.
         [java]
         double[] values = new double[10];
-        int a = 4;
-        values[a + 2] = 3.2 // modifica il settimo elemento (parto da indice 0)
+        // tutti gli elementi sono inizializzati a 0 in questo caso
         [/java]
-    - se si accede a un elemento dell'array usando un indice sbagliato, l'ambiente di esecuzione lancia un'ecceszione di tipo "ArrayIndexOutOfBoundsException"
-
-- struttura di dati ad accesso casuale: il tempo di accesso (in lettura o scrittura) a uno dei suoi elementi non deve dipendere dal valore dell'indice associato a tale elemento.
-
-- la dimensione di un array: 
-    - un array non ha metodi pubblici, ne statici, ne di esemplare
-    - l'unico elemento pubblico di un oggetto di tipo array è la sua dimensione, a cui si accede attraverso la sua variabile pubblica di esemplare length (attenzione, non è un metodo)
-    - una variabile pubblica di esemplare sembrerebbe una violazione delle regole
-    - in realtà, length è una variabile pubblica ma è final, quindi non può essere modificat, può soltanto essere ispezionata.
-        - questo paradigma è, in generale, considerato accettabile nell'OPP
+        - si accede al contenuto di una cella dell'array indicando tra parentesi la posizione voluta
+            - accesso al contenuto della posizione i dell'array values:
+                [java]
+                values[i];
+                [/java]
+        - si può leggere il contenuto di una cella dell'array, per usarlo in un'espressione
+        [java]
+        double doubleVar = 5 + values[3];
+        [/java]
+        - la stessa sintassi si usa per scrivere un valore in una cella dell'array, ponendola nella parte sinistra di un enunciato di assegnazione
+            [java]
+            values[9] = 3.4 + Math.sqrt(2);
+            [/java]
             [java]
             double[] values = new double[10];
-            values.length = 15; // errore in compilazione 
-
-            // in alternativa si sarebbe potuto fornire un metodo pubblico per accedere alla variabile privata
-            double[] values = new double[10];
-            int a = values.getLength(); // non è così!
-            // la soluzione progettuale scelta è meno elegante ma fornisce lo stesso livello di protezione dell'informazione ed è più veloce in esecuzione
+            double oneValue = values[3]; // vale 0
+            values[9] = 3.4;
             [/java]
+        - il numero utilizzato per accedere a un particolare elemento dell'array si chiama indicare
+        - l'indice può assumere un valore compreso tra 0 (incluso) e la dimensione dell'array (esclusa), cioè segue le stess convenzioni viste per le posizioni dei caratteri in una stringa
+            - il primo elemento ha indice 0
+            - l'ultimo elemento ha indice (dimensione - 1)
+        - a tutti gli effetti sintattici e semantici, un elemento di un array equivale a una singola variabile dello stesso tipo
+            - values[3] è, quindi, una variabile di tipo double
+        - l'indice di un elemento di un array può, più in generale, essere un'espressione di tipo int
+            [java]
+            double[] values = new double[10];
+            int a = 4;
+            values[a + 2] = 3.2 // modifica il settimo elemento (parto da indice 0)
+            [/java]
+        - se si accede a un elemento dell'array usando un indice sbagliato, l'ambiente di esecuzione lancia un'ecceszione di tipo "ArrayIndexOutOfBoundsException"
 
-    ## argomenti sulla riga di comando 
-    [java]
-        public static void main(String[] args)
-    [/java]
-    - Quando si esegue un programma Java, è possibile fornire dei parametri dopo il nome della classe che contiene il metodo main 
-    - Tali parametri vengono letti dall'interprete Java e trasformati in un array di stringhe che costituisce il parametro del metodo main
+    - struttura di dati ad accesso casuale: il tempo di accesso (in lettura o scrittura) a uno dei suoi elementi non deve dipendere dal valore dell'indice associato a tale elemento.
 
-    [java]
-        public class Program
-        {
+    - la dimensione di un array: 
+        - un array non ha metodi pubblici, ne statici, ne di esemplare
+        - l'unico elemento pubblico di un oggetto di tipo array è la sua dimensione, a cui si accede attraverso la sua variabile pubblica di esemplare length (attenzione, non è un metodo)
+        - una variabile pubblica di esemplare sembrerebbe una violazione delle regole
+        - in realtà, length è una variabile pubblica ma è final, quindi non può essere modificat, può soltanto essere ispezionata.
+            - questo paradigma è, in generale, considerato accettabile nell'OPP
+                [java]
+                double[] values = new double[10];
+                values.length = 15; // errore in compilazione 
+
+                // in alternativa si sarebbe potuto fornire un metodo pubblico per accedere alla variabile privata
+                double[] values = new double[10];
+                int a = values.getLength(); // non è così!
+                // la soluzione progettuale scelta è meno elegante ma fornisce lo stesso livello di protezione dell'informazione ed è più veloce in esecuzione
+                [/java]
+
+        ## argomenti sulla riga di comando 
+        [java]
             public static void main(String[] args)
-            {
-                System.out.println(args.length);
-                System.out.println(args[1]);
-            }   // qui sotto l'output del programma, se viene eseguito con la riga di comando vista sopra
-        }
-    [/java]
-
-    ## Copiare o clonare un array
-    - una variabile che si riferisce a un array è una variabile oggetto che contiene un riferimento all'oggetto array. Copiando il contenuto della variabile in un'altra non si copia l'array, ma si ottiene un altro riferimento allo stesso oggetto array.
-    - se si vuole clonare un array, bisogna:
-        1) creare un nuovo array dello stesso tipo e con la stessa dimensione
-        2) copiare ogni elemento del primo array nel corrispondente elemento del secondo array
-        [java]
-            double[] values = new double[10];
-            // inseriamo i dati nell'array
-            ...
-            double[] otherValues = new double[values.length];
-            for (int i = 0; i < values.length; i++)
-            {
-                otherValues[i] = values[i];
-            }
         [/java]
-    - invece di usare un ciclo, è possibile invocare il metodo statico "arraycopy" della classe System.
-    - il metodo "System.arraycopy" consente, più in generale, di copiare una porzione di un array in un altro array
-        - anche l'array di destinazione (quello in cui si copiano i dati) deve già esistere e deve essere grande a sufficienza
-
-    ## Dimemsione fisica vs dimensione logica
-    - Dimensione fisica:
-        - values.length è il numero di valori memorizzabili ed è la dimensione fisica dell'array
-    - Dimensione logica:
-        - valuesSize è il numero di valori memorizzati ed è la dimensione logica dell'array
-
-    ## Array riempiti solo in parte
-    - Si dice che un array utilizzato in questo modo è "riempito solo in parte", anche se sarebbe meglio dire "riempito in una sua porzione iniziale" (eventualmente vuota o eventualmente coincidente con l'intero array).
-    - valuesSize è una variabile esterna all'array, non esistono oggetti primitivi di tipo "array riempito solo in parte".
-    - L'array riempito solo in parte è, quindi, semplicemente una modalità di utilizzo di un normale array, a cui viene associata, dal punto di vista logico (ma non strutturale), una variabile di tipo int. 
-
-    ## Cambiare dimensione a un array
-    - Non si può aumentare o diminuire la dimensione di un array.
-    - Si può creare un nuovo array più grande di quello "pieno"
-        - ad esempio: il doppio, ma potrebbe bastare un elemento in più
-        - copiarne il contenuto
-        - "abbandonare il vecchio array, usando poi quello nuovo
-    - si parla di array dinamico, sottointendendo che in realtà si tratta di una gestione dinamica dell'array:
-        - non può esserci ambiguità perché in Java non esistono array dinamici, cioè di dimensione modificabile
-    - si dice anche che si ridimensione l'array, di nuovo senza ambiguità
+        - Quando si esegue un programma Java, è possibile fornire dei parametri dopo il nome della classe che contiene il metodo main 
+        - Tali parametri vengono letti dall'interprete Java e trasformati in un array di stringhe che costituisce il parametro del metodo main
 
         [java]
-            if (valuesSize == values.length) // è pieno
+            public class Program
             {
-                double[] newValues = new double[values.length * 2];
-                for (int i = 0; i < values.length; i++)
-                {
-                    newValues[i] = values[i];
-                }
-                values = newValues;
-                // valuesSize ovviamente non cambia
-                // values non punta più al vecchio
-                // array che viene abbandonato.
-            }
-        [/java]
-
-    - possiamo progettare un metodo di utilità che restituisca un array "ingrandito" a partire da quello che viene fornito
-
-        [java]
-            public class ArrayUtil
-            {
-                public static double[] resize(double[] oldArray, int newLength)
-                {
-                    if (newLength < oldArray.length)
-                    {
-                        // gestire la situazione come più opportuno
-                    }
-                    
-                    double[] newArray = new double[newLength];
-                    for (int i = 0; i < oldArray.length; i++)
-                    {
-                        newArray[i] = oldArray[i];
-                    }
-
-                    return newArray;
-                } 
-                // la "coda" del nuovo array rimane riempita con i valori predenfiniti
-
                 public static void main(String[] args)
                 {
-                    double[] values = {1, 2.3, 4.5};
-                    values = ArrayUtil.resize(values, 5);
-                    values[4] = 5.2;
-                    
-                    
-                    // lo stesso metodo può essere usato per CLONARE un intero array; in seguito, è consentito utilizzare sia iul nuovo sia il vecchio
-
-                    double[] values = {1, 2.3, 4.5};
-                    double[] newV = ArrayUtil.resize(values, values.length);
-                    values[2] = 5.2;
-
-                }
+                    System.out.println(args.length);
+                    System.out.println(args[1]);
+                }   // qui sotto l'output del programma, se viene eseguito con la riga di comando vista sopra
             }
         [/java]
 
-    ## Garbage Collector
-    - la JVM provvede a effettuare automaticamente la gestione della memoria (garbage collection) durante l'esecuzione di un programma
-    - gli oggetti che non hanno più un riferimento nel programma vengono considerati memoria libera. 
+        ## Copiare o clonare un array
+        - una variabile che si riferisce a un array è una variabile oggetto che contiene un riferimento all'oggetto array. Copiando il contenuto della variabile in un'altra non si copia l'array, ma si ottiene un altro riferimento allo stesso oggetto array.
+        - se si vuole clonare un array, bisogna:
+            1) creare un nuovo array dello stesso tipo e con la stessa dimensione
+            2) copiare ogni elemento del primo array nel corrispondente elemento del secondo array
+            [java]
+                double[] values = new double[10];
+                // inseriamo i dati nell'array
+                ...
+                double[] otherValues = new double[values.length];
+                for (int i = 0; i < values.length; i++)
+                {
+                    otherValues[i] = values[i];
+                }
+            [/java]
+        - invece di usare un ciclo, è possibile invocare il metodo statico "arraycopy" della classe System.
+        - il metodo "System.arraycopy" consente, più in generale, di copiare una porzione di un array in un altro array
+            - anche l'array di destinazione (quello in cui si copiano i dati) deve già esistere e deve essere grande a sufficienza
 
-        ### Allocazione della memoria in Java
-        - Durante l'esecuzione dei metodi di un programma vengono creati dinamicamente oggetti (allocazione dinamica) usando lo speciale operatore new:
-            - BankAccount acct = new BankAccount();
-            - crea dinamicamente un oggetto di classe BankAccount
-        - Per l'allocazione dinamica di oggetti Java usa un'area di memoria denominata Java Heap.
+        ## Dimemsione fisica vs dimensione logica
+        - Dimensione fisica:
+            - values.length è il numero di valori memorizzabili ed è la dimensione fisica dell'array
+        - Dimensione logica:
+            - valuesSize è il numero di valori memorizzati ed è la dimensione logica dell'array
 
-    ## Array riempito in parte come parametro
-    - un metodo che voglia elaborare un array riempito solo in parte deve dichairare due parametri..
-        - 1. l'Array
-        - 2. la sua dimensione logica, perché quest'ultima non può essere dedotta ispezionando l'array, come invece avviene per la dimensione fisica
-        - NB: se passo come parametro v.length elaboro array pieni
+        ## Array riempiti solo in parte
+        - Si dice che un array utilizzato in questo modo è "riempito solo in parte", anche se sarebbe meglio dire "riempito in una sua porzione iniziale" (eventualmente vuota o eventualmente coincidente con l'intero array).
+        - valuesSize è una variabile esterna all'array, non esistono oggetti primitivi di tipo "array riempito solo in parte".
+        - L'array riempito solo in parte è, quindi, semplicemente una modalità di utilizzo di un normale array, a cui viene associata, dal punto di vista logico (ma non strutturale), una variabile di tipo int. 
+
+        ## Cambiare dimensione a un array
+        - Non si può aumentare o diminuire la dimensione di un array.
+        - Si può creare un nuovo array più grande di quello "pieno"
+            - ad esempio: il doppio, ma potrebbe bastare un elemento in più
+            - copiarne il contenuto
+            - "abbandonare il vecchio array, usando poi quello nuovo
+        - si parla di array dinamico, sottointendendo che in realtà si tratta di una gestione dinamica dell'array:
+            - non può esserci ambiguità perché in Java non esistono array dinamici, cioè di dimensione modificabile
+        - si dice anche che si ridimensione l'array, di nuovo senza ambiguità
+
+            [java]
+                if (valuesSize == values.length) // è pieno
+                {
+                    double[] newValues = new double[values.length * 2];
+                    for (int i = 0; i < values.length; i++)
+                    {
+                        newValues[i] = values[i];
+                    }
+                    values = newValues;
+                    // valuesSize ovviamente non cambia
+                    // values non punta più al vecchio
+                    // array che viene abbandonato.
+                }
+            [/java]
+
+        - possiamo progettare un metodo di utilità che restituisca un array "ingrandito" a partire da quello che viene fornito
+
+            [java]
+                public class ArrayUtil
+                {
+                    public static double[] resize(double[] oldArray, int newLength)
+                    {
+                        if (newLength < oldArray.length)
+                        {
+                            // gestire la situazione come più opportuno
+                        }
+                        
+                        double[] newArray = new double[newLength];
+                        for (int i = 0; i < oldArray.length; i++)
+                        {
+                            newArray[i] = oldArray[i];
+                        }
+
+                        return newArray;
+                    } 
+                    // la "coda" del nuovo array rimane riempita con i valori predenfiniti
+
+                    public static void main(String[] args)
+                    {
+                        double[] values = {1, 2.3, 4.5};
+                        values = ArrayUtil.resize(values, 5);
+                        values[4] = 5.2;
+                        
+                        
+                        // lo stesso metodo può essere usato per CLONARE un intero array; in seguito, è consentito utilizzare sia iul nuovo sia il vecchio
+
+                        double[] values = {1, 2.3, 4.5};
+                        double[] newV = ArrayUtil.resize(values, values.length);
+                        values[2] = 5.2;
+
+                    }
+                }
+            [/java]
+
+        ## Garbage Collector
+        - la JVM provvede a effettuare automaticamente la gestione della memoria (garbage collection) durante l'esecuzione di un programma
+        - gli oggetti che non hanno più un riferimento nel programma vengono considerati memoria libera. 
+
+            ### Allocazione della memoria in Java
+            - Durante l'esecuzione dei metodi di un programma vengono creati dinamicamente oggetti (allocazione dinamica) usando lo speciale operatore new:
+                - BankAccount acct = new BankAccount();
+                - crea dinamicamente un oggetto di classe BankAccount
+            - Per l'allocazione dinamica di oggetti Java usa un'area di memoria denominata Java Heap.
+
+        ## Array riempito in parte come parametro
+        - un metodo che voglia elaborare un array riempito solo in parte deve dichairare due parametri..
+            - 1. l'Array
+            - 2. la sua dimensione logica, perché quest'ultima non può essere dedotta ispezionando l'array, come invece avviene per la dimensione fisica
+            - NB: se passo come parametro v.length elaboro array pieni
 
 # ARRAY BIDIMENSIONALI E MULTIDIMENSIONALI
-- problema:
-    - stampare una tabella con i valor idelle potenze x^y, tra 1 e 4 per ogni valore di y tra 1 e 5
+    - problema:
+        - stampare una tabella con i valor idelle potenze x^y, tra 1 e 4 per ogni valore di y tra 1 e 5
 
-        1       1      1       1       1
-        2       4      8      16      32
-        3       9     27      81     243
-        4      16     64     256    1024
+            1       1      1       1       1
+            2       4      8      16      32
+            3       9     27      81     243
+            4      16     64     256    1024
 
-    - una struttura di questo tipo, con dati organizzati in righe e colonne, si dice "MATRICE" o array bidimensionale
-    - un elemento all'interno di una matrice p identificato da una coppia (ordinanta) di indici
-        - un indice di riga
-        - un indice di colonna
-    - in Java esistono gli array bidimensionali e, in generale, multidimensionali
-        ! sempre di dati omogenei
-    - dichiarazione di un array bidimensionale con elementi di tipo int
-        [java]
-            int[][] powers;
-        [/java]
+        - una struttura di questo tipo, con dati organizzati in righe e colonne, si dice "MATRICE" o array bidimensionale
+        - un elemento all'interno di una matrice p identificato da una coppia (ordinanta) di indici
+            - un indice di riga
+            - un indice di colonna
+        - in Java esistono gli array bidimensionali e, in generale, multidimensionali
+            ! sempre di dati omogenei
+        - dichiarazione di un array bidimensionale con elementi di tipo int
+            [java]
+                int[][] powers;
+            [/java]
 
-    - costruzione di array bidimensionale di tipo int con 4 righe e 5 colonne
-        [java]
-            new int[4][5];
-        [/java]
+        - costruzione di array bidimensionale di tipo int con 4 righe e 5 colonne
+            [java]
+                new int[4][5];
+            [/java]
 
-    - Assegnazione di un riferimento ad array bidimensionale
-        [java]
-            powers = new int[4][5];
-        [/java]
+        - Assegnazione di un riferimento ad array bidimensionale
+            [java]
+                powers = new int[4][5];
+            [/java]
 
-    - Accesso a un elemento di un array bidimensionale
-        [java]
-            powers[2][3] = 2;
-            int x = powers[0][1] + 5;
-        [/java]
-        
-    - Ciascun indice deve essere:
-        - di tipo int
-        - non negativo
-        - minore della dimensione corrispondente
-    - per conoscere il valore delle due dimensioni
-        - la prima dimensione è "powers.length;"
-        - la seconda dimensione è "powers[0].length;" // perché in realtà un array bidimensionale è un array di array
-    - in un array tridimensionale (double[][][] powers), la terza dimensione è, analogamente "powers[0][0].length;"
+        - Accesso a un elemento di un array bidimensionale
+            [java]
+                powers[2][3] = 2;
+                int x = powers[0][1] + 5;
+            [/java]
+            
+        - Ciascun indice deve essere:
+            - di tipo int
+            - non negativo
+            - minore della dimensione corrispondente
+        - per conoscere il valore delle due dimensioni
+            - la prima dimensione è "powers.length;"
+            - la seconda dimensione è "powers[0].length;" // perché in realtà un array bidimensionale è un array di array
+        - in un array tridimensionale (double[][][] powers), la terza dimensione è, analogamente "powers[0][0].length;"
 
-    - ESEMPIO: TableOfPowers.java
+        - ESEMPIO: TableOfPowers.java
 
 # SEMPLICI ALGORITMI SU ARRAY
-! GENERO FILE CHIAMATO: ArrayUtil.java
+    ! GENERO FILE CHIAMATO: ArrayUtil.java
 
     ## Numeri Casuali
     - La classe Math mette a disposizione il metodo statico random() per generare sequenze di numeri pseudo-casuali
@@ -1511,85 +1511,85 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
 
     - usando random scriviamo nella classe ArrayUtil un metodo che genera array di numeri interi casuali, ciascuno dei quali ha un valore compreso tra 0 e n.
 
-# ELIMINARE UN ELEMENTO
-- L'eliminazione di un elemento da un array richiede due algoritmi diversi
-    - se l'ordine degli elementi non è importante, è sufficiente spostare l'ultimo elemento nell'indice da eliminare e
-        - ridimensionare l'array se uso array riempiti completamente
-        - decrementare la dimensione logica se uso array riempiti parzialmente
-    - se l'ordine degli elementi è importante, è necessario spostare tutti gli elementi successivi di un indice verso sinistra
-    [java]
-        double[] values = {1, 2.3, 4.5, 5.6};
-        int vSize = 4; // array pieno, dim logica = dim fisica
-        int iIndexToRemove = 1;
-        for (int i = iIndexToRemove; i < values.length - 1; i++)
-        {
-            values[i] = values[i + 1];
-        }
-        vSize--;
-    [/java]
+    ## ELIMINARE UN ELEMENTO
+    - L'eliminazione di un elemento da un array richiede due algoritmi diversi
+        - se l'ordine degli elementi non è importante, è sufficiente spostare l'ultimo elemento nell'indice da eliminare e
+            - ridimensionare l'array se uso array riempiti completamente
+            - decrementare la dimensione logica se uso array riempiti parzialmente
+        - se l'ordine degli elementi è importante, è necessario spostare tutti gli elementi successivi di un indice verso sinistra
+        [java]
+            double[] values = {1, 2.3, 4.5, 5.6};
+            int vSize = 4; // array pieno, dim logica = dim fisica
+            int iIndexToRemove = 1;
+            for (int i = iIndexToRemove; i < values.length - 1; i++)
+            {
+                values[i] = values[i + 1];
+            }
+            vSize--;
+        [/java]
 
-# INSERIRE UN ELEMENTO
-- Per inserire un elemento in un array nella posizione voluta, se questa non è la prima posizione libera, bisogna "fargli spazio"
-    - tutti gli elementi il cui indice è maggiore dell'indice della posizione voluta devono essere spostati nella posizioen con indice immediatamente superiore, a partire dall'ultimo elemento dell'array
-    [java]
-        double[] values = {1, 2.3, 4.5, 5.6};
-        values = resize(values, values.length + 1);
+    ## INSERIRE UN ELEMENTO
+    - Per inserire un elemento in un array nella posizione voluta, se questa non è la prima posizione libera, bisogna "fargli spazio"
+        - tutti gli elementi il cui indice è maggiore dell'indice della posizione voluta devono essere spostati nella posizioen con indice immediatamente superiore, a partire dall'ultimo elemento dell'array
+        [java]
+            double[] values = {1, 2.3, 4.5, 5.6};
+            values = resize(values, values.length + 1);
 
-        int iIndex = 2;
-        for (int i = values.length - 1; i > iIndex; i--)
-        {
-            values[i] = values[i - 1];
-        }
-        values[iIndex] = 5.4;
-        vSize++;
-    [/java]
-# Ricerca di un valore in un array
-[java]
-    // Declare and initialize an array of doubles with a size of 100
-    double[] v = new double[100];
+            int iIndex = 2;
+            for (int i = values.length - 1; i > iIndex; i--)
+            {
+                values[i] = values[i - 1];
+            }
+            values[iIndex] = 5.4;
+            vSize++;
+        [/java]
+    # Ricerca di un valore in un array
+        [java]
+            // Declare and initialize an array of doubles with a size of 100
+            double[] v = new double[100];
 
-    // Declare and initialize a variable to hold the number of elements in the array
-    int vSize = 0;
+            // Declare and initialize a variable to hold the number of elements in the array
+            int vSize = 0;
 
-    // Declare a variable to hold the target value to be searched for in the array
-    double target;
+            // Declare a variable to hold the target value to be searched for in the array
+            double target;
 
-    // Declare and initialize a boolean variable to indicate whether the target value is found in the array
-    boolean found = false;
+            // Declare and initialize a boolean variable to indicate whether the target value is found in the array
+            boolean found = false;
 
-    // Read the data. At the end, vSize contains the number of elements and target contains the value to be searched for
+            // Read the data. At the end, vSize contains the number of elements and target contains the value to be searched for
 
-    // Iterate over the elements in the array
-    for (int i = 0; i < vSize; i++)
-    {
-        // Check if the current element is equal to the target value
-        if (v[i] == target)
-        {
-            // If it is, set found to true and exit the loop
-            found = true;
-            break;
-        }
-    }
+            // Iterate over the elements in the array
+            for (int i = 0; i < vSize; i++)
+            {
+                // Check if the current element is equal to the target value
+                if (v[i] == target)
+                {
+                    // If it is, set found to true and exit the loop
+                    found = true;
+                    break;
+                }
+            }
 
-    // Check if the target value was found in the array
-    if(found)
-    {
-        // If it was, print a message indicating that it was found
-        System.out.println("Trovato");
-    }
-    else
-    {
-        // If it wasn't, print a message indicating that it was not found
-        System.out.println("Non trovato");
-    }
+            // Check if the target value was found in the array
+            if(found)
+            {
+                // If it was, print a message indicating that it was found
+                System.out.println("Trovato");
+            }
+            else
+            {
+                // If it wasn't, print a message indicating that it was not found
+                System.out.println("Non trovato");
+            }
 
-[/java]
+        [/java]
 
 # Varianti per verificare la presenza di uno specifico valore 
-- l'algoritmo può essere realizzato in diverse varianti e inserito in un metodo che riceve il valroe da cercare e l'array in cui cercare
-    - un valore boolean: successo/insuccesso della ricerca
-    - un valore int: posizione dell'elemento trovato, -1 se non trovato
-    - un array di int: posizioni di tutti gli elementi trovati, array vuoto se non trovato
+    - l'algoritmo può essere realizzato in diverse varianti e inserito in un metodo che riceve il valroe da cercare e l'array in cui cercare
+        - un valore boolean: successo/insuccesso della ricerca
+        - un valore int: posizione dell'elemento trovato, -1 se non trovato
+        - un array di int: posizioni di tutti gli elementi trovati, array vuoto se non trovato
 
 
 # GESTIONE DI CONTENUTI CONDIVISI IN UNA CLASSE
@@ -1713,19 +1713,19 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
     [/java]
 
 # VARIABILI STATICHE
-- Una variabile static (detta variabile di classe) è condivisa da tutti gli oggetti della classe e ne esiste un'unica copia.
-    - non si trova all'interno degli esemplari della classe, ma in una zona di memoria riservata alla classe
--! osserviamo che le variabili statiche non dovrebbero (da un punto di vista logico) essere inizializzate nei Costruttori
-    - il loro valore verrebbe inizializzato di nuovo ogni volta che si costruisce un oggetto, perdendo il vantaggio di avere una variabile condivisa!
-- Bisogna inizializzarle quando si dichiarono
-    [java] private static int iLastAssignedNumber = 0; [/java]
-    - sappiamo che questa sintassi si può usare anche per le variabili di esemplare, anziché usare un costruttore, ma non è una buona pratica di programmazione
-- Nella programmazione a oggetti, l'utilizzo di variabili statiche deve essere limitato, perché
-    - metodi che leggono variabili statiche e agiscono di conseguenza hanno un comportamento che non dipende soltanto dai loro parametri (implicito ed espliciti), quindi sono più esposti ai cosiddetti "effetti collaterali", cioè effetti più difficili da prevedere correttamente
-- in  ogni caso, le variabili statiche devono essere private come quelle di esemplare, per evitare accessi indesiderati
-    - se iLastAssignedNumber fosse public, vi si potrebbe accedere (in lettura o in scrittura) anche da un metodo esterno alla classe usando la sintassi BanckAccount.iLastAssignedNumber, cioè usando il nome della classe.
-- è invece pratica comune (senza controindicazioni) usare costanti statiche, come nella classe Math
-- Tali costanti sono di norma public e per accedere al loro valore si usa il nome della classe seguito dal punto e dal nome della costante, Math.PI
+    - Una variabile static (detta variabile di classe) è condivisa da tutti gli oggetti della classe e ne esiste un'unica copia.
+        - non si trova all'interno degli esemplari della classe, ma in una zona di memoria riservata alla classe
+    -! osserviamo che le variabili statiche non dovrebbero (da un punto di vista logico) essere inizializzate nei Costruttori
+        - il loro valore verrebbe inizializzato di nuovo ogni volta che si costruisce un oggetto, perdendo il vantaggio di avere una variabile condivisa!
+    - Bisogna inizializzarle quando si dichiarono
+        [java] private static int iLastAssignedNumber = 0; [/java]
+        - sappiamo che questa sintassi si può usare anche per le variabili di esemplare, anziché usare un costruttore, ma non è una buona pratica di programmazione
+    - Nella programmazione a oggetti, l'utilizzo di variabili statiche deve essere limitato, perché
+        - metodi che leggono variabili statiche e agiscono di conseguenza hanno un comportamento che non dipende soltanto dai loro parametri (implicito ed espliciti), quindi sono più esposti ai cosiddetti "effetti collaterali", cioè effetti più difficili da prevedere correttamente
+    - in  ogni caso, le variabili statiche devono essere private come quelle di esemplare, per evitare accessi indesiderati
+        - se iLastAssignedNumber fosse public, vi si potrebbe accedere (in lettura o in scrittura) anche da un metodo esterno alla classe usando la sintassi BanckAccount.iLastAssignedNumber, cioè usando il nome della classe.
+    - è invece pratica comune (senza controindicazioni) usare costanti statiche, come nella classe Math
+    - Tali costanti sono di norma public e per accedere al loro valore si usa il nome della classe seguito dal punto e dal nome della costante, Math.PI
 
 # CONSNIGLI PER LA PROGETTAZIONE DI UNA CLASSE
     ## Progettare la classe
@@ -1736,369 +1736,511 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
     - Se un metodo restituisce valori non void, scrivere inizalmente un corpo fittizzio contenente solo un enunciato di return
 
 # GESTIONE DELLE ECCEZIONI
-- Un'eccezione è un evento anomalo che si verifica durante l'esecuzione di un programma e che interrompe il normale flusso di esecuzione.
-- Un'eccezione può essere generata da un'istruzione che non può essere eseguita correttamente, ad esempio perché i dati su cui deve operare non sono validi.
-- Un'eccezione può essere generata anche da un'istruzione che non può essere eseguita correttamente, ad esempio perché i dati su cui deve operare non sono validi.
+    - Un'eccezione è un evento anomalo che si verifica durante l'esecuzione di un programma e che interrompe il normale flusso di esecuzione.
+    - Un'eccezione può essere generata da un'istruzione che non può essere eseguita correttamente, ad esempio perché i dati su cui deve operare non sono validi.
+    - Un'eccezione può essere generata anche da un'istruzione che non può essere eseguita correttamente, ad esempio perché i dati su cui deve operare non sono validi.
 
-    ## Record di attivazione
-    - Quando un metodo entra in esecuzione viene creata nella memoria Stack una zona riservata, detta record di attivazione, che contiene tutte le informazioni necessarie per l'esecuzione del metodo, quali:
-        - Parametri formali
-        - Variabili locali 
-        - Valore di ritorno
-    
-    ## Pila di attivazione
-    - La zona di memoria che contiene i record di attivazione dei metodi invocati si chiama Stack perché si comporta come una pila di piatti o di libri.
-        - Quando un metodo in esecuzione invoca un altro metodo viene aggiunto in cima alla pila il record di attivazione del metodo invocato
-        - Quando un metodo termina la sua esecuzione viene tolto dalla pila e si torna ad eseguire il metodo che l'aveva invocato (quindi quello immediatamente "sotto") dal punto in cui eravamo rimasti.
-    
-    ## Lancio delle eccezioni
-    - Il meccanismo generali di segnalazione di errori (o di condizioni di funzionamento anomale) in Java è basato sul lancio di eccezioni.
-    - si dice anche che il metodo solleva o genera un'eccezione
+        ## Record di attivazione
+        - Quando un metodo entra in esecuzione viene creata nella memoria Stack una zona riservata, detta record di attivazione, che contiene tutte le informazioni necessarie per l'esecuzione del metodo, quali:
+            - Parametri formali
+            - Variabili locali 
+            - Valore di ritorno
+        
+        ## Pila di attivazione
+        - La zona di memoria che contiene i record di attivazione dei metodi invocati si chiama Stack perché si comporta come una pila di piatti o di libri.
+            - Quando un metodo in esecuzione invoca un altro metodo viene aggiunto in cima alla pila il record di attivazione del metodo invocato
+            - Quando un metodo termina la sua esecuzione viene tolto dalla pila e si torna ad eseguire il metodo che l'aveva invocato (quindi quello immediatamente "sotto") dal punto in cui eravamo rimasti.
+        
+        ## Lancio delle eccezioni
+        - Il meccanismo generali di segnalazione di errori (o di condizioni di funzionamento anomale) in Java è basato sul lancio di eccezioni.
+        - si dice anche che il metodo solleva o genera un'eccezione
 
-    ## Le eccezioni in Java
-    - Quando un metodo lancia un'eccezione..
-        - il metodo termina immediatamente la sua esecuzione
-        - il controllo passa al metodo che l'ha invocato
-        - se anche questo metodo non gestisce l'eccezione, il controllo passa al metodo che l'ha invocato, e così via
-        - se nessuno dei metodi che hanno invocato il metodo che ha lanciato l'eccezione gestisce l'eccezione, il programma termina con un messaggio di errore
-    
-    ## Gestire le eccezioni di input
-    [java]
-        String line = console.nextLine();
-        int n = Integer.parseInt(line);
-    [/java]
-    - se l'utente inserisce una stringa che non rappresenta un numero intero, il metodo parseInt lancia un'eccezione di tipo NumberFormatException
-    - si può gestire l'eccezione, segnalando l'errore all'utente e chiedendo di inserire nuovamente il dato numerico, anziché terminare il programma
-        - possiamo intercettare l'eccezione e gestirla mediante un blocco try-catch
-    [java]
-        int n = 0;
-        boolean valid = false;
-        do
-        {
-            try
+        ## Le eccezioni in Java
+        - Quando un metodo lancia un'eccezione..
+            - il metodo termina immediatamente la sua esecuzione
+            - il controllo passa al metodo che l'ha invocato
+            - se anche questo metodo non gestisce l'eccezione, il controllo passa al metodo che l'ha invocato, e così via
+            - se nessuno dei metodi che hanno invocato il metodo che ha lanciato l'eccezione gestisce l'eccezione, il programma termina con un messaggio di errore
+        
+        ## Gestire le eccezioni di input
+        [java]
+            String line = console.nextLine();
+            int n = Integer.parseInt(line);
+        [/java]
+        - se l'utente inserisce una stringa che non rappresenta un numero intero, il metodo parseInt lancia un'eccezione di tipo NumberFormatException
+        - si può gestire l'eccezione, segnalando l'errore all'utente e chiedendo di inserire nuovamente il dato numerico, anziché terminare il programma
+            - possiamo intercettare l'eccezione e gestirla mediante un blocco try-catch
+        [java]
+            int n = 0;
+            boolean valid = false;
+            do
             {
-                String line = console.nextLine();
-                n = Integer.parseInt(line);
-                valid = true;
+                try
+                {
+                    String line = console.nextLine();
+                    n = Integer.parseInt(line);
+                    valid = true;
+                }
+                catch (NumberFormatException e)
+                {
+                    System.out.println("Inserire un numero intero");
+                }
             }
-            catch (NumberFormatException e)
-            {
-                System.out.println("Inserire un numero intero");
-            }
-        }
-    [/java]
-    - il blocco try-catch è un blocco di codice che contiene un blocco try e uno o più blocchi catch
+        [/java]
+        - il blocco try-catch è un blocco di codice che contiene un blocco try e uno o più blocchi catch
 
-    ## Eccezioni numeriche e Scanner
-    [java]
-        int n = 0;
-        boolean done = false;
-        do
-        {
-            try
+        ## Eccezioni numeriche e Scanner
+        [java]
+            int n = 0;
+            boolean done = false;
+            do
             {
-                n = console.nextInt();
-                done = true;
-            }
+                try
+                {
+                    n = console.nextInt();
+                    done = true;
+                }
+                catch(java.util.InputMismatchException e)
+                {
+                    System.out.println("Riprova");
+                    console.next();
+                }
+            } while (!done);
+        [/java]
+        - se invece di nextLine() uso nextInt(), le eccezioni ci sono lo stesso (le lancia nextInt invece di parseInt).
+        - usando nextLine() invece di next() si pone rimedio a errore più gravi da parte dell'utente (che magari ha scritto "pippo pluto", con uno spazio, invece di un numero)
+            - usando next() avrei eliminato pippo ma non pluto
+        - si può anche pensare di svuotare completamente il flusso, nell'ipotesi che l'errore dell'utente si possa estendere su più righe, in questo modo
+        [java]
             catch(java.util.InputMismatchException e)
             {
                 System.out.println("Riprova");
-                console.next();
-            }
-        } while (!done);
-    [/java]
-    - se invece di nextLine() uso nextInt(), le eccezioni ci sono lo stesso (le lancia nextInt invece di parseInt).
-    - usando nextLine() invece di next() si pone rimedio a errore più gravi da parte dell'utente (che magari ha scritto "pippo pluto", con uno spazio, invece di un numero)
-        - usando next() avrei eliminato pippo ma non pluto
-    - si può anche pensare di svuotare completamente il flusso, nell'ipotesi che l'errore dell'utente si possa estendere su più righe, in questo modo
-    [java]
-        catch(java.util.InputMismatchException e)
-        {
-            System.out.println("Riprova");
-            while(console.hasNextLine())
-            {
-                console.nextLine();
-            }
-        }
-    [/java]
-    - con questo codice, togliamo tutta la riga scritta per errore dall'utente, quando avrebbe dovuto scrivere un numero e premere Invio
-    [java]
-        catch(java.util.InputMismatchException e)
-        {
-            System.out.println("Riprova");
-            console.nextLine();
-        }
-    [/java]
-    - basta anche questo, infatti è veramente difficile che l'utente sia riuscito a scrivere qualcos'altro dopo aver premuto invio e prima che venga eseguito di nuovo il metodo nextLine() del blocco try ( dopo la pulizia nel catch), quindi è fortemente probabile che veda prima il "Riprova".
-
-    ## Scanner: comportamenti anomali
-    - a volte nextInt e nextDouble si comportano in modo "strano", in realtà sempre in modo ben documentato.
-        - leggono e "consumano" eventuali caratteri di spaziatura che possono precedere il numero che stanno cercando, ignorandoli
-            - anche in caso di lancio di eccezione, questi caratteri saranno definitivamente consumati
-        - leggono i caratteri provenienti dal flusso finché sono idonei a costruire un numero (intero o, rispettivamente, frazionario)
-        - appena "vedono" un carattere non idoneo, interrompono la propria azione, lasciando all'inizio del flusso, senza "consumarlo", il carattere appena visto.
-            - se hanno visto caratteri sufficienti a costruire un numero e SOLTANTO caratteri che costituiscono un numero, li "consumano" e restituiscono
-            - altrimenti si verifica l'eccezione InputMismatchException e i caratteri NON vengono consumati, rimangono nel flusso, così come se il flusso viene chiuso prima che si sia visto un carattere non idoneo.
-    - quando un'invocazione di next/nextInt/nextDouble è seguita da un'invocazione di nextLine
-    
-    ## Un altro uso di Scanner
-    - E' possibile creare un oggetto della classe Scanner fornendo una stringa come parametro al costruttore
-    - Scanner considera come delimitatori predefiniti gli spazi, i caratteri di tabulazione e i caratteri di "andata a capo". Questi e altri caratteri sono detti whitespaces, e sono risconosciuti dal metodo predicativo: Character.isWhitesplace(char c)
-    - se come parametro di costruzione viene fornita una stringa, lo scanner esaminerà i caratteri di quella stringa (invece di esaminare i caratteri di un flusso)
-        - può essere utile per scomporre una stringa in "parole"
-        - non ha niente a che vedere con la redirezione del flusso di input
-    - per accedere al token successivo si usa next() della classe Scanner
-    - se l'elemento successivo non c'è next() lancia l'eccezione java.util.NoSuchElementException
-    - poiché non è noto a priori il numero di "token" (parole ben delimitate da whitespaces) is utilizza "hasNext()"
-
-    ## Diversi tipi di eccezioni
-    - la gestione delle eccezioni di tipo Error e di tipo RuntimeException è facoltativa
-        - se non vengono gestite e vengono lanciate, provocano la terminazione del programma
-        - si dice che sono non controllate
-            - descrivono problemi dovuti a errori del programmatore e che quindi non dovrebbero verificarsi
-        - per questo motivo le eccezioni di tipo RuntimeException sono non controllate
-        - non è obbligatorio catturarle traminte try-catch
-    - la gestione delle altre eccezioni è obbligatoria (se non c'è, si ha un errore in compilazione)
-        - si dice che sono controllate
-            - descrivono problemi che possono verificarsi prima o poi, indipendentemente dalla bravura del programmatore
-        - se si invoca un metodo che può lanciare un'eccezione controllata, è obbligatorio gestirla con try-catch
-            - altrimenti viene segnalato un errore in compilazione
-    
-# REALIZZAZIONE DEI METODI: argomenti inattesi (pre-condizioni)
-- spesso un metodo richiede che i suoi argomenti
-    - siano di un tipo ben definito
-        - questo viene garantito dal compilatore
-    - abbiamo un valore che rispetti certi vincoli, ad esempio sia un numero positivo
-        - ci sono tre modi per reagire ad argomenti inattesi
-            -  non fare niente: il metodo semplicemente termina la sua esecuzione senza alcuna segnalazione d'errore
-                - si può fare solo epr metodi con valore di ritorno void, altrimenti che cosa restituisce il metodo?
-                - se restituisce un valore casuale senza segnalare un errore, chi ha invocato il metodo probabilmente andrà incontro ad un errore logico
-            - terminare il programma con System.exit(1);
-                - System.exit(0): è andato tutto bene
-            - lanciare un'eccezione
-                - lanciare un'eccezione in risposta ad un parametro che non rispetta una precondizione è la soluzione più corretta in ambito professionale
-                    - la libreria standard mette a disposizione tale eccezione
-                        - "IllegalArgumentException"
-                    [java]
-                        public void deposit(double amount)
-                        {
-                            if (amount < 0)
-                            {
-                                throw new IllegalArgumentException();
-                            }
-                            balance += amount;
-                        }
-                    [/java]
-    
-    ## Gestione dei casi degeneri
-    - spesso (ma non sempre) i casi degeneri di un algoritmo vanno gestiti separatamente
-        [java]
-            public static double sum(double[] values)
-            {
-                if (values.length == 0)
+                while(console.hasNextLine())
                 {
-                    return 0; // inutile
+                    console.nextLine();
                 }
-                double sum = 0;
-                for (int i=0; i<values.length; i++)
-                {
-                    sum += values[i];
-                }
-                return sum;
             }
         [/java]
-        - qui è inutile gestire separatamente il caso in cui l'array ha lunghezza zero, 
-    - l'obiettivo del programmatore era quello di rendere più veloce l'elaborazione nel caso di array di lunghezza zero
-        - l'effetto ottenuto è quello di rendere più lenta l'elaborazione nel caso di array con lunghezza diversa da zero, perché la condizione va valutata sempre. 
-    - in un metodo che calcola, invece, il valore medio dei dati presenti in un array, il caso di array di lunghezza zero va gestito separatamente, per evitare divisioni per zero
-    [java]
-        public static double average(double[] values)
+        - con questo codice, togliamo tutta la riga scritta per errore dall'utente, quando avrebbe dovuto scrivere un numero e premere Invio
+        [java]
+            catch(java.util.InputMismatchException e)
+            {
+                System.out.println("Riprova");
+                console.nextLine();
+            }
+        [/java]
+        - basta anche questo, infatti è veramente difficile che l'utente sia riuscito a scrivere qualcos'altro dopo aver premuto invio e prima che venga eseguito di nuovo il metodo nextLine() del blocco try ( dopo la pulizia nel catch), quindi è fortemente probabile che veda prima il "Riprova".
+
+        ## Scanner: comportamenti anomali
+        - a volte nextInt e nextDouble si comportano in modo "strano", in realtà sempre in modo ben documentato.
+            - leggono e "consumano" eventuali caratteri di spaziatura che possono precedere il numero che stanno cercando, ignorandoli
+                - anche in caso di lancio di eccezione, questi caratteri saranno definitivamente consumati
+            - leggono i caratteri provenienti dal flusso finché sono idonei a costruire un numero (intero o, rispettivamente, frazionario)
+            - appena "vedono" un carattere non idoneo, interrompono la propria azione, lasciando all'inizio del flusso, senza "consumarlo", il carattere appena visto.
+                - se hanno visto caratteri sufficienti a costruire un numero e SOLTANTO caratteri che costituiscono un numero, li "consumano" e restituiscono
+                - altrimenti si verifica l'eccezione InputMismatchException e i caratteri NON vengono consumati, rimangono nel flusso, così come se il flusso viene chiuso prima che si sia visto un carattere non idoneo.
+        - quando un'invocazione di next/nextInt/nextDouble è seguita da un'invocazione di nextLine
+        
+        ## Un altro uso di Scanner
+        - E' possibile creare un oggetto della classe Scanner fornendo una stringa come parametro al costruttore
+        - Scanner considera come delimitatori predefiniti gli spazi, i caratteri di tabulazione e i caratteri di "andata a capo". Questi e altri caratteri sono detti whitespaces, e sono risconosciuti dal metodo predicativo: Character.isWhitesplace(char c)
+        - se come parametro di costruzione viene fornita una stringa, lo scanner esaminerà i caratteri di quella stringa (invece di esaminare i caratteri di un flusso)
+            - può essere utile per scomporre una stringa in "parole"
+            - non ha niente a che vedere con la redirezione del flusso di input
+        - per accedere al token successivo si usa next() della classe Scanner
+        - se l'elemento successivo non c'è next() lancia l'eccezione java.util.NoSuchElementException
+        - poiché non è noto a priori il numero di "token" (parole ben delimitate da whitespaces) is utilizza "hasNext()"
+
+        ## Diversi tipi di eccezioni
+        - la gestione delle eccezioni di tipo Error e di tipo RuntimeException è facoltativa
+            - se non vengono gestite e vengono lanciate, provocano la terminazione del programma
+            - si dice che sono non controllate
+                - descrivono problemi dovuti a errori del programmatore e che quindi non dovrebbero verificarsi
+            - per questo motivo le eccezioni di tipo RuntimeException sono non controllate
+            - non è obbligatorio catturarle traminte try-catch
+        - la gestione delle altre eccezioni è obbligatoria (se non c'è, si ha un errore in compilazione)
+            - si dice che sono controllate
+                - descrivono problemi che possono verificarsi prima o poi, indipendentemente dalla bravura del programmatore
+            - se si invoca un metodo che può lanciare un'eccezione controllata, è obbligatorio gestirla con try-catch
+                - altrimenti viene segnalato un errore in compilazione
+        - esistono eccezioni controllate e non controllate
+            - eccezioni controllate: descrivono problemi che possono verificarsi prima o poi, indipendentemente dalla bravura del programmatore
+                - per questo motivo le eccezioni di tipo IOException sono controllate
+                - se si invoca un metodo che può lanciare un'eccezione controllata, è obbligatorio gestirla con try-catch
+                    - altrimenti viene segnalato un errore in compilazione
+            - eccezioni non controllate: descrivono problemi dovuti a errori del programmatore e che quindi non dovrebbero verificarsi
+                - per questo motivo le eccezioni di tipo RuntimeException sono non controllate
+                - non è obbligatorio catturarle traminte try-catch
+            
+    
+    ## REALIZZAZIONE DEI METODI: argomenti inattesi (pre-condizioni)
+        - spesso un metodo richiede che i suoi argomenti
+            - siano di un tipo ben definito
+                - questo viene garantito dal compilatore
+            - abbiamo un valore che rispetti certi vincoli, ad esempio sia un numero positivo
+                - ci sono tre modi per reagire ad argomenti inattesi
+                    -  non fare niente: il metodo semplicemente termina la sua esecuzione senza alcuna segnalazione d'errore
+                        - si può fare solo epr metodi con valore di ritorno void, altrimenti che cosa restituisce il metodo?
+                        - se restituisce un valore casuale senza segnalare un errore, chi ha invocato il metodo probabilmente andrà incontro ad un errore logico
+                    - terminare il programma con System.exit(1);
+                        - System.exit(0): è andato tutto bene
+                    - lanciare un'eccezione
+                        - lanciare un'eccezione in risposta ad un parametro che non rispetta una precondizione è la soluzione più corretta in ambito professionale
+                            - la libreria standard mette a disposizione tale eccezione
+                                - "IllegalArgumentException"
+                            [java]
+                                public void deposit(double amount)
+                                {
+                                    if (amount < 0)
+                                    {
+                                        throw new IllegalArgumentException();
+                                    }
+                                    balance += amount;
+                                }
+                            [/java]
+            
+            ## Gestione dei casi degeneri
+            - spesso (ma non sempre) i casi degeneri di un algoritmo vanno gestiti separatamente
+                [java]
+                    public static double sum(double[] values)
+                    {
+                        if (values.length == 0)
+                        {
+                            return 0; // inutile
+                        }
+                        double sum = 0;
+                        for (int i=0; i<values.length; i++)
+                        {
+                            sum += values[i];
+                        }
+                        return sum;
+                    }
+                [/java]
+                - qui è inutile gestire separatamente il caso in cui l'array ha lunghezza zero, 
+            - l'obiettivo del programmatore era quello di rendere più veloce l'elaborazione nel caso di array di lunghezza zero
+                - l'effetto ottenuto è quello di rendere più lenta l'elaborazione nel caso di array con lunghezza diversa da zero, perché la condizione va valutata sempre. 
+            - in un metodo che calcola, invece, il valore medio dei dati presenti in un array, il caso di array di lunghezza zero va gestito separatamente, per evitare divisioni per zero
+            [java]
+                public static double average(double[] values)
+                {
+                    if (values.length == 0)
+                    {
+                        throw new IllegalArgumentException();
+                    }
+                    double sum = 0;
+                    for (int i=0; i < values.length; i++)
+                    {
+                        sum = sum + values[i];
+                    }
+                    return sum / values.length;
+                }
+            [/java]
+            - ESERCIZIO: FactorGenerator.java
+
+
+
+# PASSAGGIO DI PARAMETRI
+    - I parametri espliciti che compaiono nell'intestazione dei metodi e il parametro implicito "this" si dicono "Parametri Formali" del metodo
+        [java]
+            public void transfer(BankAccount toAccount, double amount)
+            {
+                this.balance = this.balance - amount
+                toAccount.balance += amount;
+            }
+        [/java]
+    - I parametri forniti nell'invocazione ai metodi si dicono "Parametri Effettivi" del metodo
+        [java]
+            BankAccount acct1 = new BankAccount();
+            BankAccount acct2 = new BankAccount();
+            acct1.transfer(acct2, 100);
+        [/java]
+    - Al momento dell'esecuzione dell'invocazione del metodo, i parametri effettivi sono copiati nei parametri formali
+    - Le "variabili parametro" di un metodo vengono automaticamente definite e inizializzate ogni volta che il metodo viene invocato
+        - Nel metodo invocante: l'interprete valuta le espressioni usate come parametri: ciascuna di queste valutazioni genera un valore di un certo tipo (primitivo o oggetto). Ad esempio vede che money contiene 100.
+        - Nel metodo invocato: PRIMA della sua esecuzione, tali valori vengono usati in normali assegnazioni di valori iniziali per le variabili parametro, che, però, sono operazioni implicite e non visibili nel codice sorgente. Ad esempio, il valore 100 viene assegnato alla variabile locale amount.
+
+    ## Modificare aprametri numerici
+        Vogliamo scrivere un emtodo increment che ha il compito di fornire un nuovo valore per una variabile di tipo numerico
+        [java]
+            public class IncrementaNuemro
+            {
+                public static void main(String[] args)
+                {
+                    int x = 3;
+                    IncrementUno(x);
+                    System.out.println(x);
+                }
+
+                public static void IncrementUno(int n)
+                {
+                    n++;
+                }
+            }
+        [/java]
+        Invocando il metodo il valore viene copiato in n, ma n è una variabile locale del metodo, quindi non viene modificato il valore di x.
+        In IncrementUno abbiamo una variabile locale n che contiene una copia del valore di x, ma non è la stessa variabile di x.
+        !Come si fa?
+        [java]
+            public class IncrementaNuemro
+            {
+                public static void main(String[] args)
+                {
+                    int x = 3;
+                    x = IncrementUno(x);
+                    System.out.println(x);
+                }
+
+                public static int IncrementUno(int n)
+                {
+                    return n++;
+                }
+            }
+        [/java]
+
+    ## Modificare parametri oggetto
+        - Un metodo può invece modificare l ostato di un oggetto passato come parametro (implicito o esplicito)
+        [java]
+            // classe BankAccount // trasferisce denaro dla conto this al conto to account
+            public void transfer(BankAccount toAccount, double amount)
+            {
+                withdraw(amount);           // prelievo dal conto this
+                toAccount.deposit(amount);  // deposito sul conto toAccount
+            }
+
+            BankAccount a = new BankAccount(10);
+            BankAccount b = new BankAccount();
+
+            a.transfer(b, 5); // trasferisce 5 da a a b
+        [/java]
+        - ma non può modificare il riferimento contenuto nela variabile oggetto che ne costituisce il parametro effettivo
+        [java]
+        // NON FUNZIONA
+        public static void swapAccounts(BankAccount x, BankAccount y)
         {
-            if (values.length == 0)
-            {
-                throw new IllegalArgumentException();
-            }
-            double sum = 0;
-            for (int i=0; i < values.length; i++)
-            {
-                sum = sum + values[i];
-            }
-            return sum / values.length;
+            BankAccount temp = x;
+            x = y;
+            y = temp;
+
+            BankAccount a = new BankAccount(10);
+            BankAccount b = new BankAccount();
+
+            swapAccounts(a, b); // non succede nulla alle variabili a e b
         }
-    [/java]
-    - ESERCIZIO: FactorGenerator.java
+        [/java]
+
+    ## Parametri formali ed effettivi
+    - Al momento dell'esecuzione dell'invocazione del metodo, i parametri effettivi sono copiati nei parametri formali.
+
+    ## Ciclo di vita di una variabile
+        - In Java esistono quattro tipi di variabili
+            - variabili locali
+                - viene creata quando viene dichiarata e viene distrutta quando il metodo termina la sua esecuzione
+                - se non è definita all'interno di un blocco di enunciati, viene eliminata quando l'esecuzione del programma esce dal metodo in cui la variabile viene definita
+            - variabili parametro
+                - viene creata quando viene invocato il metodo e viene distrutta quando il metodo termina la sua esecuzione
+            - variabili di esemplare o di istanza
+                - viene creata quando viene creato l'oggetto a cui appartiene e viene distrutta quando l'oggetto viene distrutto
+                - un oggetto viene eliminato dalla JVM quando non esistono più riferimenti ad esso
+                    - la zona di memoria riservata all'oggetto viene "riciclata", cioè resa di nuovo libera, dal raccoglitore di rifiuti (garbage collector) della JVM, che controlla periodicamente se ci sono oggetti da eliminare
+            - variabili statiche o di classe
+                - viene creata quando viene caricata la classe e viene distrutta quando il programma termina la sua esecuzione
+        
+        ### Inizializzazione di una variabile
+            - Le variabili di esemplare e le variabili statiche, se non sono inizializzate esplicitamente, vengono inizializzate esplicitamente, vengono inizializzate automaticamente ad un valore predefinito
+                - zero per le variabili id tipo numerico e carattere
+                - false per le variabili di tipo boolean
+                - null per le variabili oggetto
+            - le variabili parametro vengono inizializzate copiando il valore dei parametri effettivi usati nell'invocazione del metodo
+            - le variabili locali non vengono inizializzate automaticamente, e il compilatore effettua un controllo semantico impedendo che vengano utilizzate prima di aver ricevuto un valore
+
+        ### Ambito di visibilità di una variabile
+            - l'ambito di visibilità di una variabile indica la parte del codice nel quale è lecito usare la variabile (per leggere e/o scrivere il suo valore)
+            - per le variabili locali e le variabili parametro, l'ambito di visibilità è quello che determina anche il relativo ciclo di vita
+            - per le variabili di esemplare e le variabili statiche, l'ambito di visibilità dipende dalla dichiarazione public o private
+                - public: sono visibili in ogni parte del programma
+                - private: sono visibili solo all'interno della classe in cui sono dichiarate
+            - è anche possibile dichiararle senza indicare uno specificatore di accesso (accesso di default)
+                - sono così visibili anche all'interno di classi che si trovano nello stesso package (cioè di file sorgenti che si trovano nella stessa cartella)
+                - esiste anche un accesso protetto (protected) che vedremo più avanti
+        
+        ### Conflitti tra nomi di variabili
+            - Conoscere l'ambito di visibilità e il ciclo di vita di una variabile è molto importante per capire quando e dove è possibile usare di nuovo il nome di una variabile che è già stato usato
+            - le regole appena viste consentono di usare, in metodi diversi della stessa classe, variabili locali o variabili parametro con gli stessi nomi, senza creare alcun conflitto, perché: 
+                - i rispettivi ambiti di visibilità non sono sovrapposti
+            - in questi casi le variabili definite nuovamente non hanno alcuna relazione con le precedenti
+            
 
 
 [2023-12-06]
 # ORDINAMENTO DI DATI
-- Un problema molto frequente nell'elaborazione dei dati consiste nell'ordinamento dei dati stessi, secondo un criterio prestabilito
-    - numeri in ordine crescente (o decrescente)
-    - stringhe in ordine lessicografico (crescente o decrescente)
-    - conti bancari in ordine di saldo (crescente o decrescente)
-- Una sequenza di n "oggetti" confrontabili
-    - si dice che un oggetto è confrontabile se è possibile stabilire se è maggiore, minore o uguale ad un altro oggetto dello stesso tipo
-- Tra i piu studiati problemi in informatica
-    - fucina di idee algoritmiche
-    - moltissime soluzioni
-- analisi di complessità computazionale
-    - caso miglior/peggiore/medio
-- L'ordinamento è un passaggio chiave su cui molti altri algoritmi sono costruiti.
-- Studieremo tre algoritmi di ordinamento
-    - selection sort
-    - merge sort
-    - insertion sort
-- In generale ci occupiamo di ordinamento di dati presenti in un contenitore (array per ora)
-- nei problemi di ordinamento si parla di
-    - ordinamento "sul posto" quando il metodo di ordinamento riceve un contenitore e ne ordina il contenuto
-        - non restituisce nulla
-        - il metodo invocante si ritrova il contenitore ordinato
-    - ordinamento "fuori posto" quando il metodo di ordinamento riceve un contenitore e restituisce un nuovo contenitore con i dati ordinati
-- I metodi che ordinano gli array sono metodi statici
-    - devono ricevere un array come parametro, ma questo non può essere il parametro implicito del metodo, perché non esiste la classe array in cui definire il metodo di ordinamento
-- ordineremo array "pieni" 
-    - fornendo la dimensione logica come parametro aggiuntivo
-- con modifiche minime, gli stessi algoritmi possono ordinare
-    - array "riempiti solo in parte"
-    - porzioni di array, fornendo due parametri aggiuntivi:
-        - indice iniziale (incluso)
-        - indice finale (escluso)
-        (in analogia con il metodo substring della classe String)
+    - Un problema molto frequente nell'elaborazione dei dati consiste nell'ordinamento dei dati stessi, secondo un criterio prestabilito
+        - numeri in ordine crescente (o decrescente)
+        - stringhe in ordine lessicografico (crescente o decrescente)
+        - conti bancari in ordine di saldo (crescente o decrescente)
+    - Una sequenza di n "oggetti" confrontabili
+        - si dice che un oggetto è confrontabile se è possibile stabilire se è maggiore, minore o uguale ad un altro oggetto dello stesso tipo
+    - Tra i piu studiati problemi in informatica
+        - fucina di idee algoritmiche
+        - moltissime soluzioni
+    - analisi di complessità computazionale
+        - caso miglior/peggiore/medio
+    - L'ordinamento è un passaggio chiave su cui molti altri algoritmi sono costruiti.
+    - Studieremo tre algoritmi di ordinamento
+        - selection sort
+        - merge sort
+        - insertion sort
+    - In generale ci occupiamo di ordinamento di dati presenti in un contenitore (array per ora)
+    - nei problemi di ordinamento si parla di
+        - ordinamento "sul posto" quando il metodo di ordinamento riceve un contenitore e ne ordina il contenuto
+            - non restituisce nulla
+            - il metodo invocante si ritrova il contenitore ordinato
+        - ordinamento "fuori posto" quando il metodo di ordinamento riceve un contenitore e restituisce un nuovo contenitore con i dati ordinati
+    - I metodi che ordinano gli array sono metodi statici
+        - devono ricevere un array come parametro, ma questo non può essere il parametro implicito del metodo, perché non esiste la classe array in cui definire il metodo di ordinamento
+    - ordineremo array "pieni" 
+        - fornendo la dimensione logica come parametro aggiuntivo
+    - con modifiche minime, gli stessi algoritmi possono ordinare
+        - array "riempiti solo in parte"
+        - porzioni di array, fornendo due parametri aggiuntivi:
+            - indice iniziale (incluso)
+            - indice finale (escluso)
+            (in analogia con il metodo substring della classe String)
 
-   ## Selection Sort
-    - L'algoritmo di ordinamento per selezione (selection sort) è un algoritmo di ordinamento "sul posto" che ordina un array di n elementi confrontando ripetutamente gli elementi dell'array e scambiandoli se necessario.
-    [java]
-        public static void selectionSort(double[] a)
-        {
-            if (a == null) 
-            {
-                return;
-            }
-
-            for (int i = 0; i < a.length - 1; i++)
-            {
-                int minIndex = findMinIndexFrom(a, i);
-                for (int j = i + 1; j < a.length; j++)
-                {
-                    if (minIndex != i)
-                    {
-                        swap(a, i, minIndex);
-                    }
-                }
-                double temp = a[i];
-                a[i] = a[j];
-                a[j] = temp;
-            }
-        }
-    [/java]
-    [java]
-        private static void swap(double[] a, int i, int j)
-        {
-            // non verifico precondizioni perché è un metodo privato
-            double temp = a[i];
-            a[i] = a[j];
-            a[j] = temp;
-        }
-
-        private static int  findMinIndexFrom(double[] a, int from)
-        {   
-            int minIndex = from;
-            for (int i = from + 1; i < a.length; i++)
-            {
-                if (a[i] < a[minIndex])
-                {
-                    minIndex = i;
-                }
-            }
-            return minIndex;
-        }
-    [/java]
-    - Metodi ausiliari privati
-        - senza i metodi ausiliari il codice è meno immediato
-        - con i metodi ausiliari, se si usano nomi appropriati, il codice "si commenta da solo"
-    
-    - Ordinare array riempiti in parte:
-    [java]
-        public static void selectionSort(double[] a, int size)
-        {
-            if (a == null)
-            {
-                throw new IllegalArgumentException();
-            }
-
-            for (int i = 0; i < size - 1; i++)
-            {
-                int minPos = findMinPosFrom(a, i, size);
-                if (minPos != i)
-                {
-                    swap(a, i, minPos);
-                }
-            }
-        }
-
-        public static int findMinPosFrom(double[] a, int from, int size)
-        {
-            int pos = from;
-            for (int i = pos + 1; i < size; i++)
-            {
-                if (a[i] < a[pos])
-                {
-                    pos = i;
-                }
-            }
-            return pos;
-        }
-    [/java]
-
-    - Ordinare per selezione: 
-        - possiamo ora sostituire il metodo che ordina un array "pieno" con uno stub che invoca quello che ordina array riempiti nella parte inziale
-        [java]
-            public static void selectionSort(double[] a)        // stub
-            {
-                if (a == null)
-                {
-                    throw new IllegalArgumentException();
-                }
-                
-                selectionSort(a, a.length);
-            }
-        [/java]
-        - quindi, findMinPos con due soli parametri non serve più
-    - complessità di selection sort
-        - sia n la dimensione logica dell'array da ordinare
-        - ho un ciclo for su indice i che va da 0 a n-2
-        - per ogni i, ho un ciclo for su indice j che va da i+1 a n-1
-            - al suo interno ho un numer ocostatne di passi primitivi
+    ## Selection Sort
+        - L'algoritmo di ordinamento per selezione (selection sort) è un algoritmo di ordinamento "sul posto" che ordina un array di n elementi confrontando ripetutamente gli elementi dell'array e scambiandoli se necessario.
         [java]
             public static void selectionSort(double[] a)
             {
-                if (a == null)
+                if (a == null) 
                 {
-                    throw new IllegalArgumentException();
+                    return;
                 }
 
                 for (int i = 0; i < a.length - 1; i++)
                 {
-                    int minPos = i;
+                    int minIndex = findMinIndexFrom(a, i);
                     for (int j = i + 1; j < a.length; j++)
                     {
-                        if (a[j] < a[minPos])
+                        if (minIndex != i)
                         {
-                            minPos = j;
+                            swap(a, i, minIndex);
                         }
                     }
+                    double temp = a[i];
+                    a[i] = a[j];
+                    a[j] = temp;
+                }
+            }
+        [/java]
+        [java]
+            private static void swap(double[] a, int i, int j)
+            {
+                // non verifico precondizioni perché è un metodo privato
+                double temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+
+            private static int  findMinIndexFrom(double[] a, int from)
+            {   
+                int minIndex = from;
+                for (int i = from + 1; i < a.length; i++)
+                {
+                    if (a[i] < a[minIndex])
+                    {
+                        minIndex = i;
+                    }
+                }
+                return minIndex;
+            }
+        [/java]
+        - Metodi ausiliari privati
+            - senza i metodi ausiliari il codice è meno immediato
+            - con i metodi ausiliari, se si usano nomi appropriati, il codice "si commenta da solo"
+        
+        - Ordinare array riempiti in parte:
+        [java]
+            public static void selectionSort(double[] a, int size)
+            {
+                if (a == null)
+                {
+                    throw new IllegalArgumentException();
+                }
+
+                for (int i = 0; i < size - 1; i++)
+                {
+                    int minPos = findMinPosFrom(a, i, size);
                     if (minPos != i)
                     {
                         swap(a, i, minPos);
                     }
                 }
             }
+
+            public static int findMinPosFrom(double[] a, int from, int size)
+            {
+                int pos = from;
+                for (int i = pos + 1; i < size; i++)
+                {
+                    if (a[i] < a[pos])
+                    {
+                        pos = i;
+                    }
+                }
+                return pos;
+            }
         [/java]
-        - cicli for esterno:
-            - i=0: n-1 cicli for interno + c istruzioni base
-            - i=1: n-2 cicli for interno + c istruzioni base
-            - i=2: n-3 cicli for interno + c istruzioni base
-            - ...
-            - i=n-2: 1 ciclo for interno + c istruzioni base
+
+        - Ordinare per selezione: 
+            - possiamo ora sostituire il metodo che ordina un array "pieno" con uno stub che invoca quello che ordina array riempiti nella parte inziale
+            [java]
+                public static void selectionSort(double[] a)        // stub
+                {
+                    if (a == null)
+                    {
+                        throw new IllegalArgumentException();
+                    }
+                    
+                    selectionSort(a, a.length);
+                }
+            [/java]
+            - quindi, findMinPos con due soli parametri non serve più
+        - complessità di selection sort
+            - sia n la dimensione logica dell'array da ordinare
+            - ho un ciclo for su indice i che va da 0 a n-2
+            - per ogni i, ho un ciclo for su indice j che va da i+1 a n-1
+                - al suo interno ho un numer ocostatne di passi primitivi
+            [java]
+                public static void selectionSort(double[] a)
+                {
+                    if (a == null)
+                    {
+                        throw new IllegalArgumentException();
+                    }
+
+                    for (int i = 0; i < a.length - 1; i++)
+                    {
+                        int minPos = i;
+                        for (int j = i + 1; j < a.length; j++)
+                        {
+                            if (a[j] < a[minPos])
+                            {
+                                minPos = j;
+                            }
+                        }
+                        if (minPos != i)
+                        {
+                            swap(a, i, minPos);
+                        }
+                    }
+                }
+            [/java]
+            - cicli for esterno:
+                - i=0: n-1 cicli for interno + c istruzioni base
+                - i=1: n-2 cicli for interno + c istruzioni base
+                - i=2: n-3 cicli for interno + c istruzioni base
+                - ...
+                - i=n-2: 1 ciclo for interno + c istruzioni base
 
 
 [2023-12-07]
@@ -2173,4 +2315,13 @@ In Java, un array è un oggetto che rappresenta una sequenza posizionale di dati
             - SelectionSort ha complessità O(n^2)
             - MergeSort ha complessità O(n log n)
         
-        
+
+[2023-12-14]
+# COMPLESSITA' COMPUTAZIONALE
+    - La complessità computazionale di un algoritmo è una misura della quantità di risorse computazionali necessarie per eseguire l'algoritmo
+        - tempo
+            - Passo base: definita come operazione che necessita un tempo di esecuzione costante. Il tempo di esecuzione non dipende dal valore o dall'oggetto dell'operazione 
+            
+        - spazio
+    - La complessità computazionale di un algoritmo dipende dalla dimensione dell'input
+    - importante per confrontare algoritmi e algoritmi di ordinamento

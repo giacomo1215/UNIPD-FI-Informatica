@@ -2174,8 +2174,206 @@ Methodi di Math vs println:
                         System.out.println("File non trovato");
                     }
                 [/java]
+            - Si costruisce un'esemplare di Scanner che scansiona il file esattamente come farebbe con il flusso di ingresso standard o con una stringa
+                [java]
+                    try
+                    {
+                        FileReader reader = new FileReader("file.txt");
+                        Scanner in = new Scanner(reader);
+                        while (in.hasNextLine())
+                        {
+                            String line = in.nextLine();
+                            System.out.println(line);
+                        }
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        System.out.println("File non trovato");
+                    }
+                [/java]
+            - al termine della lettura del file, occorre chiudere il file
+                - questa operazione si traduce in java nella chiamata al metodo close dell'oggetto FileReader
+                [java]
+                    try
+                    {
+                        FileReader reader = new FileReader("file.txt");
+                        Scanner in = new Scanner(reader);
+                        while (in.hasNextLine())
+                        {
+                            String line = in.nextLine();
+                            System.out.println(line);
+                        }
+                        
+                        try
+                        {
+                            reader.close();
+                        }
+                        catch (IOException e)
+                        {
+                            System.out.println("Errore nella chiusura del file");
+                        }
 
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        System.out.println("File non trovato");
+                    }
+                [/java]
+            - Eccezioni:
+                - FileNotFoundException: sottoclasse di IOException, viene lanciata se il file non esiste
+                - IOException: viene lanciata se si verifica un errore durante la lettura del file
+                    - Si gestice inplicitamente anche FileNotFoundException
+                - se voglio distinguerli devo prima gestire FileNotFoundException
 
+        ### Scrivere un file di testo
+            - Prima di scrivere caratteri su un file (esistente) occorre aprire il file in scrittura
+                - questa operazione si traduce in java nella creazione di un oggetto di tipo PrintWriter
+                [java] FileWriter writer = new FileWriter("file.txt"); [/java]
+                - il costruttore necessita del nome del file (con eventuale percorso) sotto forma di stringa
+                - se il file non esiste, viene creato
+                - se il file esiste, viene sovrascritto
+                [java]
+                    try
+                    {
+                        FileWriter writer = new FileWriter("file.txt");
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.println("Errore nella creazione del file");
+                    }
+                [/java]
+            - Si costruisce un'esemplare di PrintWriter che scrive sul file esattamente come farebbe con il flusso di uscita standard
+                [java]
+                    try
+                    {
+                        FileWriter writer = new FileWriter("file.txt");
+                        PrintWriter out = new PrintWriter(writer);
+                        out.println("Hello World");
+                        out.println(123);
+                        out.close();
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.println("Errore nella creazione del file");
+                    }
+                [/java]
+            - al termine della scrittura del file, occorre chiudere il file
+                - questa operazione si traduce in java nella chiamata al metodo close dell'oggetto FileWriter
+                [java]
+                    try
+                    {
+                        FileWriter writer = new FileWriter("file.txt");
+                        PrintWriter out = new PrintWriter(writer);
+                        out.println("Hello World");
+                        out.println(123);
+                        out.close();
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.println("Errore nella creazione del file");
+                    }
+                [/java]
+            - Eccezioni:
+                - IOException: viene lanciata se si verifica un errore durante la scrittura del file
+                - se voglio distinguerli devo prima gestire FileNotFoundException
+    
+    ## try-with-resources
+        - La gestione di file in Java è molto verbosa
+            - occorre dichiarare le variabili che rappresentano i file
+            - occorre gestire le eccezioni
+            - occorre chiudere i file
+        - Per semplificare la gestione dei file, Java 7 ha introdotto il costrutto try-with-resources
+            - permette di dichiarare le variabili che rappresentano i file all'interno del blocco try
+            - permette di non gestire le eccezioni
+            - permette di non chiudere i file
+        - Il costrutto try-with-resources si basa sul fatto che le classi che rappresentano i file implementano l'interfaccia AutoCloseable
+            - questa interfaccia contiene un solo metodo, close, che viene invocato automaticamente alla fine del blocco try
+            - il metodo close può lanciare un'eccezione, che viene gestita automaticamente dal costrutto try-with-resources
+            - il costrutto try-with-resources può gestire più di un file
+                [java]
+                    try (FileReader reader = new FileReader("file.txt");
+                        Scanner in = new Scanner(reader);
+                        FileWriter writer = new FileWriter("file.txt");
+                        PrintWriter out = new PrintWriter(writer))
+                    {
+                        while (in.hasNextLine())
+                        {
+                            String line = in.nextLine();
+                            out.println(line);
+                        }
+                    }
+                    catch (IOException e)
+                    {
+                        System.out.println("Errore nella creazione del file");
+                    }
+                [/java]
+            - Eccezioni:
+                - IOException: viene lanciata se si verifica un errore durante la lettura o la scrittura del file
+                - se voglio distinguerli devo prima gestire FileNotFoundException
+# RICORSIONE
+    - la definizione ricorsiva di una funzione è una definizione che usa la funzione stessa
+    - Quandp un metodo ricorsivo invoca se stesso, la macchina virtuale Java esegue le stesse azioni che vengono eseguite quando viene invocato un metodo qualsiasi
+        - sospende l'esecuzione del metodo invocante
+        - esegue il metodo invoato fino alla sua terminazione
+        - riprende l'esecuzione del metodo invocante dal punto in cui era stata sospesa
+
+    ## Il calcolo del fattoriale
+        - Il fattoriale di un numero intero positivo n, indicato con "n!", è il prodotto di tutti i numeri interi positivi minori o uguali a n
+            - 0! = 1
+            - 1! = 1
+            - 2! = 2 * 1 = 2
+            - 3! = 3 * 2 * 1 = 6
+            - 4! = 4 * 3 * 2 * 1 = 24
+            - 5! = 5 * 4 * 3 * 2 * 1 = 120
+            - 6! = 6 * 5 * 4 * 3 * 2 * 1 = 720
+            - 7! = 7 * 6 * 5 * 4 * 3 * 2 * 1 = 5040
+            - 8! = 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1 = 40320
+            - 9! = 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1 = 362880
+            - 10! = 10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1 = 3628800
+        - questa funzione, molto usata nel calcolo combinatorio, è definita ricorsivamente
+            - 0! = 1
+            - n! = n * (n-1)! per n > 0
+        => CREATO FILE Factorial.java
+
+    ## Progettazione di metodi ricorsivi
+        - Si scompone il problema in una porzione "semplice" e in un'altra parte, simile a quella iniziale ma di "dimensione" inferiore
+        - Nel metodo, si eseguono le fasi seguenti (la prima e la seconda fase possono scambiarsi, dipende dal problema)
+            - Risolvere la porzione semplice
+                - a volte c'è solo questa fase (caso base) e allora si dice che il metodo è ricorsivo terminale
+            - effettuare una chiamata ricorsiva per risolvere il problema di dimensione inferiore
+                - Importante: non ci si preoccupa di come verrà risolta questa parte, altrimenti non si riesce a comprendere il funzionamento del metodo
+            - combinare i risultati ottenuti dalle due fasi precedenti per ottenere il risultato finale
+        
+        ### Caso Base
+            - Prima regola (condizione necessaria)
+                - Il metodo ricorsivo deve fornire la soluzione del problema in almento un caso particolare, senza ricorrere a un'invocazione ricorsiva
+                    - questo caso particolare si chiama caso base
+            - Seconda regola (condizione necessaria)
+                - il metodo ricorsivo deve effettuare l'invocazione ricorsiva dopo aver semplificato il problema
+                    - se l'invocazione ricorsiva viene effettuata prima di aver semplificato il problema, il metodo non termina mai
+            - Le regole appena viste sono fondamentali per poter dimostrare che la soluzione ricorsiva di un problema sia un algoritmo
+                - in particolare, che arrivi a conclusione in un numero finito di passi
+            - Si potrebbe pensare che le invocazioni ricorsive si possano succedere una dopo l'altra, all'infinito; invece, se
+                a. ad ogni invocazione il problema diventa sempre più semplice e si avvicina al caso base
+                b. la soluzione del caso base non richiede RICORSIONE
+            allora certamente la soluzione viene calcolata in un numero finito di passi, per quanto complesso possa essere il problema.
+
+        ### Ricorsione infinita
+            - Se manca il caso base, il metodo ricorsivo continua a invocare se stesso "all'infinito"
+            - se il problema non viene semplificato ad ogni invocazione ricorsiva, il metodo ricorsivo continua a invocare se stesso "all'infinito"
+            - Dato che la lista dei metodi "in attesa" si allunga indefinitamente, l'ambiente runtime esaurisce la memoria disponibile per tener traccia di questa lista e il programma termina con un errore.
+
+        ### Eliminare la Ricorsione
+            - Esistono diversi tipi di Ricorsione
+            - Tail recursion
+                - è un tipo di ricorsione in cui l'invocazione ricorsiva è l'ultima operazione eseguita dal metodo
+                - in questo caso, la ricorsione può essere eliminata
+                - la ricorsione in coda può sempre essere agevolmente eliminata, trasformando il metodo ricorsivo in un metodo che usa un ciclo
+            - ricorsione multipla
+                - è un tipo di ricorsione in cui il metodo ricorsivo effettua più di una invocazione ricorsiva
+                
+
+    
 [2023-12-06]
 # ORDINAMENTO DI DATI
     - Un problema molto frequente nell'elaborazione dei dati consiste nell'ordinamento dei dati stessi, secondo un criterio prestabilito

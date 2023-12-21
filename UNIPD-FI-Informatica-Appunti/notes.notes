@@ -2068,7 +2068,112 @@ Methodi di Math vs println:
             - le regole appena viste consentono di usare, in metodi diversi della stessa classe, variabili locali o variabili parametro con gli stessi nomi, senza creare alcun conflitto, perché: 
                 - i rispettivi ambiti di visibilità non sono sovrapposti
             - in questi casi le variabili definite nuovamente non hanno alcuna relazione con le precedenti
-            
+
+
+
+# GESTIONE DI FILE IN JAVA
+
+    ## Reindirizzamento di input e output
+        [java]
+        import java.util.Scanner;
+
+        public class sum
+        {
+            public static void main(String[] args)
+            {
+                Scanner console = new Scanner(System.in);
+                double sum = 0;
+                while (console.hasNextDouble())
+                {
+                    sum += console.nextDouble();
+                }
+                System.out.println(sum);
+                console.close();
+            }
+        }
+        [/java]
+        - Usando il programma Sum (Sum.java) si inseriscono dei numeri da tastiera, che al termine non vengono memorizzati
+            - per sommare una serie di numeri, bisogna digitarli tutti, ma non ne rimane traccia!
+        - Alternativa interessante e utile: il programma legge i numer ida un File
+            - questo si può fare con il reindirizzamento dell'input standard
+                - Il reindirizzamento dell'input standard, sia nei sistemi Unix sia nei sistemi Windows, si indica con il carattere < seguito dal nome del file da cui ricevere l'input
+                - [java] java Sum < input.txt [/java]
+                - Si dice che il file numeri.txt viene collegato all'input standard
+                - Il programma non ha bisogno di alcuna istruzione particolare, semplicemente System.in non sarà più collegato alla tastiera ma al file specificato. 
+                    - la tastiera "non esiste più" per il programma, quindi non si può più inserire input da tastiera
+                - a volte è comodo anche il reindirizzamento dell'output
+                    - ad esempio, quando il programma produce molte righe di output, che altrimenti scorrono velocemente sullo schermo senza poter esser lette 
+                    [java]java Sum > output.txt[/java]
+                        - se il file output.txt non esiste viene creato, se esiste viene sovrascritto
+                        - per non sovrascrivere il file, ma aggiungere le righe alla fine, si usa il doppio carattere >>
+                - I due reindirizzamenti possono anche essere combinati
+                    [java]java Sum < input.txt > output.txt[/java]
+                    - in questo caso il file output.txt viene creato o sovrascritto, ma il file input.txt non viene modificato
+                    - il file input.txt viene letto e il file output.txt viene scritto
+                    - il file output.txt contiene il risultato della somma dei numeri contenuti in input.txt
+    
+    ## Canalizzazioni ("Pipes")
+        - Supponiamo di aver scritto la classe Split che scrive ciascuna parola ricevuta in ingresso su una riga di output separatamente
+            [java] java Split < testo.txt [/java]
+        - una elaborazione molto comune consiste nell'ordinare poi tali parole. Questa elaborazione è talmente comune che quasi tutti i sistemi operativi hanno un programma sort.
+        - in alternativa, possiamo scrivere una classe Sort
+        - per ottenere le parole di testo.txt una per riga e ordinate, abbiamo bisogno di un file temporaneo
+        [java]
+            java Split < testo.txt > temp.txt
+            sort < temp.txt > testoOrdinato.txt
+        [/java]
+        - il file temporaneo temp.txt serve soltanto per memorizzare il risultato intermedio, prodotto dal primo programma e utilizzato dal secondo
+        - questa situazione è talmente comune che quasi tutti i sistemi operativi offrono un'alternativa
+        - anziché utilizzare un file temporaneo per memorizzare l'output prodotto da un programma che deve servire da input per un altro programma, si usa una canalizzazione ("pipe").
+            [java] java Split < testo.txt | sort | sort > testoOrdinato.txt [/java]
+        - la canalizzazione può anche prolungarsi, ad esempio, possiamo eliminare eventuali parole ripetute da testoOrdinato.txt
+            [java] java Split < testo.txt | sort | java Unique > testoOrdinato.txt [/java]
+        
+    ## Formattazione di numeri
+        - Java fornisce il metodo "printf"
+            - il primo parametro esplicito è una stringa che contiene una sequenza di caratteri e di specificatori di formato
+            - i parametri successivi sono i valori da formattare secondo i formati specificati
+                [java] System.out.printf("Total:%5.2f", total); [/java]
+                - il formato %5.2f indica che il valore total deve essere formattato come un numero in virgola mobile con 5 cifre totali, di cui 2 dopo la virgola
+                - questo formato viene applicato alla variabile total, che è il secondo parametro del metodo
+                - se il valore total è 123.456, il risultato sarà "Total:123.46"
+        
+        ### Tipi di formato e modificatori di formato
+        d -> intero decimale
+        x -> intero esadecimale
+        o -> intero ottale
+        f -> numero in virgola mobile
+        e -> numero in virgola mobile in notazione scientifica
+        g -> numero in virgola mobile in notazione scientifica o decimale
+        s -> stringa
+        n -> carattere di andata a capo
+        - -> allineamento a sinistra
+        + -> segno anche per i numeri positivi
+        0 -> riempimento con zeri
+        , -> separatore delle migliaia
+        . -> separatore decimale
+        ( -> parentesi per i numeri negativi
+        % -> carattere percentuale
+
+    ## Gestione di file all'interno di un programma
+        - La gestione dei file avviene interagendo con il sistema operativo mediante classi del pacchetto "java.io" della libreria standard
+
+        ### Leggere un file di testo
+            - Prima di leggere caratteri da un file (esistente) occorre aprire il file in lettura
+                - questa operazione si traduce in java nella creazione di un oggetto di tipo FileReader
+                [java] FileReader reader = new FileReader("file.txt"); [/java]
+                - il costruttore necessita del nome del file (con eventuale percorso) sotto forma di stringa
+                - se il file non esiste, viene lanciata l'eccezione FileNotFoundException, che dev'essere obbligatoriamente gestita
+                [java]
+                    try
+                    {
+                        FileReader reader = new FileReader("file.txt");
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        System.out.println("File non trovato");
+                    }
+                [/java]
 
 
 [2023-12-06]

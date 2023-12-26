@@ -2372,259 +2372,98 @@ Methodi di Math vs println:
             - ricorsione multipla
                 - è un tipo di ricorsione in cui il metodo ricorsivo effettua più di una invocazione ricorsiva
                 
+        ### Ricorsione multipla
+            - La ricorsione multipla va usata con molta cautela
+            - Eseguendo il calcolo dei numeri di Fibonacci di ordine crescente
+                - si nota che il tempo di esecuzione cresce in modo esponenziale, servono quasi 3 milioni di invocazioni per calcolare Fib(31), quando in realtà basterebbe eseguire 30 addizioni
 
+        ### Ricorsione strutturale
+            - La ricorsione strutturale sfrutta caratteristiche intrinseche della struttura di memorizzazione dei dati di un problema
+                - Ad esempio, un array di n elementi può essere visto come la concatenazione di un elemento e di un array di n-1 elementi
+                    - Una diversa suddivisione strutturale spesso utilizzata nella ricorsione operante su array identifica due sotto-problemi relativi a due metà dell'array stesso
+                - Il medesimo ragionamento è valido per una stringa
+                - La ricorsione strutturale è molto usata per la risoluzione di problemi su alberi e grafi
+                    - Ad esempio, per calcolare l'altezza di un albero binario, si può sfruttare la ricorsione strutturale, considerando l'altezza della radice come 1 più l'altezza del sotto-albero sinistro o destro, a seconda di quale sia più alto
+
+# COMPLESSITA' COMPUTAZIONALE
+    - La complessità computazionale di un algoritmo è una misura della quantità di risorse (tempo e spazio) necessarie per eseguire l'algoritmo
     
-[2023-12-06]
+    ## Analisi Sperimentale
+        - Rilevare le prestazioni:
+            - Per valutare l'efficienza temporale di un algoritmo si misura il tempo impiegato per la sua esecuzione su insiemi di dati di dimensioni diverse, per poi magari fare un grafico
+            - Il tempo non va misurato con un cronometro, perché il tempo di esecuzione di un programma dipende da molti fattori, come ad esempio:
+                - la velocità del processore
+                - la quantità di memoria disponibile
+                - il sistema operativo
+                - il linguaggio di programmazione
+                - il compilatore
+                - l'ottimizzazione del codice
+                - la dimensione dei dati
+            - Tali componenti sono, poi, anche variabili nel tempo, da un'esecuzione all'altra
+            - Il tempo di esecuzione di un algoritmo va misurato all'interno del programma
+            - Si può usare il metodo statico System.currentTimeMillis() che, a ogni invocazione, restituisce un valore di tipo long che rappresenta
+                - il numero di millisecondi da un evento di riferimento (mezzanotte del 1/1/1970)
+            - Ciò che interessa è la "differenza" tra i due valori
+                [java]
+                    long start = System.currentTimeMillis();
+                    // eseguire l'algoritmo
+                    long end = System.currentTimeMillis();
+                    long elapsed = end - start;
+                [/java]
+
+            - POSSIBILE APPLICAZIONE:
+                - Data una stringa di caratteri di lunghezza n voglio sapere qual'è il numero di sottostringhe presenti
+                - Oppure, elencare tutte le sottostringhe di una stringa
+                    - le coppie di indici rappresentano le posizioni di inizio e fine di ciascuna sottostringa
+                    - attenzione! se volessi stampare anche le sottostringhe dovrei tener conto anche delle operazioni di estrazione della sottostringa
+                
 # ORDINAMENTO DI DATI
+!# CREATO FILE SortingAlgorithms.java
     - Un problema molto frequente nell'elaborazione dei dati consiste nell'ordinamento dei dati stessi, secondo un criterio prestabilito
-        - numeri in ordine crescente (o decrescente)
-        - stringhe in ordine lessicografico (crescente o decrescente)
-        - conti bancari in ordine di saldo (crescente o decrescente)
+        - numeri in ordine crescente/decrescente, alfabetico, ecc.
     - Una sequenza di n "oggetti" confrontabili
-        - si dice che un oggetto è confrontabile se è possibile stabilire se è maggiore, minore o uguale ad un altro oggetto dello stesso tipo
-    - Tra i piu studiati problemi in informatica
+        - si dice che un oggetto è confrontabile se è possibile stabilire se è maggiore, minore o uguale ad un altro oggetto della stessa classe
+        - una sequenza di oggetti si dice ordinata qunado gli oggetti sono disposti in ordine crescente o decrescente
+    - Tra i più studiati problemi in informatica
         - fucina di idee algoritmiche
         - moltissime soluzioni
-    - analisi di complessità computazionale
-        - caso miglior/peggiore/medio
+    - Analisi di complessità computazionale
+        - Caso migliore, caso peggiore, caso medio
     - L'ordinamento è un passaggio chiave su cui molti altri algoritmi sono costruiti.
-    - Studieremo tre algoritmi di ordinamento
-        - selection sort
-        - merge sort
-        - insertion sort
-    - In generale ci occupiamo di ordinamento di dati presenti in un contenitore (array per ora)
-    - nei problemi di ordinamento si parla di
+    - Usiamo l'ordinamento per essere più efficienti nel..
+        - Cercare un valore
+        - Trovare min/max o k-th min/max
+        - Ricerca della coppia di elementi più vicina
+            - Verificare unicità di un elemento (o trovare duplicati)
+        - Distribuzione di frequenza degli elementi
+        - Intersezione / unione di insiemi
+    - Metodi studiati in questo corso:
+        - Selection Sort
+        - Insertion Sort
+        - Merge Sort
+    
+    - Nei problemi di ordinamento si parla di
         - ordinamento "sul posto" quando il metodo di ordinamento riceve un contenitore e ne ordina il contenuto
             - non restituisce nulla
             - il metodo invocante si ritrova il contenitore ordinato
-        - ordinamento "fuori posto" quando il metodo di ordinamento riceve un contenitore e restituisce un nuovo contenitore con i dati ordinati
-    - I metodi che ordinano gli array sono metodi statici
-        - devono ricevere un array come parametro, ma questo non può essere il parametro implicito del metodo, perché non esiste la classe array in cui definire il metodo di ordinamento
-    - ordineremo array "pieni" 
-        - fornendo la dimensione logica come parametro aggiuntivo
-    - con modifiche minime, gli stessi algoritmi possono ordinare
-        - array "riempiti solo in parte"
-        - porzioni di array, fornendo due parametri aggiuntivi:
-            - indice iniziale (incluso)
-            - indice finale (escluso)
-            (in analogia con il metodo substring della classe String)
-
+        - ordinamento "non sul posto" quando il metodo di ordinamento riceve un contenitore e ne restituisce un altro contenente gli stessi elementi, ma in ordine; il contenitore ricevuto non viene modificato
+    - I metodi che ordinano array sono "metodi statici"
+        - Devono ricevere un array come parametro, ma questo non può essere il parametro implicito del metodo, perché non esiste la "classe array" in cui definire il metodo di ordinamento
+    - Con modifiche minime, gli stessi algoritmi possono ordinare:
+        - array "riempiti solo in parte", fornendo la dimensione logica come parametro aggiuntivo
+        - porizoni di array, fornendo due parametri aggiuntivi
+            - l'indice di inizio e l'indice di fine della porzione da ordinare
+    
     ## Selection Sort
-        - L'algoritmo di ordinamento per selezione (selection sort) è un algoritmo di ordinamento "sul posto" che ordina un array di n elementi confrontando ripetutamente gli elementi dell'array e scambiandoli se necessario.
-        [java]
-            public static void selectionSort(double[] a)
-            {
-                if (a == null) 
-                {
-                    return;
-                }
-
-                for (int i = 0; i < a.length - 1; i++)
-                {
-                    int minIndex = findMinIndexFrom(a, i);
-                    for (int j = i + 1; j < a.length; j++)
-                    {
-                        if (minIndex != i)
-                        {
-                            swap(a, i, minIndex);
-                        }
-                    }
-                    double temp = a[i];
-                    a[i] = a[j];
-                    a[j] = temp;
-                }
-            }
-        [/java]
-        [java]
-            private static void swap(double[] a, int i, int j)
-            {
-                // non verifico precondizioni perché è un metodo privato
-                double temp = a[i];
-                a[i] = a[j];
-                a[j] = temp;
-            }
-
-            private static int  findMinIndexFrom(double[] a, int from)
-            {   
-                int minIndex = from;
-                for (int i = from + 1; i < a.length; i++)
-                {
-                    if (a[i] < a[minIndex])
-                    {
-                        minIndex = i;
-                    }
-                }
-                return minIndex;
-            }
-        [/java]
-        - Metodi ausiliari privati
-            - senza i metodi ausiliari il codice è meno immediato
-            - con i metodi ausiliari, se si usano nomi appropriati, il codice "si commenta da solo"
-        
-        - Ordinare array riempiti in parte:
-        [java]
-            public static void selectionSort(double[] a, int size)
-            {
-                if (a == null)
-                {
-                    throw new IllegalArgumentException();
-                }
-
-                for (int i = 0; i < size - 1; i++)
-                {
-                    int minPos = findMinPosFrom(a, i, size);
-                    if (minPos != i)
-                    {
-                        swap(a, i, minPos);
-                    }
-                }
-            }
-
-            public static int findMinPosFrom(double[] a, int from, int size)
-            {
-                int pos = from;
-                for (int i = pos + 1; i < size; i++)
-                {
-                    if (a[i] < a[pos])
-                    {
-                        pos = i;
-                    }
-                }
-                return pos;
-            }
-        [/java]
-
-        - Ordinare per selezione: 
-            - possiamo ora sostituire il metodo che ordina un array "pieno" con uno stub che invoca quello che ordina array riempiti nella parte inziale
-            [java]
-                public static void selectionSort(double[] a)        // stub
-                {
-                    if (a == null)
-                    {
-                        throw new IllegalArgumentException();
-                    }
-                    
-                    selectionSort(a, a.length);
-                }
-            [/java]
-            - quindi, findMinPos con due soli parametri non serve più
-        - complessità di selection sort
-            - sia n la dimensione logica dell'array da ordinare
-            - ho un ciclo for su indice i che va da 0 a n-2
-            - per ogni i, ho un ciclo for su indice j che va da i+1 a n-1
-                - al suo interno ho un numer ocostatne di passi primitivi
-            [java]
-                public static void selectionSort(double[] a)
-                {
-                    if (a == null)
-                    {
-                        throw new IllegalArgumentException();
-                    }
-
-                    for (int i = 0; i < a.length - 1; i++)
-                    {
-                        int minPos = i;
-                        for (int j = i + 1; j < a.length; j++)
-                        {
-                            if (a[j] < a[minPos])
-                            {
-                                minPos = j;
-                            }
-                        }
-                        if (minPos != i)
-                        {
-                            swap(a, i, minPos);
-                        }
-                    }
-                }
-            [/java]
-            - cicli for esterno:
-                - i=0: n-1 cicli for interno + c istruzioni base
-                - i=1: n-2 cicli for interno + c istruzioni base
-                - i=2: n-3 cicli for interno + c istruzioni base
-                - ...
-                - i=n-2: 1 ciclo for interno + c istruzioni base
-
-
-[2023-12-07]
-    ## Merge Sort
-    - L'algoritmo di ordinamento per fusione (merge sort) è un algoritmo di ordinamento "fuori posto" che ordina un array di n elementi dividendo l'array in due sottosequenze, ordinando ciascuna di esse e quindi fondendo le due sottosequenze ordinate in un'unica sequenza ordinata.
-        - l'array da ordinare non viene modificato
-        - viene restituito un nuovo array ordinato
-    [java]
-        public static void mergeSort(double[] a)
-        {
-            if (a == null)
-            {
-                throw new IllegalArgumentException();
-            }
-            mergeSort(a, 0, a.length);
-        }
-
-        private static void mergeSort(double[] a, int from, int to)
-        {
-            if (to - from <= 1)
-            {
-                return;
-            }
-            int mid = (from + to) / 2;
-            mergeSort(a, from, mid);
-            mergeSort(a, mid, to);
-            merge(a, from, mid, to);
-        }
-
-        private static void merge(double[] a, int from, int mid, int to)
-        {
-            double[] temp = new double[to - from];
-            int i = from;
-            int j = mid;
-            int k = 0;
-            while (i < mid && j < to)
-            {
-                if (a[i] < a[j])
-                {
-                    temp[k] = a[i];
-                    i++;
-                }
-                else
-                {
-                    temp[k] = a[j];
-                    j++;
-                }
-                k++;
-            }
-            while (i < mid)
-            {
-                temp[k] = a[i];
-                i++;
-                k++;
-            }
-            while (j < to)
-            {
-                temp[k] = a[j];
-                j++;
-                k++;
-            }
-            for (k = 0; k < temp.length; k++)
-            {
-                a[from + k] = temp[k];
-            }
-        }
-    [/java]
-    - Prestazioni di Merge Sort
-        - Rilevazionie sperimentali delle prestazioni mostarano che l'ordinamento con MergeSort è molto più efficiente dell'ordinamento con selezione
-            - la curva del tempo, in funzione delle dimensione, cresce poco più rapidamente di una retta
-        - L'analisi teorica conferma che MergeSort è più efficiente di SelectionSort
-            - SelectionSort ha complessità O(n^2)
-            - MergeSort ha complessità O(n log n)
-        
-
-[2023-12-14]
-# COMPLESSITA' COMPUTAZIONALE
-    - La complessità computazionale di un algoritmo è una misura della quantità di risorse computazionali necessarie per eseguire l'algoritmo
-        - tempo
-            - Passo base: definita come operazione che necessita un tempo di esecuzione costante. Il tempo di esecuzione non dipende dal valore o dall'oggetto dell'operazione 
-            
-        - spazio
-    - La complessità computazionale di un algoritmo dipende dalla dimensione dell'input
-    - importante per confrontare algoritmi e algoritmi di ordinamento
+        - Per semplicità, analizzeremo prima algoritmi per ordinare numeri memorizzati in un array
+        - Il Selection Sort è un algoritmo di ordinamento "sul posto"
+            - non richiede memoria aggiuntiva
+            - non crea un nuovo array ordinato, ma ordina l'array ricevuto come parametro
+        - Per prima cosa, bisogna trovare la posizione dell'elemento minimo presente nell'intero array
+            - si confronta l'elemento in posizione 0 con tutti gli altri elementi dell'array
+            - se si trova un elemento minore, si memorizza la sua posizione
+            - si scambia l'elemento in posizione 0 con l'elemento minimo trovato
+        - Essendo l'elemento minimo, la sua posizione finale corretta nell'array ordinato è 0
+        - Si ripete la stessa operazione per l'elemento in posizione 1, che viene scambiato con l'elemento minimo trovato
+        - Per ordinare array riempiti solo in parte basta aggiungere un parametro che indica la dimensione logica dell'array
+        - Per ordinare una porzione di array, basta aggiungere due parametri che indicano l'indice di inizio e l'indice di fine della porzione da ordinare

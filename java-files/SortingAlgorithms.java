@@ -11,48 +11,49 @@ public class SortingAlgorithms
         
         // Creating the array
         int[] array = createArray(size);
-
-        // Printing the array
-        for (int i = 0; i < array.length; i++)
-        {
-            System.out.print(array[i] + " ");
-        }
         System.out.println();
+        System.out.println("-------------");
+        
+        // Printing the array
+        printArray(array);
+        
+        System.out.println();
+        System.out.println("-------------");
 
         // User selects the sorting algorithm between selection / bubble / insertion sort
         System.out.println("Select the sorting algorithm: ");
         System.out.println("1. Selection sort (ASCENDING)");
         System.out.println("2. Selection sort (DESCENDING)");
-        System.out.println("3. Bubble sort (not implemented)");
+        System.out.println("3. Merge sort (not implemented)");
         System.out.println("4. Insertion sort (not implemented)");
-        int choice = input.nextInt();
 
+        int choice = input.nextInt();
+        System.out.println("-------------");
+        long startTime = System.currentTimeMillis();
         switch (choice)
         {
-            case 1: // Selection sort
-                // Creating milliseconds counter 
-                long startTime = System.currentTimeMillis();
+            case 1: // Selection sort (ascending)
                 selectionSortAsc(array);
-                long endTime = System.currentTimeMillis();
-                System.out.println("Array sorted in " + (endTime - startTime) + " milliseconds");
                 break;
+
             case 2: // Selection sort (descending)
-                // Creating milliseconds counter 
-                startTime = System.currentTimeMillis();
                 selectionSortDesc(array);
-                endTime = System.currentTimeMillis();
-                System.out.println("Array sorted in " + (endTime - startTime) + " milliseconds");
                 break;
-            //case 3:
-            //    bubbleSort(array);
-            //    break;
+
+            case 3: // Merge sort
+                mergeSort(array);
+                break;
+
             //case 4:
             //    insertionSort(array);
             //    break;
+            
             default:
                 System.out.println("Invalid choice");
                 break;
         }
+        long endTime = System.currentTimeMillis();
+        System.out.println("Operation completed in " + (endTime - startTime) + " milliseconds");
     }
     
     // Creating array
@@ -68,7 +69,65 @@ public class SortingAlgorithms
         return array;
     }
 
-    // Ascending selection sort
+    public static void mergeSort(int[] originalArray)
+    {
+        if (originalArray == null)
+        {
+            return;
+        }
+        if (originalArray.length < 2) 
+        {
+            return; // Base case: stop recursion
+        }
+
+        int mid = originalArray.length / 2;
+        int[] left = new int[mid];
+        int[] right = new int[originalArray.length - mid];
+
+        System.arraycopy(originalArray, 0, left, 0, left.length);
+        System.arraycopy(originalArray, mid, right, 0, right.length);
+
+        // Recursive calls
+        mergeSort(left);
+        mergeSort(right);
+
+        // Merging the two arrays
+        merge(left, right, originalArray);
+
+        // Printing the array
+        printArray(originalArray);
+        System.out.println();
+    }
+
+    public static void merge(int[] left, int[] right, int[] originalArray)
+    {
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int originalIndex = 0;
+
+        while (leftIndex < left.length && rightIndex < right.length)
+        {
+            if (left[leftIndex] < right[rightIndex]) {
+                originalArray[originalIndex++] = left[leftIndex++];
+            } else {
+                originalArray[originalIndex++] = right[rightIndex++];
+            }
+        }
+
+        // Copy remaining elements from left array, if any
+        while (leftIndex < left.length)
+        {
+            originalArray[originalIndex++] = left[leftIndex++];
+        }
+
+        // Copy remaining elements from right array, if any
+        while (rightIndex < right.length)
+        {
+            originalArray[originalIndex++] = right[rightIndex++];
+        }
+    }
+
+    // Ascending selection sort (Integers only)
     public static void selectionSortAsc (int[] a)
     {
         String output = "";
@@ -162,5 +221,14 @@ public class SortingAlgorithms
 
         // Returning the position of the maximum value
         return pos;
+    }
+
+    // Printing the array
+    public static void printArray(int[] a)
+    {
+        for (int i = 0; i < a.length; i++)
+        {
+            System.out.print(a[i] + " ");
+        }
     }
 }

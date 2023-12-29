@@ -2467,3 +2467,79 @@ Methodi di Math vs println:
         - Si ripete la stessa operazione per l'elemento in posizione 1, che viene scambiato con l'elemento minimo trovato
         - Per ordinare array riempiti solo in parte basta aggiungere un parametro che indica la dimensione logica dell'array
         - Per ordinare una porzione di array, basta aggiungere due parametri che indicano l'indice di inizio e l'indice di fine della porzione da ordinare
+
+        ### Complessità del Selection Sort
+        [java]
+            public static void selectionSort (double[] a)
+            {
+                if (a == null)
+                {
+                    return;
+                }
+
+                for (int i = 0; i < a.length - 1; i++) // (**)
+                {
+                    int pos = i;
+
+                    for (int j = i + 1; j < a.length; j++) // (***)
+                    {
+                        if (a[j] < a[pos])
+                        {
+                            pos = j;
+                        }
+                    }
+
+                    if (pos != i)
+                    {
+                        double temp = a[i];
+                        a[i] = a[pos];
+                        a[pos] = temp;
+                    }
+                }
+            }
+        [/java]
+            - Sia n la dimensione dell'array da ordinare
+            - Ho un ciclo for su indice i che va da 0 a n-2 (**)
+            - Ho un ciclo for su indice j che va da i+1 a n-1 (***)
+                - Al suo interno ho un numero costante di passi primitivi
+            - Ciclo for esterno: 
+                - i = 0: n-1 cicli for interno + c istruzioni base
+                - i = 1: n-2 cicli for interno + c istruzioni base
+                - i = 3: n-3 cicli for interno + c istruzioni base
+                - ...
+                - i = n-2: 1 ciclo for interno + c istruzioni base
+            - T(n) = (n-1+c) + ((n-2)+c) + ... + (2+c) + (1+c)
+                   = (n-1) + (n-2) + ... + 2 + 1 + c(n-1)
+                   =  n(n-1)/2 + c(n-1)
+                   = O(n^2)
+            - Il Selection Sort ha complessità O(n^2)
+            - In generale cicli annidati di questo tipo portano a complessità quadratica
+            - Per stimare il tempo di esecuzione dobbiamo stimare il numero di operazioni primitive eseguite nel ciclo interno
+                - per i = 0 vengono eseguite n volte
+                - per i = 1 vengono eseguite n-1 volte
+                - Il numero totale è quindi n + (n-1) + (n-2) + ... + 2 + 1 = n(n+1)/2 = O(n^2)
+    
+    ## Analisi di Complessità
+        - In un'analisi dettagliata della complessità si dovrà tener conto di tutte le possibilità
+            - caso migliore, tempo richiesto dai casi più fortunati
+            - caso peggiore, tempo richiesto dai casi più sfortunati
+            - caso medio, tempo richiesto da un caso medio
+        - Il ciclo for intenro devo eseguirlo in ogni caso fino alla fine della sequenza, quindi non cambia nulla
+        
+        ### Selection sort nel caso migliore
+            - Il caso migliore si ha quando "i != pos" è sempre falso (=sequenza ordinata in partenza) e risparmio lo swap
+            - Si tratta di un numero costante di operazioni
+                - Caso peggiore: 5 istruzioni
+                - Caso migliore: 2 istruzioni
+                - Non cambia nulla dal punto di vista asintotico
+            - L'ordinamento per selezione è, quindi, quadratico anche nel caso migliore, oltre che nel caso peggiore
+                - Non trae (asintoticamente) alcun vantaggio dal fatto che l'array da ordinare sia già ordinato. Anche se, ovviamente, le prestazioni "a cronometro" migliorano un po'
+
+        ### Selection sort nel caso medio
+            - Di solito le prestazion nel "caso migliore" hanno poco interessante
+            - Non è semplice definire le condizioni di "caso medio"
+                - bisognerebbe, in teoria, fare la media del numero di accessi necessario per ordinare tutte le possibili permutazioni dei dati, cioè tutte le possibili situazioni iniziali
+                - in pratica, si arriva a una definizione adeguata in modo più semplice, con esperienza e matematica
+                - dato che l'ordinamento per selezione è quadratico sia nel caso migliore sia nel caso peggiore, è anche quadratico nel caso medio
+
+    ## Merge Sort

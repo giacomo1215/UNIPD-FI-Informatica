@@ -2543,3 +2543,18 @@ Methodi di Math vs println:
                 - dato che l'ordinamento per selezione è quadratico sia nel caso migliore sia nel caso peggiore, è anche quadratico nel caso medio
 
     ## Merge Sort
+        - Dovendo ordinare un array, lo dividiamo in due parti di dimensioni (circa) uguali
+        - poi, l'algoritmo di fusione opera in due modalità diverse nelle sue due fasi:
+            - nella prima parte effettua confronti tra elementi di due array diversi
+            - nella seconda non ha più bisogno di confronti, perché gli elementi sono già in ordine
+        - L'algoritmo è ricorsivo
+            - la condizione di terminazione è che l'array da ordinare contenga un solo elemento
+            - in questo caso, l'array è già ordinato
+        Questo algoritmo si chiama MergeSort
+            - Caso base: se l'array contiene meno di due elementi, è già ordinato
+            - Altrimenti: 
+                - si divide l'array in due parti
+                - si divide la prima parte (usando MergeSort)
+                - si divide la seconda parte (usando MergeSort)
+                - si fondono le due parti ordinate usando l'algoritmo di fusione (merge)
+        

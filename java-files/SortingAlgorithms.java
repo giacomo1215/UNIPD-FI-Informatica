@@ -24,7 +24,7 @@ public class SortingAlgorithms
         System.out.println("Select the sorting algorithm: ");
         System.out.println("1. Selection sort (ASCENDING)");
         System.out.println("2. Selection sort (DESCENDING)");
-        System.out.println("3. Merge sort (not implemented)");
+        System.out.println("3. Merge sort");
         System.out.println("4. Insertion sort (not implemented)");
 
         int choice = input.nextInt();

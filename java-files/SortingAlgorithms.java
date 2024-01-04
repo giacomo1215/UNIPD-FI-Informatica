@@ -44,29 +44,44 @@ public class SortingAlgorithms
                 mergeSort(array);
                 break;
 
-            //case 4:
-            //    insertionSort(array);
-            //    break;
+            case 4:
+               insertionSort(array);
+               break;
             
             default:
                 System.out.println("Invalid choice");
                 break;
         }
         long endTime = System.currentTimeMillis();
+        System.out.println();
         System.out.println("Operation completed in " + (endTime - startTime) + " milliseconds");
     }
     
-    // Creating array
-    public static int[] createArray(int size)
+    public static void insertionSort(int[] originalArray)
     {
-        int[] array = new int[size];
-        
-        for (int i = 0; i < size; i++)
+        if (originalArray == null)
         {
-            array[i] = (int) (Math.random() * 100);
+            return;
         }
-        
-        return array;
+
+        for (int i = 1; i < originalArray.length; i++)
+        {
+            for (int j = i-1; j >= 0; j--)
+            {
+                if (originalArray[j] > originalArray[j+1])
+                {
+                    swap(originalArray, j, j+1);
+                    printArray(originalArray);
+                }
+                else
+                {
+                    break;
+                }
+                System.out.println();
+            }
+        }
+        System.out.println();
+        printArray(originalArray);
     }
 
     public static void mergeSort(int[] originalArray)
@@ -177,6 +192,23 @@ public class SortingAlgorithms
         }
 
         System.out.println(output);
+    }
+
+
+
+    // Utilities
+
+    // Creating array
+    public static int[] createArray(int size)
+    {
+        int[] array = new int[size];
+        
+        for (int i = 0; i < size; i++)
+        {
+            array[i] = (int) (Math.random() * 100);
+        }
+        
+        return array;
     }
 
     private static void swap(int[] a, int i, int j)

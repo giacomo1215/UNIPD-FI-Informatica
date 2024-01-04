@@ -2542,7 +2542,7 @@ Methodi di Math vs println:
                 - in pratica, si arriva a una definizione adeguata in modo più semplice, con esperienza e matematica
                 - dato che l'ordinamento per selezione è quadratico sia nel caso migliore sia nel caso peggiore, è anche quadratico nel caso medio
 
-    ## Merge Sort
+    ## Merge Sort "T(n) ∈ O(n log2n)"
         - Dovendo ordinare un array, lo dividiamo in due parti di dimensioni (circa) uguali
         - poi, l'algoritmo di fusione opera in due modalità diverse nelle sue due fasi:
             - nella prima parte effettua confronti tra elementi di due array diversi
@@ -2557,4 +2557,54 @@ Methodi di Math vs println:
                 - si divide la prima parte (usando MergeSort)
                 - si divide la seconda parte (usando MergeSort)
                 - si fondono le due parti ordinate usando l'algoritmo di fusione (merge)
+        - Prestazioni: 
+            - La creazione dei due semi-array e le loro inizializzazioni di default richiedono complessivamente "n" accessi
+            - le due invocazioni di "System.arraycopy" richiedono complessivamente "2n" accessi
+                - Tutti gli "n" elementi devono essere letti (una volta) dall'array e scritti (una volta) in uno dei semi-array
+            - Ciascuna delle due invocazioni ricorsive richiede un numero di accessi uguale a "T(n/2)"
+                - Il fatto che n sia pari o dispari è assolutamente ininfluente quando n è molto grande
+            
+    ## Insertion sort
+        - L'algoritmo di ordinamento per inserimento
+            - inizia osservando che il sotto array di lunghezza unitaria costituito dalla prima cella dell'array è ordinato (essendo, appunto, di lunghezza unitaria)
+            - procede estendendo verso destra la parte ordinata, includendo nel sottoarray ordinato il primo elemento alla sua destra. 
+                - per farlo, il nuovo elemento viene spostato verso sinistra finché non si trova nella sua posizione corretta, spostando verso destra gli elementi intermedi
+            - si ripete il procedimento per tutti gli elementi dell'array
+        - Questa tipologia di ordinamento è molto utilizzata quando si deve inserire un nuovo elemento in un array già ordinato
+            - si inserisce l'elemento in ultima posizione e si sposta verso sinistra finché non si trova nella sua posizione corretta
+            - se si sa che l'unico elemento fuori posto è l'ultimo, è inutile eseguire l'intero algoritmo, perché le prime "n-2" iterazioni del ciclo più esterno sono inutili
+        - L'algoritmo di ordinamento per inserimento è quadratico
+
+    ## Confronto di algoritmi
+        - Se le notazioni O-grande delle prestazioni temprali di due algoritmi diversi
+            - sono tra loro diverse, allora è possibile dire quale sia l'algoritmo migliore
+            - sono tra loro uguali, allora per decidere quale sia l'algoritmo migliore occorre studiare con maggior cura le prestazioni effettive, eventualmente ricorrendo al numero di accessi effettivo e non al suo O-grande, per cui anche i fattori qui trascurati sono rilevanti
+                - in mancanza di tale analisi dichiareremo "equivalenti" i due algoritmi dal punto di vista delle prestazioni asintotiche
         
+# Algoritmi di ricerca
+
+    ## Ricerca sequenziale
+        - Abbiamo già visto un algoritmo da utilizzare per individuare la posizione di un elemento che abbia un particolare valore all'interno di un array i cui elementi non siano ordinati
+        - Dato che bisogna esaminare tutti gli elementi, uno dopo l'altro in sequenza, si parla di "ricerca sequenziale o lineare"
+        
+        [java]
+
+            public static int sequentialSearch(int[] a, int v)
+            {
+                if (a == null)
+                {
+                    return -1;
+                }
+
+                for (int i = 0; i < a.length; i++)
+                {
+                    if (a[i] == v)
+                    {
+                        return i; // value found 
+                    }
+                }
+
+                return -1; // value not found 
+            }
+
+        [/java]

@@ -2608,3 +2608,30 @@ Methodi di Math vs println:
             }
 
         [/java]
+
+        - La complessità dell'algoritmo di ricerca sequenziale è lineare
+            - nel caso peggiore, il valore da cercare non è presente nell'array e bisogna esaminare tutti gli elementi
+                - ci sono "n" accessi al ciclo for
+            - nel caso migliore, il valore da cercare è presente in prima posizione
+                - ci sono "1" accessi al ciclo for
+            - nel caso medio, il valore da cercare è presente in posizione casuale
+                - ci sono "(n+1)/2" accessi al ciclo for
+            - in ogni caso, le prestazioni dell'algoritmo sono sia nel caso peggiore sia nel medio "O(n)"
+            - l'algoritmo di ricerca sequenziale è lineare
+                - Per questo si parla anche di ricerca lineare
+            - L'algoritmo di ricerca sequenziale è molto semplice, ma non è molto efficiente
+                - Se l'array è molto grande, il tempo di esecuzione può essere molto lungo
+                - Se l'array è ordinato, si può usare un algoritmo di ricerca più efficiente
+    
+    ## Ricerca per bisezione (o "binaria")
+
+        ### Ricerca in un array ordinato
+        - Il problema di individuare la posizione di un elemento in un array ordinato è molto più semplice
+            - si può usare un algoritmo di ricerca più efficiente
+        - L'algoritmo di ricerca per bisezione (o "binaria") è un algoritmo di ricerca "non sequenziale"
+            - non esamina gli elementi dell'array in sequenza
+            - si basa sul fatto che l'array è ordinato
+            - L'algoritmo di ricerca per bisezione è ricorsivo
+                - la condizione di terminazione è che l'array da esaminare contenga un solo elemento
+                - in questo caso, l'array è già ordinato
+        

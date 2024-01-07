@@ -127,10 +127,35 @@ public class Search
 
     public static int[] createArray(int size)
     {
+        int[] usedValues = new int[size + 1];
         int[] array = new int[size];
+        int tempValue;
+
         for (int i = 0; i < size; i++)
         {
-            array[i] = (int)(Math.random() * 100);
+            boolean isUsed = false;
+            tempValue = (int)(Math.random() * 100);
+            
+            // Checking if the value has already been used
+            for (int j = 0; j < i; j++)
+            {
+                if (tempValue == usedValues[j])
+                {
+                    isUsed = true;
+                    break; // Exiting loop once value is found
+                }
+            }
+
+            // Inserting it in the array
+            if (!isUsed)
+            {
+                array[i] = tempValue;
+                usedValues[i] = tempValue;
+            }
+            else
+            {
+                i--;
+            }
         }
         return array;
     }

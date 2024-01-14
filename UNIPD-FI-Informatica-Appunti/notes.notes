@@ -2634,4 +2634,589 @@ Methodi di Math vs println:
             - L'algoritmo di ricerca per bisezione è ricorsivo
                 - la condizione di terminazione è che l'array da esaminare contenga un solo elemento
                 - in questo caso, l'array è già ordinato
+        - Prestazioni:
+            - Per cercare in un array di dimensione n bisogna
+                - effettuare un confronto (con l'elemento centrale)
+                - effettuare una ricerca in un array di dimensione n/2
+            - quindi "T(n) = 1 + T(n/2)"
+            
+# Ereditarietà
+    - L'ereditarietà è lo strumento concettuale che suporta l'obiettivo di riusabilità del codice nell'OOP (Object Oriented Programming)
+        - si usa quando si deve realizzare una classe ed è già disponibile un'altra classe che rappresenta un concetto più generale
+        - la nuova classe da scrivere è più specializzata, eredita comportamenti (metodi) della classe più generale e ne aggiunge di nuovi.
+    - Supponiamo di voler realizzare una classe SavingsAccount per rappresentare un conto bancario di risparmio
+        - un tasso d'interesse annuo determinato al momento dell'apertura
+        - un metodo "addInterest" per accreditare gli interessi sul conto
+    - un conto bancario di risparmio ha tutte le stesse caratteristiche di un conto bancario, più alcune altre caratteristiche che gli sono perculiari
+        - riutilizziamo il codice già scritto per la classe BankAccount
+    
+    [java]  // Ricordiamo Bank Account
+        public class BankAccount
+        {
+            private double balance;
+
+            public BankAccount()
+            {
+                balance = 0;
+            }
+            public BankAccount(double initialBalance)
+            {
+                balance = initialBalance;
+            }
+            public void deposit(double amount)
+            {
+                balance = balance + amount;
+            }
+
+            //versione semplificata, senza controllo
+            public void withdraw(double amount)
+            {
+                balance = balance - amount;
+            }
+            public double getBalance()
+            {
+                return balance;
+            }
+        }
+    [/java]
+
+    [java] // Progettiamo SavingsAccount da zero
+        public class SavingsAccount
+        {
+            private double balance; // codice copiato
+            private double interestRate;
+
+            public SavingsAccount(double rate)
+            {
+                balance = 0; // codice copiato
+                interestRate = rate;
+            }
+            public void addInterest()
+            {
+                balance += balance * interestRate / 100;
+            }
+            public void deposit(double amount) // codice copiato
+            {
+                balance = balance + amount;
+            }
+            public void withdraw(double amount) // codice copiato
+            {
+                balance = balance - amount;
+            }
+            public double getBalance() // codice copiato
+            {
+                return balance;
+            }
+        }
+    [/java]
+
+    - come previsto, abbiamo potuto copiare nella definizione della classe SavingsAccount buona parte del codice di BankAccount
+    - inoltre ci sono tre cambiamenti
+        - abbiamo aggiunto una variabile di esemplare "interestRate"
+    - abbiamo modificato il costruttore
+        - ovviamente il costruttore ha anche cambiato nome
+    - abbiamo aggiunto un metodo "addInterest"
+    -!? Cosa succede se modifichiamo "BankAccount"?
+        - dobbiamo modificare anche "SavingsAccount"
+        - se ci sono altre classi che usano "BankAccount" dobbiamo modificarle tutte
+    - L'ereditarietà risolve questi problemi
+
+    [java] // SavingsAccount
+    public class SavingsAccount extends BankAccount
+    {
+        private double interestRate;
+
+        public SavingsAccount(double rate)
+        {
+            interestRate = rate;
+            // balance viene implicitamente inizializzata 0, si vedrà dopo
+        }
+
+        public void addInterest()
+        {
+            double interest = getBalance() * interestRate / 100;
+        }
+    }
+    [/java]
+
+    - Con la clausola "extends" dichiariamo che SavingsAccount è una classe derivata da BankAccount, nel senso che ne estende le funzionalità
+        - ne eredita tutte le caratteristiche
+        - specifichiamo soltanto le peculiarità 
+    
+    ## Come usare la classe derivata
+
+        - Esemplari della classe derivata SavingsAccount si usano come se fossero esempari di BankAccount, con qualche proprietà in più
+
+            [java]
+                SavingsAccount sa = new SavingsAccount(10);
+                sa.deposit(100);
+                sa.withdraw(200);
+                sa.addInterest();
+                System.out.println(sa.getBalance());
+            [/java]
+
+        - La classe derivata si chiama "sottoclasse"
+        - La classe da cui deriva si chiama "superclasse"
+    
+    ## La superclasse universale Object
         
+        - In Java, ogni classe che non deriva esplicitamente (cioè mediante la clausola extends) da un'altra classe deriva implicitamente dalla superclasse universale: Object 
+            - massimo dell'astrazione
+        - Quindi, SavingsAccount deriva da BankAccount, che a sua volta deriva da Object
+        - Object ha (pochissimi) metodi (tra cui toString) che, quindi, sono ereditati da tutte le classi in Java
+            - l'ereditarietà avviene anche su più livelli, quindi SavingsAccount eredita anche i metodi di Object
+        
+        [java] // Sintassi
+            class NomeSottoclasse extends NomeSuperclasse
+            {
+                costruttori
+                nuovi metodi
+                nuove variabili
+            }
+        [/java]
+
+        ### Scopo
+
+            - Definire la classe NomeSottoclasse che deriva dalla classe NomeSuperclasse, definendo nuovi metodi e/o nuove variabili, oltre ai suoi costruttori.
+            - NOTA: se la superclasse non è indicata esplicitamente, il compilatore usa implicitamente "java.lang.Object"
+    
+    ## Gerarchia di ereditarietà
+
+        - In Java, ciascuna classe ne estende un'altra e !soltanto una!
+            - tranne Object, che non estende alcuna classe
+        - di conseguenza, in Java la struttura gerarchica dell'ereditarietà è un albero, la cui radice è la superclasse universale Object
+        - ESEMPIO: 
+
+            Object
+                |
+                String
+                BankAccount
+                    |
+                    SavingsAccount
+                    AnotherAccount
+                    ...
+
+                Scanner
+
+    ## Terminologia e notazione
+        
+        - Dato che oggetti di tipo SavingsAccount sono
+            - un'estensione di oggetti di tipo BankAccount
+            - più "grandi" di oggetti di tipo BankAccount, perché hanno una variabile di esemplare in più   
+            - più "abili" di oggetti di tipo BankAccount, perché hanno un metodo in più
+        ?! perché SavingsAccount si chiama sottoclasse e non superclasse?
+            - I termini superclasse e sottoclasse derivano dalla teoria degli insiemi
+                - i conti bancari di risparmio (gli oggetti di tipo SavingsAccount) costituiscono un sottoinsieme dell'insieme di tutti i conti bancari (gli oggetti di tipo BankAccount) e quest'ultimo insieme è, quindi, un superinsieme di tale sottoinsieme
+    
+    ## I metodi della sottoclasse
+
+        - Quando si definisce una sottoclasse, per quanto riguarda i suoi metodi possono succedere tre cose:
+            - nella sottoclasse viene definito un metodo che nella sueprclasse non esisteva (addInterest)
+            - un metodo della superclasse viene ereditato dalla sottoclasse (deposit, withdraw, getBalance)
+            - un metodo della superclasse viene sovrascritto nella sottoclasse
+
+        ### Sovrascrittura di metodi
+
+            - La possibilità di sovrascrivere (override) un metodo della superclasse, modificandone il comportamento (soltanto) quando è usato per la sottoclasse, è una delle caratteristiche più potenti dell'OOP
+            - Per sovrascrivere un metodo bisogna definire nella sottoclasse un metodo con la stessa firma (cioè stesso nome e stesso elenco di tipi dei parametri) di quello definito nella superclasse
+                - tale metodo prevale (overrides) su quello ereditato dalla superclasse quando viene invocato con un oggetto della sottoclasse
+                - da non ocnfondere con metodi sovraccarichi, che hanno lo stesso nome ma parametri diversi
+            - ESEMPIO:
+                - vogliamo modificare la classe SavingsAccount introducendo un contatore delle sole operazioni di versamento (e metodi che consentano di ispezionare e azzerare tale contatore)
+                
+                [java]
+                    public class SavingsAccount extends BankAccount
+                    {
+                        ...
+                        private int count = 0;
+                        public int getCount()
+                        {
+                            return count;
+                        }
+                        public void resetCount()
+                        {
+                            count = 0;
+                        }
+                    }
+                [/java]
+                
+                - i versamenti nei conti di tipo SavingsAccount si fanno però invocando il metodo deposit di BankAccount, sul quale non abbiamo controllo
+                - possiamo però sovrascrivere deposit, ridefinendolo in SavingsAccount
+                
+                [java]
+                    public class SavingsAccount extends BankAccount
+                    {
+                        ...
+                        public void deposit(double amount)
+                        {
+                            count++;
+                        }
+                    }
+                [/java]
+                
+                - in questo modo, quando viene invocato deposit con un oggetto di tipo SavingsAccount, viene effettivamente invocato il metodo deposit definito nella classe SavingsAccount e non quello definito in BankAccount
+                    - non cambia nulla per oggetti di tipo BankAccount
+                - per accedere al metodo deposit di BankAccount, si usa la parola chiave "super"
+
+                [java]
+                    public class SavingsAccount extends BankAccount
+                    {
+                        ...
+                        public void deposit(double amount)
+                        {
+                            count++;
+                            super.deposit(amount);
+                        }
+                    }
+                [/java]
+
+            - la parola chiave "super" è un riferimento all'oggetto della superclasse
+                - si usa per invocare un metodo della superclasse
+                - si usa per accedere a una variabile di esemplare della superclasse
+                - si usa per invocare il costruttore della superclasse
+
+    ## Costruttori della sottoclasse
+        - Un'invocazione di super viene sempre eseguita quando la JVM costruisce un esemplare di una sottoclasse
+            - se la chiamata a super(...) non è indicata esplicitamente, il compilatore esegue automaticamente l'invocazione di super() senza parametri
+                - questo avviene, ad esempio, nel caso del primo costruttore definito in SavingsAccount
+
+                    [java]
+                        public SavingsAccount(double rate)
+                        {
+                            // invocazione implicita di super();
+                            // che inizializza balance a zero
+                            interestRate = rate;
+                        }
+                    [/java]
+                
+                - Sintassi:
+                    [java]
+                        NomeSottoclasse(parmetri)
+                        {
+                            super(eventualiParametri);
+                            ...
+                        }
+                    [/java]
+                - Scopo:
+                    - invocare il costruttore della superclasse di NomeSottoclasse passando eventualiParametri (che possono essere anche diversi dai parametri del costruttore della sottoclasse)
+                    - Nota: per motivi "tecnici", se esplicitamente presente, deve essere il primo enunciato del costruttore
+                    - Nota: se non presente, viene inserita implicitamente una invocazione a super() senza parametri
+        - Attenzione: il csotruttore predefinito (senza argomenti) esiste implicitamente SOLTANTO se nella classe non vengono deifniti die costruttori.
+            - altrimenti dev'essere stato scritto esplicitamente
+    
+    ## Conversione fra riferimenti di superclasse e sottoclasse (up-casting)
+        - Un oggetto di tipo SavingsAccount è un caso speciale di oggetti di tipo BankAccount
+        - Questa proprietà si riflette in una proprietà sintattica del linguaggio Java
+            - un riferimento ad un oggetto di una classe derivata può essere assegnato a una variabile oggetto del tipo di una sua superclasse, diretta o indiretta
+
+            [java]
+                SavingsAccount sAccount = new SavingsAccount(10);
+                BankAccount bAccount = sAccount;
+                // si potrebbe anche fare Object obj = sAccount;
+
+                // Le due variabili, di tipi diversi, puntano ora allo stesso oggetto
+            [/java]
+
+            - non c'è nessuna "conversione" effettiva, cioè non vengono modificati i dati, che sono indirizzi... e rimangono indirizzi!
+
+        [java]
+            SavingsAccount sAccount = new SavingsAccount(10);
+            BankAccount bAccount = sAccount;
+            bAccount.deposit(500); // OK
+        [/java]
+
+        - Tramite la variabile bAccount si può usare l'oggetto di tipo SavingsAccount come se fosse di tipo BankAccount, senza però poter accedere alle proprietà specifiche di SavingsAccount
+
+        [java] // Aggiungiamo un metodo a BankAccount
+            public class BankAccount
+            {
+                ...
+                
+                public void transferTo(BankAccount other, double amount)
+                {
+                    withdraw(amount);
+                    other.deposit(amount);
+                    // effettua un bonifico
+                }
+            }
+        [/java]
+        [java]
+            BankAccount b1 = new BankAccount();
+            BankAccount b2 = new BankAccount();
+            b1.transferTo(b2, 100);
+        [/java]
+
+        - Per quanto visto fin'ora, "other" può anche riferirsi ad un oggetto di tipo SavingsAccount
+
+            [java]
+                BankAccount other = new BankAccount(1000);
+                SavingsAccount sAccount = new SavingsAccount(10);
+                BankAccount bAccount = sAccount;
+                other.transferTo(bAccount, 100);
+            [/java]
+        
+        - Il metodo transferTo di BankAccount richiede un parametro di tipo BankAccount e non conosce (né usa) i metodi specifici di SavingsAccount, ma è comodo poterlo invocare senza doverlo modificare!
+
+            [java]
+                public class BankAccount
+                {
+                    ...
+                    public void transferTo(BankAccount other, double amount)
+                    {
+                        withrdraw(amount);
+                        this.withdraw(...);
+                        other.deposit(amount);
+                        // effettua un bonifico
+                    }
+                }
+            [/java]
+        
+        - Si tratta di una proprietà ESTREMAMENTE utile
+            - Chi ha progettato la classe BankAccount l'ha dotata della possibilità di "fare un bonifico" 
+            - Questa funzionalità può operare anche se uno dei due conti bancari coinvolti (o anche entrambi) è di un tipo derivato da BankAccount,tipo di cui il progettista di BankAccount (e, quindi, del metodo transferTo) non potevano prevedere l'esistenza
+        - Vengono "ridotte" le potenzialità dell'oggetto
+            - In realtà, si usa un riferimento che consente minori funzionalità, l'oggetto non subisce modifiche
+        - Si parla di conversione mediante "up-casting" perché si "risale" nell'albero della gerarchia di ereditarietà.
+        - La conversione tra riferimento a sottoclasse e riferimento a superclasse può avvenire anche implicitamente (come tra int e double)
+        
+        [java]
+            BankAccount other = new BankAccount(1000);
+            SavingsAccount sAccount = new SavingsAccount(10);
+            other.transferTo(sAccount, 100);
+        [/java]
+
+        - Il compilatore sa che il metodo transferTo richiede un riferimento di tipo BankAccount, quindi
+            - controlla che il tipo della variabile sAccount sia BankAccount oppure quello di una sua sottoclasse
+            - effettua la "conversione" automaticamente
+                - in realtà non c'è niente da convertire perché è un riferimento, ma si intende conversione come visto fin'ora
+        
+    ## Polimorfismo ed ereditarietà
+
+        ### Polimorfismo
+            
+            - Sappiamo già che un oggetto di uan sottoclasse può essere usato come se fosse un oggetto di una superclasse
+                - si parla di "polimorfismo"
+            
+            [java]
+                BankAccount account = new SavingsAccount(10);
+                account.deposit(100);
+                account.withdraw(200);
+            [/java]
+
+            - Abbiamo sovrascritto/ridefinito deposit in SavingsAccount, in modo che prelevi una commissione ad ogni versamento.
+            - Quando si invoca deposit con la variabile "account", che è una variabile di tipo BankAccount che punta ad un oggetto di tipo SavingsAccount, viene invocato il metodo deposit definito in SavingsAccount e non quello definito in BankAccount
+                - secondo la semantica di Java viene invocato il metodo deposit di SavingsAccount
+            - Questa semantica si chiama polimorfismo ed è caratteristica dei linguaggi OOP 
+                - l'invocazione di un metodo è SEMPRE determinato dal tipo dell'oggetto usato come parametro implicito e NON dal tipo della variabile oggetto
+            - Si parla di polimorfismo perché si compie la stessa elaborazione (deposit) in modi diversi, in relazione all'oggetto usato.
+            - Abbiamo già visto il polimorfismo a proposito dei metodi sovraccarichi.
+                - l'invocazione del metodo println si traduce nell'invocazione di un metodo scelto fra alcuni metodi diversi, in realzione al tipo del parametro esplicito. 
+                - il compilatore decide quale metodo invocare
+            - Nel caso dei metodi sovrascritti la situazione è molto diversa, perché la decisione non può essere presa dal compilatore, ma dev'essere presa dall'ambiente runtime (l'interprete)
+                - si parla di selezione posticipata (late binding)
+                - selezione anticipata (early binding) nel caso di metodi sovraccarichi
+
+        ### Ereditarietà: figli e nipoti
+
+            - Limitazioni nell'accesso ai metodi:
+                - La classe C può sovrascrivere il metodo ereditato da B.
+                - È possibile invocare il metodo di B usando super.metodo(), ma non è possibile accedere direttamente al metodo di A tramite super.super.metodo().
+            - Ragioni della limitazione:
+                - La ragione principale per cui C non può accedere direttamente al metodo di A è la scelta progettuale di far ereditare C da B anziché direttamente da A.
+                - Questa scelta implica che il comportamento di A, come modificato da B, è accettato come specializzazione.
+            - Soluzioni:
+                - È possibile aggirare questo vincolo, ma non è consigliato, in quanto va contro la logica della struttura di ereditarietà e potrebbe indicare una cattiva progettazione.
+        
+        ### L'operatore "instanceof"
+            
+            - è possibile stabilire se un oggetto è un'istanza del tipo specificato (classe o interfaccia) attraverso l'operatore "instanceof"
+            - 
+
+            [java] 
+                variabileOggetto instanceof NomeClasse 
+            [/java]
+            
+            - restituisce un valore booleano
+            - dipende dal tipo di oggetto in esecuzione, non dal tipo dichiarato del riferimento
+            - posso utilizzarlo per fare casting in modo sicuro
+
+            [java]
+                BankAccount account = new SavingsAccount();
+                SavingsAccount sAccount;
+                if (account instanceof SavingsAccount)
+                {
+                    sAccount = (SavingsAccount) account;
+                    sAccount.addInterest();
+                }
+            [/java]
+            
+            - Senza instanceof, se la variabile non contiene un riferimento a SavingsAccount, verrà generata un'eccezione di tipo ClassCastException
+
+    ## Ereditarietà e controllo di accesso
+
+        - Java fornisce quattro livelli per il controllo di accesso a metodi, campi e classi.
+            - public
+            - private
+            - protected
+                - il progettista della superclasse decide se rendere accessibile in modo protected lo stato della classe (o una sua parte...)
+                    - variabili e metodi definiti protected sono accessibili da tutte le sottoclassi!
+                - è una parziale violazione dell'incapsulamento, ma avviene in modo consapevole ed esplicito
+                - anche i metodi possono essere definiti protected 
+                    - possono essere invocati soltanto all'interno della classe in cui sono definiti (come i metodi private) e all'interno delle classi derivate da essa
+            - package
+                - un membro di classe (o una classe) senza specificatore di accesso ha di default un'impostazione di accesso package
+                    - i metodi di classi nello stesso pacchetto vi hanno accesso
+                    - può essere una buona impostazione per le classi, non lo è per le variabili, perché si viola l'incapsulamento
+                    - errore comune: dimenticare lo specificatore di accesso per una variabile di esemplare
+    
+    ## Ereditarietà e modificatore final
+
+        - Il modificatore final può essere applicato a metodi, variabili di esemplare e classi
+            - un metodo final non può essere sovrascritto
+            - una variabile di esemplare final non può essere modificata dopo la sua inizializzazione
+            - una classe final non può essere estesa
+
+    ## La superclasse universale object
+
+        - ogni classe di Java, in modo diretto o indiretto, è una sottoclasse di Object
+            - quindi ogni classe eredita tutti i metodi della classe Object
+        
+        ### Sovrascrivere i metodi
+
+            - La classe Object definisce metodi che possono essere sovrascritti
+                - toString
+                - equals
+                - hashCode
+                - clone
+                - finalize
+                - getClass
+                - notify
+                - notifyAll
+                - wait
+
+            #### toString
+
+                - L'invocazione di questo metodo con un oggetto (qualsiasi) ne restituisce la cosiddetta descrizione testuale standard 
+
+                [java]
+                    BankAccount@111f71
+                [/java]
+
+                    - La descrizione testuale standard è "il nome della classe" seguito dal carattere @ e da un numero che dipende dall'indirizzo dell'oggetto in memoria
+                - In generale la descrizione testuale standard non è molto utile, anche se ha un'interessante proprietà
+                    - oggetti distinti hanno descrizione testuale standard distinte (perché si trovano in posizioni diverse nella memoria)
+                - Sovrascrivere toString è molto utile
+                    - per fornire una descrizione testuale più significativa
+                    - per fornire una descrizione testuale che non dipenda dall'indirizzo dell'oggetto in memoria
+                - Il metodo "toString" di una classe dovrebbe produrre una stringa contenente tutte le informazioni di stato dell'oggetto, cioè
+                    - il valore di tutte le sue variabili di esemplare
+                    - il valore di eventuali variabili statiche della classe che non siano costanti
+                - Nelle classi derivate, il metodo toString dovrebbe sempre invocare il metodo toString della superclasse, concatenando le informazioni specifiche della sottoclasse
+                - ESEMPIO:
+                    [java]
+                        public class BankAccount
+                        {
+                            public String toString()
+                            {
+                                return "BankAccount[balance=" + balance + "]" + super.toString();
+                            }
+                            ...
+                        }
+
+                        public class SavingsAccount extends BankAccount
+                        {
+                            public String toString()
+                            {
+                                return "SavingsAccount[interestRate=" + interestRate + "]" + super.toString();
+                            }
+                            ...
+                        }
+                    [/java]
+                - Il metodo "toString" di una classe viene invocato implicitamente anche quando si concatena un oggetto della classe con una stringa
+                    [java]
+                        BankAccount account = new BankAccount();
+                        String s = "Conto " + account;
+                    [/java]
+                - Questa concatenazione è sintatticamente corretta, come per i tipi di dati numerici, e viene interpretata dal compilatore così:
+                    [java]
+                        BankAccount account = new BankAccount();
+                        String s = "Conto " + account.toString();
+                    [/java]
+
+            #### equals
+
+                - L'invocazione di questo metodo restituisce true se e solo se l'oggetto su cui viene invocato coincide con l'oggetto passato come parametro:
+                    [java]this == otherObject[/java]
+                - Non molto utile, sarebbe meglio confrontare gli oggetti in base alle variabili che ne descrivono lo stato
+                
+                [java]
+                    public class BankAccount
+                    {
+                        ...
+                        public boolean equals(Object otherObject)
+                        {
+                            BankAccount otherAccount = (BankAccount)otherObject;
+                            return balance == otherAccount.balance;
+                        }
+                    }
+                [/java]
+
+                - Problema: nella firma di equals ho Object e non BankAccount
+                    - devo fare casting esplicito per poter accedere alle variabili di esemplare dell'oggetto otherObject che in realtà sarà un riferimento di tipo BankAccount
+                    - ATTENZIONE: se scrivo un metodo 
+                        - public boolean equals(BankAccount otherAccount) non sovrascrivo il metodo equals di Object!!!
+        
+        - A questo punto siamo in grado di capire come è possibile definire metodi che, come println, sono in grado di ricevere come parametro un oggetto di qualsiasi tipo.
+            - un riferimento a un oggetto di qualsiasi tipo può sempre essere convertito automaticamente (up-casting) in un riferimento di tipo Object, con cui si invoca toString()
+
+            [java]
+                public void println(Object obj)
+                {
+                    println(obj.toString()); // NO Ricorsione
+                }
+                public void println(String s)
+                {
+                    ...
+                    // questo viene invocato per le stringhe e ne stampa i singoli caratteri
+                }
+            [/java]
+        - Ma un esemplare di String è anche un esemplare di Object
+            - Nell'up-casting usato implicitamente per i parametri, durante l'invocazione di metodi il compilatore cerca sempre di fare "il minor numero di conversioni".
+                - viene usato, quindi, il metodo "più specifico"
+                - la presenza della seconda versione del metodo fa in modo che l'invocazione presente nel primo metodo NON sia una ricorsione
+        - Il metodo println ha una forma sovraccarica anche per ogni tipo di dato primitivo, perché variabili di tipi primitivi non sono variabili riferimento e non possono essere assegnate, mediante up-casting, a un riferimento di tipo Object
+
+        [java]
+            public void println(Object obj)
+            {
+                println(obj.toString());
+            }
+            
+            public void println(String s)
+            {
+                ... // per ogni carattere...
+            }
+
+            public void println(char c)
+            {
+                ... // l'unico che interagisce con il flusso!
+            }
+
+            public void println(int i)
+            {
+                println(Integer.toString(i));
+                // così invoca il primo metodo
+            }
+
+            public void println(double d)
+            {
+                println(Double.toString(d));
+                // così invoca il primo metodo
+            }
+        [/java]
+    
+    ## Errori comuni
+
+        ### Mettere in ombra le variabili esemplare
+
+            - Ogni oggetto della sottoclasse ha una propria copia di tali variabili, come ogni oggetto della superclasse, ma se sono private non vi si può accedere dai metodi della sottoclasse

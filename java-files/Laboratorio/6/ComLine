@@ -1,0 +1,14 @@
+/*
+Argomento: lettura di parametri da linea di comando, array, cicli
+
+Realizzare una classe ComLine in cui si inseriscano dei parametri da linea di comando, ad esempio, in esecuzione: java ComLine 3 ciao 48
+
+Se non vengono inseriti parametri riportare a standard output il messaggio: "Non sono stati inseriti parametri", altrimenti elencare, in ordine, uno sotto l'altro, i parametri inseriti.
+*/
+public class ComLine
+{
+    public static void main(String[] args)
+    {
+        System.out.println(args.length);
+    }
+}

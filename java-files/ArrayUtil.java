@@ -1,6 +1,5 @@
 public class ArrayUtil
 {
-
     // metodo per ridimensionare array
     public static double[] resize(double[] oldArray, int newLength)
     {

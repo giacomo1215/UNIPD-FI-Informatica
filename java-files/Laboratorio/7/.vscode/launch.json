@@ -1,0 +1,77 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch with Arguments Prompt",
+            "request": "launch",
+            "mainClass": "",
+            "args": "10"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "CapsCopy",
+            "request": "launch",
+            "mainClass": "CapsCopy",
+            "projectName": "7_77749c90"
+        },
+        {
+            "type": "java",
+            "name": "ContaInteri",
+            "request": "launch",
+            "mainClass": "ContaInteri",
+            "projectName": "7_77749c90"
+        },
+        {
+            "type": "java",
+            "name": "Lights",
+            "request": "launch",
+            "mainClass": "Lights",
+            "projectName": "7_77749c90"
+        },
+        {
+            "type": "java",
+            "name": "Read1",
+            "request": "launch",
+            "mainClass": "Read1",
+            "projectName": "7_77749c90"
+        },
+        {
+            "type": "java",
+            "name": "Read2",
+            "request": "launch",
+            "mainClass": "Read2",
+            "projectName": "7_77749c90"
+        },
+        {
+            "type": "java",
+            "name": "Read3",
+            "request": "launch",
+            "mainClass": "Read3",
+            "projectName": "7_77749c90"
+        },
+        {
+            "type": "java",
+            "name": "Sum",
+            "request": "launch",
+            "mainClass": "Sum",
+            "projectName": "7_77749c90"
+        },
+        {
+            "type": "java",
+            "name": "stringEnumerator",
+            "request": "launch",
+            "mainClass": "stringEnumerator",
+            "projectName": "7_77749c90"
+        }
+    ]
+}
